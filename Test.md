@@ -3,6 +3,6 @@
 - test gitPress
 
 - run Code
-```js
+```JavaScript
 [1,2,3].map(item => item * 2);
 ```
