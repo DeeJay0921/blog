@@ -29,7 +29,7 @@ Java内置支持多线程编程(multithreaded programming),多线程程序包含
 ### 关于Thread类的基本使用
 Java的多线程系统建立于Thread类和Runable接口. Thread类定义了好几种方法来帮助管理线程：
 |方法|意义|
-|--|--|
+|:---:|:---:|
 |getName|获取线程名称|
 |getPriority|获取线程优先级|
 |isAlive|判定线程是否仍在执行|
