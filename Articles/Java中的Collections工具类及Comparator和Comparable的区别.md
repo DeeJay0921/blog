@@ -53,12 +53,86 @@ Comparator是一个接口，实现其内部的compare方法即可按照给定规
 
 举个例子来说，我们这次创建一个自定义的可以排序的类。
 ```
+package com.DeeJay;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<SortDemo> arr = new ArrayList<>();
+        arr.add(new SortDemo(3));
+        arr.add(new SortDemo(1));
+        arr.add(new SortDemo(2));
+        arr.add(new SortDemo(4));
+
+        System.out.println(arr); // [sortDemo_3, sortDemo_1, sortDemo_2, sortDemo_4]
+
+        Collections.sort(arr);
+
+        System.out.println(arr); // [sortDemo_1, sortDemo_2, sortDemo_3, sortDemo_4]
+    }
+}
+class SortDemo implements Comparable {
+    int num;
+
+    public SortDemo(int num) {
+        this.num = num;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        SortDemo s = (SortDemo) o;
+        return this.num - s.num;
+    }
+
+    @Override
+    public String toString() {
+        return "sortDemo_" + this.num;
+    }
+}
 ```
 上述例子中，SortDemo类实现了Comparable接口1，重写了compareTo方法，从而使得SortDemo类的实例对象可以相互比较排序，直接调用`Collections.sort()`即可按照实现的compareTo方法进行排序，不需要传入额外的比较逻辑。
 再来看使用Comparator的例子，这次我们的SortDemo类并不支持排序，调用`Collections.sort()`传入一个实现Comparator的内部匿名类来指定排序规则。
 ```
+package com.DeeJay;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<SortDemo> arr = new ArrayList<>();
+        arr.add(new SortDemo(3));
+        arr.add(new SortDemo(1));
+        arr.add(new SortDemo(2));
+        arr.add(new SortDemo(4));
+
+        System.out.println(arr); // [sortDemo_3, sortDemo_1, sortDemo_2, sortDemo_4]
+
+        Collections.sort(arr, new Comparator<SortDemo>() {  // 此处为内部匿名类
+            @Override
+            public int compare(SortDemo o1, SortDemo o2) {
+                return o1.num - o2.num;
+            }
+        });
+
+        System.out.println(arr); // [sortDemo_1, sortDemo_2, sortDemo_3, sortDemo_4]
+    }
+}
+class SortDemo{
+    int num;
+
+    public SortDemo(int num) {
+        this.num = num;
+    }
+
+    @Override
+    public String toString() {
+        return "sortDemo_" + this.num;
+    }
+}
 ```
 
 ### Collections.binarySearch
@@ -70,18 +144,75 @@ Comparator是一个接口，实现其内部的compare方法即可按照给定规
 对于Integer这种Java已经实现了Comparable的类是可以不做处理的，但是我们自定义的类要进行实现Comparable。
 
 ```
+package com.DeeJay;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        arr.add(3);
+        arr.add(1);
+        arr.add(2);
+        arr.add(4);
+
+        Collections.sort(arr); // 调用binarySearch之前要先进行sort
+        System.out.println(Collections.binarySearch(arr, 3));
+    }
+}
 ```
 ### Collections.copy(destList, targetList)
 
 这个方法需要注意的地方是，目的List的长度要保证不短于要被克隆的targetList
 
 ```
+package com.DeeJay;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        arr.add(3);
+        arr.add(1);
+        arr.add(2);
+        arr.add(4);
+        ArrayList<Integer> arr2 = new ArrayList<>();
+        arr2.add(null);
+        arr2.add(null);
+        arr2.add(null);
+        arr2.add(null);
+        Collections.copy(arr2, arr);
+        System.out.println(arr2); // [3, 1, 2, 4]
+    }
+}
 ```
 
 ### Collections.fill() Collections.reverse() Collections.shuffle()
 
 ```
+package com.DeeJay;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        arr.add(3);
+        arr.add(1);
+        arr.add(2);
+        arr.add(4);
+        Collections.sort(arr);
+        System.out.println(arr);// [1, 2, 3, 4]
+        Collections.reverse(arr);
+        System.out.println(arr); // [4, 3, 2, 1]
+        Collections.shuffle(arr);
+        System.out.println(arr); // [1, 3, 2, 4] 随机打乱次序
+        Collections.fill(arr, null);
+        System.out.println(arr); // [null, null, null, null]
+    }
+}
 ```
