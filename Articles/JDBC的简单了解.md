@@ -293,3 +293,79 @@ public class JDBCUtils {
 }
 
 ```
+
+
+### JDBC对数据库的CRUD
+- insert
+```
+ @Test
+    public void testInsert() {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet res = null;
+        try{
+            connection =  JDBCUtils.getConnection();
+            statement = connection.createStatement();
+            String sql = "insert into product values(null, '泡椒凤爪', 3, null, 5);";
+            int result = statement.executeUpdate(sql); // 执行insert update  delete的时候使用executeUpdate return int
+            if(result > 0) { // result为影响的行数
+                System.out.println("insert successfully!");
+            }else {
+                System.out.println("insert failed");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtils.close(res, statement, connection);
+        }
+    }
+```
+
+update和delete同理
+
+### 使用junit进行单元测试
+
+1. 添加junit依赖
+```
+<!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+```
+2. 添加一个类，定义测试方法，给其加上@Test注解
+
+```
+import com.JDBCUtils;
+import org.junit.Test;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class TestDemo {
+
+    @Test
+    public void testQuery() {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet res = null;
+        try{
+            connection =  JDBCUtils.getConnection();
+            statement = connection.createStatement();
+            String sql = "select * from product;";
+            res = statement.executeQuery(sql);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtils.close(res, statement, connection);
+        }
+    }
+}
+
+```
+
+
+
