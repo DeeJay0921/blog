@@ -1,3 +1,14 @@
+---
+title: sql多表查询
+date: 2019/04/19 00:00:01
+tags: 
+- mysql
+categories: 
+- DataBase
+---
+sql多表查询
+<!--more-->
+
 # sql会创建多表以及多表的关系
 ## 需求：
 [上篇文章](https://www.jianshu.com/p/3f3315a453d7)中的商品表和分类表之间存在着所属关系，在数据库如何表示这种关系

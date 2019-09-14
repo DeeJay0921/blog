@@ -1,3 +1,15 @@
+---
+title: Java线程模型
+date: 2019/03/23 00:00:01
+tags: 
+- Java
+- 线程
+categories: 
+- Java
+---
+Java线程模型
+<!--more-->
+
 [面试--线程](https://github.com/Homiss/Java-interview-questions/blob/master/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Java%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%9A%E7%BA%BF%E7%A8%8B(%E4%B8%80).md)
 
 [知乎--java中的多线程究竟在什么情况下使用？](https://www.zhihu.com/question/65200684)

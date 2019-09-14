@@ -1,3 +1,15 @@
+---
+title: 对XML以及Tomcat的简单了解
+date: 2019/04/22 00:00:01
+tags: 
+- Tomcat
+- XML
+categories: 
+- Java
+---
+Java线程
+<!--more-->
+
 # XML
 extensible markup language 可扩展标记语言。
 

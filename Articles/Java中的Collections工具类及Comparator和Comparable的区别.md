@@ -1,3 +1,16 @@
+---
+title: Java中的Collections工具类及Comparator和Comparable的区别
+date: 2019/03/23 00:00:01
+tags: 
+- Java
+- 集合
+- Collection
+categories: 
+- Java
+---
+Java中的Collections工具类及Comparator和Comparable的区别
+<!--more-->
+
 ## Collections类的常见方法
 为了处理Collection类的实例对象，java提供了Collections工具类来进行操作。该类为工具类，内部都为static方法。来看常见的几种使用：
 
@@ -83,7 +96,14 @@ class SortDemo implements Comparable {
     @Override
     public int compareTo(Object o) {
         SortDemo s = (SortDemo) o;
-        return this.num - s.num;
+        if(this.num < s.num) {
+            return -1;
+        }else if(this.num > s.num) {
+            return 1;
+        }
+        return 0;
+          // 这块不能直接写 return this.num - s.num; 因为会存在溢出的情况
+        // return this.num - s.num;
     }
 
     @Override
@@ -93,6 +113,10 @@ class SortDemo implements Comparable {
 }
 ```
 上述例子中，SortDemo类实现了Comparable接口1，重写了compareTo方法，从而使得SortDemo类的实例对象可以相互比较排序，直接调用`Collections.sort()`即可按照实现的compareTo方法进行排序，不需要传入额外的比较逻辑。
+> 对于上述情况，不能直接写 `return this.num - s.num;`,举个例子来讲：```byte a = -128;
+        byte b = 1;
+        System.out.println((byte) a - b); // 127 发生了溢出```
+
 再来看使用Comparator的例子，这次我们的SortDemo类并不支持排序，调用`Collections.sort()`传入一个实现Comparator的内部匿名类来指定排序规则。
 ```
 package com.DeeJay;

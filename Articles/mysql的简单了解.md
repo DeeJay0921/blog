@@ -1,3 +1,14 @@
+---
+title: mysql的简单了解
+date: 2019/04/14 00:00:01
+tags: 
+- mysql
+categories: 
+- DataBase
+---
+mysql的简单了解
+<!--more-->
+
 # 数据库概述
 
 - 什么是数据库: 数据库就是一个文件系统，只不过需要通过命令(sql)来操作这个文件系统
@@ -434,7 +445,8 @@ mysql> select * from student;
 ```
 select [distinct] [ * ] [列名1,列名2] from 表名 [where 条件];
 ```
-> distinct: 去除重复的数据
+> distinct: 去除重复的数据 [distinct详细用法](https://www.cnblogs.com/shiluoliming/p/6604407.html)
+
 
 首先创建一个商品分类的表：
 ```sql
@@ -626,7 +638,7 @@ mysql> select * from product;
         指定条件，确定要查询记录
         - 查询价格大于60的商品：`select * from where price > 60;`
         - where后的关系运算符：`> >= < <= = != <>` <>和!=都为不等于，区别在于<>是标准sql语法而!=是非标准的sql语法
-        - where后的逻辑运算符： `and, or, not`
+        - where后的逻辑运算符： `and, or, not`，判断某一列是否为空: `is null`, `is not null`
         - 查询价格大于10并且小于100的商品: ` select * from product where price < 100 and price > 10;`
         也可以使用`between...and...`,`select * from product where price between 10 and 100;`
         - like 模糊查询
