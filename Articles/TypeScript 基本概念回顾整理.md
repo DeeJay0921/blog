@@ -1606,6 +1606,70 @@ function createArray<T = string>(length: number, value: T): Array<T> {
     return result;
 }
 ```
+### 关于泛型的补充 keyof 用法
+
+
+
+keyof返回的是一个联合属性
+
+
+
+```
+
+const a = {
+
+    a: 1,
+
+    b: 2,
+
+};
+
+keyof typeof a; // 'a' | 'b'
+
+
+
+class A {
+
+    c: number;
+
+    d: number;
+
+}
+
+
+
+keyof A; // 'c' | 'd'
+
+```
+
+
+
+而keyof和泛型搭配，达到的一个效果就是可以通过索引类型查询和索引访问操作符：
+
+
+
+```
+
+//  假设现在我想去拿到一个obj内部的指定属性的值
+
+function getPropertyFromObj<T, K extends keyof T>(obj: T, key: K): T[K] {
+
+    return obj[key];
+
+}
+
+let obj = {a: 1, b: 2};
+
+getPropertyFromObj(obj, "a");
+
+getPropertyFromObj(obj, "c"); // Argument of type '"c"' is not assignable to parameter of type '"a" | "b"'.
+
+```
+
+
+
+可以看到keyof在泛型中的应用，`<T, K extends keyof T>`约束了K的类型只能是T的属性生成的联合类型，而返回值`: T[K]`规定了只能返回目标对象的属性值中联合类型。
+
 
 ## 声明合并
 
