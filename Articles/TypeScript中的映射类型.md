@@ -116,3 +116,67 @@ type PartialPerson = usrDefinedPartial<Person>;
 type ReadonlyPerson = usrDefinedReadonly<Person>;
 
 ```
+
+如果想要在上面的类型的基础上新增一些属性的话，注意这个语法描述的**是类型而非成员**，所以我们不能直接这么写：
+
+```
+
+// 不能这么写
+
+type addNewPropertyPerson<T> = {
+
+    readonly [P in keyof T]: T[P];
+
+    test: string; // 'string' only refers to a type, but is being used as a value here.
+
+};
+
+```
+
+
+
+而是应该采用交叉类型：
+
+```
+
+interface TestAble {test: string}
+
+
+
+type addNewPropertyPerson<T> = {
+
+    readonly [P in keyof T]: T[P];
+
+} & TestAble;
+
+
+
+let p: addNewPropertyPerson<Person> = {
+
+    name: "Yang",
+
+    age: 21,
+
+    test: "abc"
+
+};
+
+
+
+// p.name = "123"; // Cannot assign to 'name' because it is a read-only property.
+
+```
+
+
+
+也可以省略定义类型，直接使用字面量类型：
+
+```
+
+type addNewPropertyPerson<T> = {
+
+    readonly [P in keyof T]: T[P];
+
+} & {test: string};
+
+```
