@@ -180,3 +180,96 @@ type addNewPropertyPerson<T> = {
 } & {test: string};
 
 ```
+看完映射类型的简单使用，接下来看一下映射类型的组成部分
+
+
+
+现有如下2个类型：
+
+```
+
+type Keys = 'option1' | 'option2';
+
+type Flags = { [K in Keys]: boolean };
+
+```
+
+其内部使用了`for ... in`，分为3个部分：
+
+1. 类型变量`K`，其会在遍历时依次绑定到每个属性
+
+2. 字符串联合类型变量`Keys`,提供了要迭代的属性名的集合（一般也会使用泛型）
+
+3. 属性的结果类型，本例中为`boolean`
+
+
+
+上述例子中定义的`Flags`类型，等价于：
+
+```
+
+type Flags = {
+
+    option1: boolean;
+
+    option2: boolean;
+
+}
+
+```
+
+
+
+在实际的开发中，遇到的情况不止这么简单，经常会基于一些已经存在的类型，且按照一定的方式进行转换字段,
+
+假设现在有如下类型：
+
+```
+
+interface Person {
+
+    name: string;
+
+    age: number
+
+}
+
+```
+
+现在要基于`Person`类型，在`--strictNullChecks`下，创建一个允许属性值有`null`的新类型:
+
+```
+
+type NullAblePerson = {
+
+    [P in keyof Person]: Person[P] | null;
+
+}
+
+
+
+let p: NullAblePerson = {
+
+    name: null,
+
+    age: null
+
+}; // 在strictNullChecks也无报错
+
+```
+
+当然我们一般会选用更通用的泛型来进行声明映射类型:
+
+```
+
+type NullAble<T> = {
+
+    [P in keyof T]: T[P] | null
+
+};
+
+
+
+type NullAblePerson = NullAble<Person>;
+
+```
