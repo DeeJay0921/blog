@@ -273,3 +273,128 @@ type NullAble<T> = {
 type NullAblePerson = NullAble<Person>;
 
 ```
+
+## 一些实用的工具类型
+
+
+
+TS内置了一些工具映射类型方便我们进行操作：
+
+
+
+### `Partial<T>`
+
+
+
+并将它所有的属性设置为可选的。它的返回类型表示输入类型的所有子类型。
+
+```
+
+interface Person {
+
+    name: string;
+
+    age: number
+
+}
+
+
+
+let p: Partial<Person> = {}; // check pass
+
+```
+
+### `Readonly<T>`
+
+构造类型T，并将它所有的属性设置为readonly，也就是说构造出的类型的属性不能被再次赋值。
+
+```
+
+interface Person {
+
+    name: string;
+
+    age: number
+
+}
+
+
+
+let p: Readonly<Person> = {
+
+   name: "Y", age: 20
+
+}; 
+
+
+
+p.name = "Z"; // Cannot assign to 'name' because it is a read-only property.
+
+```
+
+还可用来表示在运行时会失败的赋值表达式（比如，当尝试给冻结对象的属性再次赋值时）:
+
+```
+
+//Object.freeze
+
+function freeze<T>(obj: T): Readonly<T>;
+
+```
+### Record<K,T>
+
+构造一个类型，其属性名的类型为K，属性值的类型为T。这个工具可用来将某个类型的属性映射到另一个类型上。
+
+```
+
+interface LineInfo {
+
+    line: string
+
+}
+
+
+
+type lines = "line1" | "line2" | "line3";
+
+
+
+let article: Record<lines, LineInfo> = {
+
+    line1: {line: "line1"},
+
+    line2: {line: "line2"},
+
+    line3: {line: "line3"},
+
+};
+
+```
+
+### Pick<T,K>
+
+从类型T中挑选部分属性K来构造类型。
+
+```
+
+interface Person {
+
+    name: string,
+
+    age: number,
+
+    gender: string
+
+}
+
+
+
+let p: Pick<Person, "name" | "gender"> = {
+
+    name: "Y",
+
+    gender: "Male"
+
+};
+
+```
