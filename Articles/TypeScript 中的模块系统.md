@@ -358,3 +358,44 @@ let a: number = fn("abc");
 
 
 当然`default`也可以是一个值
+
+
+# `export = `和`import = require()`
+
+
+
+针对CommonJS和AMD的`exports`变量,ts提供了`export =`语法来进行导出
+
+
+
+同时通过`export =`语法导出的模块，必须要用特定的`import module = require("module")`来进行导入
+
+
+
+```typescript
+
+interface Person {
+
+    name: string
+
+}
+
+
+
+export = Person;
+
+```
+
+```typescript
+
+import Person = require("./module/TestModule");
+
+
+
+let p: Person = {
+
+    name: "zZ"
+
+};
+
+```
