@@ -235,3 +235,126 @@ console.log(t.name);
 
 ```
 
+# 导入
+
+
+
+可以使用以下几种`import`方式来进行导入其他模块导出的内容
+
+
+
+## 导入一个模块中的某个导出内容
+
+```typescript
+
+import {Person} from "./module/TestModule";
+
+
+
+let p: Person = {
+
+    name: "zZ"
+
+};
+
+```
+
+导入的时候也可以进行重命名：
+
+```typescript
+
+import {Person as P} from "./module/TestModule";
+
+
+
+let p: P = {
+
+    name: "zZ"
+
+};
+
+```
+
+
+
+## 将整个模块导入到一个变量，并通过它来访问模块的导出部分
+
+```typescript
+
+import * as module from "./module/TestModule";
+
+
+
+let p: module.Person = {
+
+    name: "zZ"
+
+};
+
+```
+
+## 具有副作用的导入模块（不推荐）
+
+当一些模块设置了一些没有导出的全局变量时，如果想要访问这些变量，可以通过这种方法来进行导入：
+
+```typescript
+
+import "./module/TestModule"
+
+```
+
+# 默认导出
+
+每个模块都有一个`default`导出，默认导出使用`default`关键字标记，并且每个模块都只能有一个`default`导出
+
+
+
+对于默认导出，需要一种特殊的导入形式来导入`default`导出
+
+
+
+对于一些工具类库，通常会使用默认导出，如jQuery等：
+
+```typescript
+
+declare let $: jQuery;
+
+export default $;
+
+```
+
+在其他地方就可以直接`import`：
+
+```typescript
+
+import $ from "jQuery";
+
+```
+
+
+
+而对于**类**和**函数声明**可以直接被标记为默认导出，且类和函数声明的名字可以省略掉：
+
+```typescript
+
+export default (s: string): number => {
+
+    return s.length;
+
+}
+
+```
+
+```typescript
+
+import fn from "./module/TestModule";
+
+
+
+let a: number = fn("abc");
+
+```
+
+
+
+当然`default`也可以是一个值
