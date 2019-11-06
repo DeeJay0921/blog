@@ -183,3 +183,148 @@ for (let comment of comments) {
 ```
 
 可以看到，我们最后在外部访问`namespace`里面`export`出来的接口或者类是，需要加上相应的命名空间，如：`Validation.DirtyWordsValidator`
+
+## 分离到多文件
+
+
+
+当项目逻辑变的比较大时，还可以将命名空间的逻辑分离到多个文件。即时逻辑在多个文件内，但其还是会被视为是**同一个命名空间**，使用时也会跟他们在同一个文件中一样。
+
+
+
+> 但是要注意的是，由于多个文件之间存在依赖关系，所以需要引用标签来进行声明,如：`/// <reference path="./DirtyWordsValidator.ts" />`
+
+
+
+分离后的代码为：
+
+module/DirtyWordsValidator.ts
+
+```typescript
+
+namespace Validation {
+
+    export interface DirtyWordsValidator { // 基类接口  外部需要访问  所以export出去
+
+        isValid(s: string): boolean;
+
+    }
+
+}
+
+```
+
+module/ShitValidator.ts
+
+```typescript
+
+/// <reference path="./DirtyWordsValidator.ts" />
+
+namespace Validation {
+
+    const SHIT_WORD = "shit";
+
+    export class ShitValidator implements DirtyWordsValidator{ // 外部需要访问  所以export出去
+
+        isValid(s: string): boolean {
+
+            return !(s.indexOf(SHIT_WORD) !== -1);
+
+        }
+
+    }
+
+}
+
+```
+
+module/FuckValidator.ts
+
+```typescript
+
+/// <reference path="./DirtyWordsValidator.ts" />
+
+namespace Validation {
+
+    const FUCK_WORD = "fuck";
+
+    export class FuckValidator implements DirtyWordsValidator { // 外部需要访问  所以export出去
+
+        isValid(s: string): boolean {
+
+            return !(s.indexOf(FUCK_WORD) !== -1);
+
+        }
+
+    }
+
+}
+
+```
+
+index.ts
+
+```typescript
+
+/// <reference path="./module/DirtyWordsValidator.ts" />
+
+/// <reference path="./module/ShitValidator.ts" />
+
+/// <reference path="./module/FuckValidator.ts" />
+
+
+
+let comments: string[] = ["I love it!", "Awesome!", "Ah, shit! Here we go again!", "What the fuck!"];
+
+
+
+let validators: { [s: string]: Validation.DirtyWordsValidator } = { // 这边需要加上命名空间
+
+    "shit": new Validation.ShitValidator(),
+
+    "fuck": new Validation.FuckValidator(),
+
+};
+
+
+
+for (let comment of comments) {
+
+    for (let validatorKey in validators) {
+
+        let valid = validators[validatorKey].isValid(comment);
+
+        console.log(`${comment} ${valid ? "doesn't contain" : "contains"} ${validatorKey}`);
+
+    }
+
+}
+
+```
+对于分离后的文件，因为存在多个文件，如果我们直接进行`tsc index.ts`的话，编译的js只有当前本身的逻辑，并不会存在依赖的其他部分，所以针对这种情况，我们有2种方法：
+
+1. 通过`--outFile target.js`的形式，例如运行`tsc --outFile sample.js index.ts`,从而生成的`sample.js`中就会引用其他部分的逻辑，我们直接使用`sample.js`即可
+
+2. 我们可以编译依赖到的每一个ts文件为js，然后通过`script`标签去将其**按顺序**引用在页面中（较麻烦）.
+
+
+
+## 使用别名简化命名空间操作
+
+
+
+针对上面的`Validation.DirtyWordsValidator`,我们可以通过`import alias = X.Y.Z`给其起一个别名。可以通过这种方式为任意标识符创建别名，不局限于namespace
+
+
+
+```typescript
+
+import ShitValidatorAlias = Validation.ShitValidator;
+
+let isValid: boolean = new ShitValidatorAlias().isValid("Ah, shit! Here we go again!");
+
+```
+
+
+
+> `import alias = X.Y.Z`和`import x = require('name')`并不一样，后者是为了针对模块的exports对象设定的
