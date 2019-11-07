@@ -1680,21 +1680,13 @@ getPropertyFromObj(obj, "c"); // Argument of type '"c"' is not assignable to par
 
 
 | declaration type | namespace | type | value |
-
 |------|------------|------------| ---- |
-
 | Namespace  | √ | | √ |
-
 | Class  | | √ | √ |
-
 | Enum  | | √ | √ |
-
 | Interface  | | √ | |
-
 | Type Alias  | | √ | |
-
 | Function  | | |√|
-
 | Variable  | | |√|
 
 
