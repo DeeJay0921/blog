@@ -1673,84 +1673,391 @@ getPropertyFromObj(obj, "c"); // Argument of type '"c"' is not assignable to par
 
 ## 声明合并
 
-如果定义了两个相同名字的**函数**、**接口**或**命名空间**等，那么它们会合并成一个类型
 
-### 函数合并
-函数的重载就是函数的合并
+
+对于声明，首先明确在TS中的声明分为三类：**命名空间**， **类型**， **值**,对应的关系如下表：
+
+
+
+| declaration type | namespace | type | value |
+
+|------|------------|------------| ---- |
+
+| Namespace  | √ | | √ |
+
+| Class  | | √ | √ |
+
+| Enum  | | √ | √ |
+
+| Interface  | | √ | |
+
+| Type Alias  | | √ | |
+
+| Function  | | |√|
+
+| Variable  | | |√|
+
+
+
+可以看出，有些声明是有多重属性的，比如Class声明既是类型也是值，而Interface只是类型等。
+
+
+
+### 合并接口
+
+最简单也是最常见的合并类型，合并的机制是**将双方的成员放到一个同名接口中**：
+
+
+
+```typescript
+
+interface Box {
+
+    width: string
+
+}
+
+interface Box {
+
+    height: string
+
+}
+
+
+
+let box: Box = {
+
+    width: "5cm",
+
+    height: "5cm"
+};
+
 ```
-function reverse(x: number): number;
-function reverse(x: string): string;
-function reverse(x: number | string): number | string {
-    if (typeof x === 'number') {
-        return Number(x.toString().split('').reverse().join(''));
-    } else if (typeof x === 'string') {
-        return x.split('').reverse().join('');
+
+> 另外要注意的是：接口的非函数的成员应该是唯一的。 如果它们不是唯一的，那么它们必须是相同的类型。 否则会报错
+
+```typescript
+
+interface Box {
+
+    width: string
+
+}
+
+interface Box {
+
+    width: number // Subsequent property declarations must have the same type. Property 'width' must be of type 'string', but here has type 'number'.
+
+    // 接口的非函数的成员应该是唯一的。 如果它们不是唯一的，那么它们必须是相同的类型。
+
+}
+
+```
+
+
+
+而对于函数成员来讲，每个同名函数的声明都会被当做这个函数的一个重载。同时，**当接口合并时，后来的接口具有更高的优先级**：
+
+
+
+```typescript
+
+interface Cloner {
+
+    clone(animal: Animal): Animal;
+
+}
+
+
+
+interface Cloner {
+
+    clone(animal: Sheep): Sheep;
+
+}
+
+
+
+interface Cloner {
+
+    clone(animal: Dog): Dog;
+
+    clone(animal: Cat): Cat;
+
+}
+
+```
+
+这三个接口合并成一个声明：
+
+```typescript
+
+interface Cloner {
+
+    clone(animal: Dog): Dog;
+
+    clone(animal: Cat): Cat;
+
+    clone(animal: Sheep): Sheep;
+
+    clone(animal: Animal): Animal;
+
+}
+
+```
+可以发现，是**后来的接口中的函数成员出现在了最上面**。
+
+
+
+对于上述这种合并原则，还有种特殊情况为当函数的参数的类型为**单一字符串字面量**时，拥有最高优先级，会被提升到最顶端：
+
+
+
+```typescript
+
+interface Document {
+
+    createElement(tagName: any): Element;
+
+}
+
+interface Document {
+
+    createElement(tagName: "div"): HTMLDivElement;
+
+    createElement(tagName: "span"): HTMLSpanElement;
+
+}
+
+interface Document {
+
+    createElement(tagName: string): HTMLElement;
+
+    createElement(tagName: "canvas"): HTMLCanvasElement;
+
+}
+
+```
+
+合并后为：
+
+```typescript
+
+interface Document {
+
+    createElement(tagName: "canvas"): HTMLCanvasElement;
+
+    createElement(tagName: "div"): HTMLDivElement;
+
+    createElement(tagName: "span"): HTMLSpanElement;
+
+    createElement(tagName: string): HTMLElement;
+
+    createElement(tagName: any): Element;
+
+}
+
+```
+
+### 合并命名空间
+
+
+
+最开始我们了解到，命名空间的声明既属于命名空间的声明也属于值的声明，所以合并也是从这2个方面出发的：
+
+
+
+对于命名空间的合并，模块导出的同名接口进行合并，构成单一命名空间内含合并后的接口。
+
+
+
+对于命名空间里值的合并，如果当前已经存在给定名字的命名空间，那么后来的命名空间的导出成员会被加到已经存在的那个模块里。
+来看合并命名空间的例子：
+
+```typescript
+
+namespace Animals {
+
+    export class Zebra { }
+
+}
+
+
+
+namespace Animals {
+
+    export interface Legged { numberOfLegs: number; }
+
+    export class Dog { }
+
+}
+
+```
+
+合并为：
+
+```typescript
+
+namespace Animals {
+
+    export interface Legged { numberOfLegs: number; }
+
+
+
+    export class Zebra { }
+
+    export class Dog { }
+
+}
+
+```
+
+但是对于非`export`的成员，仅仅在合并前的原有namespace里面可见，在另外的同名的namespace仍不可访问
+
+```typescript
+
+namespace Animal {
+
+    let haveMuscles = true;
+
+
+
+    export function animalsHaveMuscles() {
+
+        return haveMuscles;
+
     }
-}
-```
 
-### 接口的合并
-
-1. 属性合并：
-```
-interface Alarm {
-    price: number;
-}
-interface Alarm {
-    weight: number;
-}
-```
-等价于：
-```
-interface Alarm {
-    price: number;
-    weight: number;
-}
-```
-> **合并的属性的类型必须是唯一的**
-
-```
-interface Alarm {
-    price: number;
-}
-interface Alarm {
-    price: number;  // 虽然重复了，但是类型都是 `number`，所以不会报错
-    weight: number;
-}
-```
-
-```
-interface Alarm {
-    price: number;
-}
-interface Alarm {
-    price: string;  // 类型不一致，会报错
-    weight: number;
 }
 
-// index.ts(5,3): error TS2403: Subsequent variable declarations must have the same type.  Variable 'price' must be of type 'number', but here has type 'string'.
+
+
+namespace Animal {
+
+    export function doAnimalsHaveMuscles() {
+
+        return haveMuscles;  // Error, because haveMuscles is not accessible here
+
+    }
+
+}
+
 ```
 
-2. 方法的合并
+### 命名空间和类与函数与枚举类型进行合并
 
-内部方法的合并和函数的合并原则相同
+
+
+命名空间可以和其他类型的声明进行合并，只要合并类型的定义符合将要合并类型的定义。合并结果包含二者的声明类型。
+
+
+
+#### 合并命名空间和类
+
+
+
+```typescript
+
+class Album {
+
+    label: Album.AlbumLabel;
+
+}
+
+namespace Album {
+
+    export class AlbumLabel { }
+
+}
 
 ```
-interface Alarm {
-    price: number;
-    alert(s: string): string;
+
+合并结果是**一个类并带有一个内部类**。
+除了内部类的模式，你在JavaScript里，创建一个函数稍后扩展它增加一些属性也是很常见的。 TypeScript使用声明合并来达到这个目的并保证类型安全。
+
+ 
+
+```typescript
+
+function buildLabel(name: string): string {
+
+    return buildLabel.prefix + name + buildLabel.suffix;
+
 }
-interface Alarm {
-    weight: number;
-    alert(s: string, n: number): string;
+
+
+
+namespace buildLabel {
+
+    export let suffix = "";
+
+    export let prefix = "Hello, ";
+
 }
+
+
+
+console.log(buildLabel("Sam Smith"));
+
 ```
-等价于：
-```
-interface Alarm {
-    price: number;
-    weight: number;
-    alert(s: string): string;
-    alert(s: string, n: number): string;
+
+
+
+> 注意：namespace中要合并的东西都要进行`export`
+
+
+
+相似的，命名空间可以用来扩展枚举型：
+
+
+
+```typescript
+
+enum Color {
+
+    red = 1,
+
+    green = 2,
+
+    blue = 4
+
 }
+
+
+
+namespace Color {
+
+    export function mixColor(colorName: string) {
+
+        if (colorName == "yellow") {
+
+            return Color.red + Color.green;
+
+        }
+
+        else if (colorName == "white") {
+
+            return Color.red + Color.green + Color.blue;
+
+        }
+
+        else if (colorName == "magenta") {
+
+            return Color.red + Color.blue;
+
+        }
+
+        else if (colorName == "cyan") {
+
+            return Color.green + Color.blue;
+
+        }
+
+    }
+
+}
+
 ```
+### 非法合并
+
+类不能与其它类或变量合并。但是也有混入的方法解决
