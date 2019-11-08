@@ -11,6 +11,7 @@ categories:
 <!--more-->
 
 
+[官方模板](https://www.tslang.cn/docs/handbook/declaration-files/templates.html)
 
 # 识别库的类型
 
