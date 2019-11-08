@@ -1099,7 +1099,7 @@ function getLength(something: string | number): number {
 
 ## 声明文件
 
-// TODO
+[TypeScript中的声明文件](https://github.com/DeeJay0921/blog/blob/master/Articles/TypeScript%E4%B8%AD%E7%9A%84%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6.md)
 
 待补充
 
