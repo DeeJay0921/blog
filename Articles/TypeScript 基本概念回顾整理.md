@@ -1,19 +1,12 @@
 ---
-
 title: TypeScript 回顾整理
-
 date: 2019/10/08 15:04:01
-
+cover: https://www.tslang.cn/assets/images/logo_nocircle.svg
 tags: 
-
 - 前端
-
 - TS
-
 categories: 
-
 - 前端
-
 ---
 
 Vue3.0 最近发布了pre-alpha版本，基本都是由TS编写的，借此机会回顾一下TypeScript相关的概念和知识点
