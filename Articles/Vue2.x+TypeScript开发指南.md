@@ -188,7 +188,7 @@ resolve: {
   },
 
   "include": [
-打开新页
+
     "src/**/*.ts",
 
     "src/**/*.tsx",
