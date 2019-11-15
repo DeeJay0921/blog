@@ -359,3 +359,348 @@ declare module "*.vue" {
 
 
 > 另外，对于自定义组件想`emit` `@Model`中定义的事件时，不能使用`@Emit`装饰器而是必须自己手动`emit`
+
+- 注册钩子
+
+
+
+除了`Vue`本身的生命周期钩子之外，其他插件的钩子要使用的话是需要提前注册的，比如我们熟悉的`Vue-router`提供的`beforeRouterEnter`等
+
+
+
+`vue-class-component`提供了`Component.registerHooks`来注册钩子，在`vue-property-decorator`我们也可以直接调用
+
+
+
+比如我们直接在`App.vue`里进行注册：
+
+
+
+```vue
+
+<script lang="ts">
+
+    import {Vue, Component} from "vue-property-decorator";
+
+
+
+    Component.registerHooks([
+
+        "beforeRouteEnter"
+
+    ]);
+
+
+
+    @Component
+
+    export default class App extends Vue {
+
+        
+
+    }
+
+</script>
+
+```
+
+
+
+在子组件里面就可以自由使用这些钩子了:
+
+```vue
+
+export default class Home extends Vue{
+
+    beforeRouteEnter():void {
+
+        console.log("beforeRouteEnter");
+
+    }
+
+}
+
+```
+- 方法内部`this`的指向问题
+
+
+
+使用ts的话，现有2种方法定义：
+
+```vue
+
+export default class Home extends Vue{
+
+    foo = () => {
+
+        console.log(this);
+
+    }
+
+    
+
+    bar() {
+
+        console.log(this);
+
+    }
+
+}
+
+```
+
+
+
+对于
+
+```
+
+foo = () => {
+
+    console.log(this); // 内部this为Home的实例
+
+}
+
+```
+
+这种定义方法，内部的this其实是为Home这个类的实例，而对于：
+
+```text
+
+bar() {
+
+    console.log(this); // 内部this为Vue示例
+
+}
+
+```
+
+其内部的`this`才为当前`Vue`组件的实例
+
+
+
+所以注意要使用:
+
+```text
+
+bar() {
+
+    console.log(this); // 内部this为Vue示例
+
+}
+
+```
+
+这种格式。
+
+
+
+- Mixin的实现
+
+
+
+Mixin的实现就是一个简单的类的继承
+
+
+
+假设现在要混入如下方法和属性：
+
+```typescript
+
+// TestMixin.ts
+
+import {Vue, Component} from "vue-property-decorator";
+
+
+
+@Component
+
+export default class TestMixin extends Vue{
+
+    mixinVal: string = "abc";
+
+
+
+    mixinMethod(): void {
+
+        console.log("mixinMethod");
+
+    }
+
+}
+
+```
+
+我们在要混入的组件中就可以直接继承该类而不是Vue了：
+
+```typescript
+
+import {Component} from "vue-property-decorator";
+
+
+
+@Component
+
+export default class Home extends TestMixin{
+
+    created() {
+
+        console.log(this.mixinVal);
+
+        this.mixinMethod();
+
+    }
+
+}
+
+```
+
+
+
+- `vuex-class`的使用
+
+
+
+我们使用了ts之后，对于`Vuex`的使用方式也要得到更新,首先安装`vuex-class`:
+
+
+
+```text
+
+npm install -S vuex-class
+
+```
+
+
+
+比方说我现在`store`文件夹下有一个`index.ts`如下，作为我`Vuex`的主模块来使用：
+
+
+
+```typescript
+
+import Vue from 'vue'
+
+import Vuex from 'vuex'
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+
+    state: {
+
+        stateVal1: "123"
+
+    },
+
+    getters: {
+
+        getStateVal1: state => state.stateVal1
+
+    },
+
+    mutations: {
+        changeStateVal(state, payload?: string): void {
+
+            if(!payload) {
+
+                state.stateVal1 = "abc";
+
+            }else {
+
+                state.stateVal1 = payload;
+
+            }
+
+        }
+
+    },
+
+    actions: {
+
+        consoleStateVal(ctx): Promise<string> {
+
+            return new Promise((resolve: (stateVal: string) => void) => {
+
+                setTimeout(() => {
+
+                    ctx.commit("changeStateVal", "def");
+
+                    resolve(ctx.state.stateVal1);
+
+                }, 3000)
+
+            });
+
+        }
+
+    },
+
+})
+
+```
+
+
+
+我们在组件内部就可以这么使用：
+
+```vue
+
+<script lang="ts">
+
+    import {Vue, Component} from "vue-property-decorator";
+
+    import {
+
+        State,
+
+        Getter,
+
+        Action,
+
+        Mutation,
+
+        namespace
+
+    } from 'vuex-class';
+
+    const TestVuexModule = namespace('@/store/TestVuexModule.ts'); // 此处引入的是别的module中的store
+
+    @Component
+    export default class Home extends Vue{
+
+        @State stateVal1; // 同名情况可以直接引用
+
+        @Getter("getStateVal1") getStateVal; // 也可以重新命名 比方说store/index.ts下为getStateVal1, 在这重命名为为getStateVal
+
+        @Mutation changeStateVal;
+
+        @Action consoleStateVal;
+
+        @TestVuexModule.State TestVal1; // 注册别的store中的状态
+
+        created() {
+
+            console.log(this.getStateVal);
+
+            this.changeStateVal();
+
+            console.log(this.getStateVal);
+
+            this.consoleStateVal().then(res => {
+
+                console.log("res", res);
+
+                console.log(this.getStateVal);
+
+            })
+
+            console.log(this.TestVal1); // 获取到别的store中的state
+
+        }
+
+    }
+
+</script>
+
+```
