@@ -1,6 +1,7 @@
 ---
 title: TypeScript中的映射类型及常见工具映射类型
 date: 2019/10/30 11:05:01
+cover: https://github.com/DeeJay0921/blog/blob/master/Covers/typescript.jpg
 tags: 
 - 前端
 - TS
