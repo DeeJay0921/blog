@@ -1,19 +1,12 @@
 ---
-
 title: TypeScript 中的命名空间（namespace）
-
 date: 2019/11/06 09:34:01
-
+cover: https://github.com/DeeJay0921/blog/blob/master/Covers/typescript.jpg
 tags: 
-
 - 前端
-
 - TS
-
 categories: 
-
 - 前端
-
 ---
 
 TS中的外部模块即为一般意义上的“模块”，而内部模块被称为“命名空间”，即`namespace`。值得一提的是以前的`module X`即等价于现在的`namespace X`且任何使用`module`关键字来声明一个内部模块的地方都应该使用`namespace`关键字来替换
