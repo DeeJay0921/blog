@@ -1,19 +1,12 @@
 ---
-
 title: TypeScript 中的模块系统
-
 date: 2019/11/08 19:42:01
-
+cover: https://github.com/DeeJay0921/blog/blob/master/Covers/typescript.jpg
 tags: 
-
 - 前端
-
 - TS
-
 categories: 
-
 - 前端
-
 ---
 
 TypeScript 中的模块系统的简单介绍
