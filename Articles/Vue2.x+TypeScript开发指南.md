@@ -1,3 +1,17 @@
+---
+title: Vue2.x+TypeScript开发指南
+date: 2019/11/15 11:02:01
+cover: https://github.com/DeeJay0921/blog/blob/master/Covers/vue%2Bts.jpg
+tags: 
+- 前端
+- Vue
+categories: 
+- 前端
+---
+
+本文主要介绍了Vue项目引入Typescript及相关组件ts形式的编写语法
+<!--more-->
+
 
 # Vue项目引入TypeScript
 
