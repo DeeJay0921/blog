@@ -1,7 +1,7 @@
 ---
 title: Vue-cli3.0使用介绍
 date: 2019/11/11 15:02:01
-cover: https://cn.bing.com/th?id=OIP.aViv0ZAFtpRDT7f-gPXjPwHaEe&pid=Api&rs=1
+cover: https://github.com/DeeJay0921/blog/blob/master/Covers/vue%20cli%203.jpg
 tags: 
 - 前端
 - Vue
