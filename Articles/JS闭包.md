@@ -1,6 +1,7 @@
 ---
 title: JS闭包
 date: 2017/08/18 00:00:01
+cover: https://i1.wp.com/programmingwithmosh.com/wp-content/uploads/2019/04/javascript-closure.png?ssl=1
 tags: 
 - 前端
 - JS

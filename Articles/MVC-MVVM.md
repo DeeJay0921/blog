@@ -1,6 +1,7 @@
 ---
 title: MVC-MVVM
 date: 2017/10/10 00:00:01
+cover: http://frugalisminds.com/wp-content/uploads/2018/01/porwnanie-architektur-mvvm-i-mvc-ios-8-638.jpg
 tags: 
 - 前端
 - MVC

@@ -1,6 +1,7 @@
 ---
 title: Web前后端基础架构原理
 date: 2019/09/03 00:00:01
+cover: https://wallpapercave.com/wp/7WB5XXQ.jpg
 tags: 
 - Web
 - HTTP

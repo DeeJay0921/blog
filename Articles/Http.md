@@ -1,6 +1,7 @@
 ---
 title: Http
 date: 2017/10/08 00:00:01
+cover: https://sdtimes.com/wp-content/uploads/2015/02/0218.sdt-http2.jpg
 tags: 
 - 前端
 - Http

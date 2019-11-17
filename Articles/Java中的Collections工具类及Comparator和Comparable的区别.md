@@ -1,6 +1,7 @@
 ---
 title: Java中的Collections工具类及Comparator和Comparable的区别
 date: 2019/03/23 00:00:01
+cover: https://marcus-biel.com/wp-content/uploads/2015/08/class-and-interface-hierarchy.png
 tags: 
 - Java
 - 集合

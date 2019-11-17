@@ -1,6 +1,7 @@
 ---
 title: 事件的应用，tab效果和模态框
 date: 2017/08/18 00:00:01
+cover: https://www.robocodeacademy.com/wp-content/uploads/2018/01/HTML5-CSS3-JS-1.jpg
 tags: 
 - 前端
 - JS

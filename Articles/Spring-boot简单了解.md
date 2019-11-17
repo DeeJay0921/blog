@@ -1,6 +1,7 @@
 ---
 title: Spring-boot简单了解
 date: 2019/07/19 00:00:01
+cover: https://i0.wp.com/keyholesoftware.com/wp-content/uploads/Spring-Boot.png?fit=700%2C400&ssl=1
 tags: 
 - Java
 - Spring-boot

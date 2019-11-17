@@ -1,6 +1,7 @@
 ---
 title: ajax
 date: 2017/08/22 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/AJAX_logo_by_gengns.svg/1200px-AJAX_logo_by_gengns.svg.png
 tags: 
 - 前端
 - Ajax

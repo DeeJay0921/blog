@@ -1,7 +1,7 @@
 ---
 title: Vue-cli3.0使用介绍
 date: 2019/11/11 15:02:01
-cover: https://github.com/DeeJay0921/blog/blob/master/Covers/vue%20cli%203.jpg
+cover: https://pizzamanz.net/wp-content/uploads/2018/08/Vue_cli_3.png
 tags: 
 - 前端
 - Vue

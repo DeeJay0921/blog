@@ -1,6 +1,7 @@
 ---
 title: npm-npmscript-gulp-webpack--相关问题
 date: 2017/09/11 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Npm-logo.svg/1200px-Npm-logo.svg.png
 tags: 
 - 前端
 - webpack

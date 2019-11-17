@@ -1,6 +1,7 @@
 ---
 title: Form表单
 date: 2017/07/29 23:22:24
+cover: https://www.computerhope.com/jargon/s/standard-input.jpg
 tags: 
 - 前端
 - Form

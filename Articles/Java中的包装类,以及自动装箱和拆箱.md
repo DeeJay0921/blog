@@ -1,6 +1,7 @@
 ---
 title: Java中的包装类,以及自动装箱和拆箱
 date: 2018/07/21 00:00:01
+cover: https://revistadigital.inesem.es/informatica-y-tics/files/2015/10/inesem-java-1024x768.jpg
 tags: 
 - Java
 - 包装类

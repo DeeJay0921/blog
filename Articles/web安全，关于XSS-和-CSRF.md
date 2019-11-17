@@ -1,6 +1,7 @@
 ---
 title: web安全，关于XSS-和-CSRF
 date: 2017/10/08 00:00:01
+cover: http://www.dukedesign.com/images/ID/id011.png
 tags: 
 - 前端
 - web安全

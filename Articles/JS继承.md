@@ -1,6 +1,7 @@
 ---
 title: JS继承
 date: 2017/09/01 00:00:01
+cover: https://cdn.bulldogjob.com/system/readables/covers/000/001/505/large_thumb/27-11-2018.png
 tags: 
 - 前端
 - JS

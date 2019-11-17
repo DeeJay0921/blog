@@ -1,6 +1,7 @@
 ---
 title: Python中列表(dict)和元祖(tuple)的相关操作
 date: 2018/06/09 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png
 tags: 
 - Python
 categories: 

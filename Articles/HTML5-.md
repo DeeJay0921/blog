@@ -1,6 +1,7 @@
 ---
 title: HTML5-
 date: 2017/09/12 00:00:01
+cover: http://www.w3.org/html/logo/downloads/HTML5_Logo_512.png
 tags: 
 - 前端
 - HTML

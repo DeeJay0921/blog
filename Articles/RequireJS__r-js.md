@@ -1,6 +1,7 @@
 ---
 title: RequireJS__r-js
 date: 2017/09/02 00:00:01
+cover: https://firebearstudio.com/blog/wp-content/uploads/2015/09/Advanced-Development-with-RequireJS.png
 tags: 
 - 前端
 - RequireJS

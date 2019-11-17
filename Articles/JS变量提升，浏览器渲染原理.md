@@ -1,6 +1,7 @@
 ---
 title: JS变量提升，浏览器渲染原理
 date: 2017/08/10 23:00:01
+cover: https://cn.bing.com/images/search?view=detailV2&ccid=6ryaBgW%2b&id=9296CE8243DE018F08451305079F1790FDFEB3BC&thid=OIP.6ryaBgW-1j262kiScIakAQHaEK&mediaurl=https%3a%2f%2fcdn-images-1.medium.com%2fmax%2f1200%2f1*0hfm3TfurQboq6KlJrG56g.jpeg&exph=450&expw=800&q=js+declare+variable&simid=608016365936313972&selectedIndex=39&ajaxhist=0
 tags: 
 - 前端
 - JS

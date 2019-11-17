@@ -1,6 +1,7 @@
 ---
 title: jQuery常用方法以及ajax
 date: 2017/08/26 00:00:01
+cover: http://www.aegisiscblog.com/wp-content/uploads/2016/10/JQ-AJAX.jpg
 tags: 
 - 前端
 - JS

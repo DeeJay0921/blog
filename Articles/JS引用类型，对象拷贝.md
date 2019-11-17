@@ -1,6 +1,7 @@
 ---
 title: JS引用类型，对象拷贝
 date: 2017/08/12 00:00:01
+cover: https://cdn.scotch.io/38945/1F62DVQf6I0h3dWDTMOg_Copying%20Objects%20in%20Javascript.png.jpg
 tags: 
 - 前端
 - JS

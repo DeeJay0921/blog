@@ -1,6 +1,7 @@
 ---
 title: CSS布局
 date: 2017/08/04 04:00:01
+cover: https://content.linkedin.com/content/dam/me/learning/blog/2016/september/CSS.jpg
 tags: 
 - 前端
 - CSS

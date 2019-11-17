@@ -1,6 +1,7 @@
 ---
 title: Maven的简单使用
 date: 2019/02/22 00:00:01
+cover: https://udemy-images.udemy.com/course/480x270/1184808_e345.jpg
 tags: 
 - Java
 - Maven

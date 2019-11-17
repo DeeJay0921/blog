@@ -1,6 +1,7 @@
 ---
 title: JSONP--跨域
 date: 2017/08/23 00:00:01
+cover: https://cn.bing.com/images/search?view=detailV2&ccid=05bPhSGC&id=00FD340347302BAF2834952170881859ACBDC0A9&thid=OIP.05bPhSGCB8Wrb-w9uBHfBwHaDY&mediaurl=http%3a%2f%2fcdn.kieran.top%2fhexo_48.jpeg%3fv%3d1&exph=778&expw=1702&q=jsonp&simid=607989307620788682&selectedIndex=45&ajaxhist=0
 tags: 
 - 前端
 - 跨域

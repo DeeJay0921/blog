@@ -1,6 +1,7 @@
 ---
 title: JS-闭包_定时器_BOM常见问题
 date: 2017/08/20 00:00:01
+cover: https://www.geekstrick.com/wp-content/uploads/2017/12/Understanding-JavaScript-Closure.png
 tags: 
 - 前端
 - JS

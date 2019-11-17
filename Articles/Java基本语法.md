@@ -1,6 +1,7 @@
 ---
 title: Java基本语法
 date: 2018/12/24 00:00:01
+cover: https://revistadigital.inesem.es/informatica-y-tics/files/2015/10/inesem-java-1024x768.jpg
 tags: 
 - Java
 categories: 

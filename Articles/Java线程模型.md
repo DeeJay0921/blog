@@ -1,6 +1,7 @@
 ---
 title: Java线程模型
 date: 2019/03/23 00:00:01
+cover: https://jarroba.com/wp-content/uploads/2015/03/Threads-Icono-www.Jarroba.com_.png
 tags: 
 - Java
 - 线程

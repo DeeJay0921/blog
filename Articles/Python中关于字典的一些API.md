@@ -1,6 +1,7 @@
 ---
 title: Python中关于字典的一些API
 date: 2018/06/10 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png
 tags: 
 - Python
 categories: 

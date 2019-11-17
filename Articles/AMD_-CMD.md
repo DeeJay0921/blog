@@ -1,6 +1,7 @@
 ---
 title: AMD_-CMD
 date: 2017/09/02 00:00:01
+cover: https://puppet.com/sites/default/files/2018-04/D2549-Modules-1200x626%20%281%29.png
 tags: 
 - 前端
 - JS

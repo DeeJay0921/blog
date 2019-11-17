@@ -1,6 +1,7 @@
 ---
 title: _flex布局汇总2
 date: 2017/09/13 00:00:01
+cover: https://blog.paradisetechsoft.com/content/images/size/w2000/2019/08/CSS-FLEX-BLOG-BANNER-IMAGE.png
 tags: 
 - 前端
 - CSS

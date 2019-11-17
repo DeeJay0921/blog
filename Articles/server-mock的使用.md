@@ -1,6 +1,7 @@
 ---
 title: server-mock的使用
 date: 2017/08/20 00:00:01
+cover: https://fakejson.com/static/assets/logo/small/full-blue.png
 tags: 
 - 前端
 categories: 

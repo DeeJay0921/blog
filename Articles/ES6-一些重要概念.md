@@ -1,6 +1,7 @@
 ---
 title: ES6-一些重要概念
 date: 2017/10/22 00:00:01
+cover: https://cdn-images-1.medium.com/max/1600/1*SL4sWHdjGR3vo0x5ta3xfw.jpeg
 tags: 
 - 前端
 - JS

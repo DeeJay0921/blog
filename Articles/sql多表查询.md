@@ -1,6 +1,7 @@
 ---
 title: sql多表查询
 date: 2019/04/19 00:00:01
+cover: https://fossbytes.com/wp-content/uploads/2016/05/sql-logo.jpg
 tags: 
 - mysql
 categories: 

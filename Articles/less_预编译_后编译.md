@@ -1,6 +1,7 @@
 ---
 title: less_预编译_后编译
 date: 2017/09/13 00:00:01
+cover: http://lesscss.org/public/img/less_logo.png
 tags: 
 - 前端
 - CSS

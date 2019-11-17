@@ -1,6 +1,7 @@
 ---
 title: JS对象，原型-相关问题
 date: 2017/09/02 00:00:01
+cover: https://www.scriptonitejs.com/wp-content/uploads/2016/01/proto.jpg
 tags: 
 - 前端
 - JS

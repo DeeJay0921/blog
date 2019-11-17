@@ -1,6 +1,7 @@
 ---
 title: CSS基础
 date: 2017/07/30 11:22:24
+cover: https://content.linkedin.com/content/dam/me/learning/blog/2016/september/CSS.jpg
 tags: 
 - 前端
 - CSS

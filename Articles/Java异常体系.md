@@ -1,6 +1,7 @@
 ---
 title: Java异常体系
 date: 2019/09/04 00:00:01
+cover: https://cdn.javacodeexamples.com/wp-content/uploads/2016/01/Exception.png
 tags: 
 - Web
 - 异常

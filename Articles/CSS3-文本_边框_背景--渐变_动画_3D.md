@@ -1,6 +1,7 @@
 ---
 title: CSS3-文本_边框_背景--渐变_动画_3D
 date: 2017/09/13 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/CSS.3.svg/548px-CSS.3.svg.png
 tags: 
 - 前端
 - CSS

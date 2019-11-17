@@ -1,6 +1,7 @@
 ---
 title: npm
 date: 2017/09/02 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Npm-logo.svg/1200px-Npm-logo.svg.png
 tags: 
 - 前端
 - JS

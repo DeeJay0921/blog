@@ -1,6 +1,7 @@
 ---
 title: JS数据类型，运算符，流程控制语句
 date: 2017/08/11 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png
 tags: 
 - 前端
 - JS

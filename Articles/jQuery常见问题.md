@@ -1,6 +1,7 @@
 ---
 title: jQuery常见问题
 date: 2017/08/26 00:00:01
+cover: https://convertintowordpress.com/wp-content/uploads/2015/12/jquery_paging_table_example_code.png
 tags: 
 - 前端
 - JS

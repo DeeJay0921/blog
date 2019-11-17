@@ -1,6 +1,7 @@
 ---
 title: CSS常见样式
 date: 2017/07/31 21:22:24
+cover: https://content.linkedin.com/content/dam/me/learning/blog/2016/september/CSS.jpg
 tags: 
 - 前端
 - CSS

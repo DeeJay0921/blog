@@ -1,6 +1,7 @@
 ---
 title: 从Python中的self说起（理解this与箭头函数）
 date: 2018/02/13 00:00:01
+cover: http://derickbailey.com/wp-content/uploads/2015/08/arrow-functions.jpg 
 tags: 
 - 前端
 - JS

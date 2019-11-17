@@ -1,6 +1,7 @@
 ---
 title: JDBC的简单了解
 date: 2019/04/22 00:00:01
+cover: https://virtuallyfun.com/wordpress/wp-content/uploads/2017/12/jdbc.png
 tags: 
 - Java
 - JDBC

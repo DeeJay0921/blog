@@ -1,6 +1,7 @@
 ---
 title: Vue中的v-model理解
 date: 2017/10/13 00:00:01
+cover: https://vuejs.org/images/logo.png
 tags: 
 - 前端
 - JS

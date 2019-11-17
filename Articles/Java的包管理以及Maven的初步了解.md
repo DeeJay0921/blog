@@ -1,6 +1,7 @@
 ---
 title: Java的包管理以及Maven的初步了解
 date: 2019/07/18 00:00:01
+cover: https://stackjava.com/wp-content/uploads/2017/11/maven-logo.jpg
 tags: 
 - Java
 - Maven

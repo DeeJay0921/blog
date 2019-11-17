@@ -1,6 +1,7 @@
 ---
 title: JS常见设计模式
 date: 2017/09/11 00:00:01
+cover: https://file.webstacks.cn/2018/05/2018051903520188.png
 tags: 
 - 前端
 - JS

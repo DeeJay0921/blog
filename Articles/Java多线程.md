@@ -1,6 +1,7 @@
 ---
 title: Java多线程
 date: 2019/09/01 00:00:01
+cover: https://revistadigital.inesem.es/informatica-y-tics/files/2015/10/inesem-java-1024x768.jpg
 tags: 
 - Java
 - 线程

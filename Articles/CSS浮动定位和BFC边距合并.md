@@ -1,6 +1,7 @@
 ---
 title: CSS浮动定位和BFC边距合并
 date: 2017/08/01 18:22:24
+cover: https://content.linkedin.com/content/dam/me/learning/blog/2016/september/CSS.jpg
 tags: 
 - 前端
 - CSS

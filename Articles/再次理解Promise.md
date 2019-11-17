@@ -1,6 +1,7 @@
 ---
 title: 再次理解Promise
 date: 2017/12/28 00:00:01
+cover: http://www.webmasters.by/images/articles/javascript/promises/promises-methods.png
 tags: 
 - 前端
 - JS

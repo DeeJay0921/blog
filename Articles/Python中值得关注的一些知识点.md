@@ -1,6 +1,7 @@
 ---
 title: Python中值得关注的一些知识点
 date: 2018/06/12 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png
 tags: 
 - Python
 categories: 

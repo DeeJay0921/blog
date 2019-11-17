@@ -1,6 +1,7 @@
 ---
 title: JS原型链
 date: 2017/09/01 00:00:01
+cover: http://seanamarasinghe.com/wp-content/uploads/2015/08/javascript-prototype-1050x360.jpg
 tags: 
 - 前端
 - JS

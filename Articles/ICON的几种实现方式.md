@@ -1,6 +1,7 @@
 ---
 title: ICON的几种实现方式
 date: 2017/08/01 04:22:24
+cover: https://www.iconsdb.com/icons/download/black/info-512.gif
 tags: 
 - 前端
 - Icon

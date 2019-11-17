@@ -1,6 +1,7 @@
 ---
 title: mysql的简单了解
 date: 2019/04/14 00:00:01
+cover: https://www.raintreeinc.com/wp-content/uploads/mysql.jpg
 tags: 
 - mysql
 categories: 

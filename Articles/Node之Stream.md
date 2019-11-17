@@ -1,6 +1,7 @@
 ---
 title: Node之Stream
 date: 2018/04/23 00:00:01
+cover: https://stackabuse.com/content/images/2019/10/xintroduction-to-nodejs-streams-cover.png.pagespeed.ic.3z_2F_1ytW.png
 tags: 
 - Node
 - Stream

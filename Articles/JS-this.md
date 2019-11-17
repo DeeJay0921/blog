@@ -1,6 +1,7 @@
 ---
 title: JS-this
 date: 2017/09/01 00:00:01
+cover: https://www.kamalkaan.com/wp-content/uploads/2019/05/JavaScript-Pro-Tips-Code-This-NOT-That.jpg
 tags: 
 - 前端
 - JS

@@ -1,6 +1,7 @@
 ---
 title: JS定时器-setTimeout-异步
 date: 2017/08/19 00:00:01
+cover: https://www.yogihosting.com/wp-content/uploads/2017/11/setTimeout-setInterval.jpg
 tags: 
 - 前端
 - JS

@@ -1,6 +1,7 @@
 ---
 title: JS函数与作用域
 date: 2017/08/11 23:00:01
+cover: https://i1.wp.com/technotip.com/wp-content/uploads/html/HTML5/callback-method-anonymous-function-javascript-jquery-nodejs-technotip.png?resize=595%2C329
 tags: 
 - 前端
 - JS

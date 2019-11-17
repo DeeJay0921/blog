@@ -1,6 +1,7 @@
 ---
 title: CSS浮动和负margin的对比，圣杯布局，双飞翼布局
 date: 2017/08/05 00:00:01
+cover: https://content.linkedin.com/content/dam/me/learning/blog/2016/september/CSS.jpg
 tags: 
 - 前端
 - CSS

@@ -1,6 +1,7 @@
 ---
 title: JS面向对象应用，常见组件的封装(轮播，tab，曝光加载)
 date: 2017/09/02 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png
 tags: 
 - 前端
 - JS

@@ -1,6 +1,7 @@
 ---
 title: Java中的面向对象的简单介绍（二）static以及代码块
 date: 2018/07/18 00:00:01
+cover: https://revistadigital.inesem.es/informatica-y-tics/files/2015/10/inesem-java-1024x768.jpg
 tags: 
 - Java
 - 面向对象

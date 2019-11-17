@@ -1,6 +1,7 @@
 ---
 title: webpack介绍
 date: 2017/09/10 00:00:01
+cover: https://cms-assets.tutsplus.com/uploads/users/831/posts/25791/preview_image/webpack-tuts.jpg
 tags: 
 - 前端
 - webpack

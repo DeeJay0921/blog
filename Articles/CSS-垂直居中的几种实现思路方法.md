@@ -1,6 +1,7 @@
 ---
 title: CSS-垂直居中的几种实现思路方法
 date: 2017/08/06 23:00:01
+cover: https://content.linkedin.com/content/dam/me/learning/blog/2016/september/CSS.jpg
 tags: 
 - 前端
 - CSS

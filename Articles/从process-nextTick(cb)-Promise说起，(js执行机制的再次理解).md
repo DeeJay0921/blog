@@ -1,6 +1,7 @@
 ---
 title: 从process-nextTick(cb)-Promise说起，(js执行机制的再次理解)
 date: 2017/12/29 00:00:01
+cover: https://cdn.filestackcontent.com/Tmzc6mJ9Q4iUgBkI2EB7
 tags: 
 - 前端
 - JS

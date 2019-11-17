@@ -1,6 +1,7 @@
 ---
 title: Http的一些知识点复习
 date: 2017/07/29 19:22:24
+cover: https://sdtimes.com/wp-content/uploads/2015/02/0218.sdt-http2.jpg
 tags: 
 - Http
 categories: 

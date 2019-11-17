@@ -1,6 +1,7 @@
 ---
 title: Java面向对象编程（上）封装和继承
 date: 2019/02/08 00:00:01
+cover: https://revistadigital.inesem.es/informatica-y-tics/files/2015/10/inesem-java-1024x768.jpg
 tags: 
 - Java
 - 面向对象

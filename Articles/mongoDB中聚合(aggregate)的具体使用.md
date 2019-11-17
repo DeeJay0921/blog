@@ -1,6 +1,7 @@
 ---
 title: mongoDB中聚合(aggregate)的具体使用
 date: 2018/05/30 00:00:01
+cover: https://cdn.tutsplus.com/net/uploads/2014/02/mongodb-retina-preview.png
 tags: 
 - mongoDB
 categories: 

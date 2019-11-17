@@ -1,6 +1,7 @@
 ---
 title: gulp介绍
 date: 2017/09/09 00:00:01
+cover: https://codehangar.io/content/images/2015/10/gulp-logo.jpg
 tags: 
 - 前端
 - gulp

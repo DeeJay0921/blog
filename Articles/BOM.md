@@ -1,6 +1,7 @@
 ---
 title: BOM
 date: 2017/08/20 00:00:01
+cover: https://image.slidesharecdn.com/dombomajaxevent-110401021116-phpapp01/95/browser-object-model-27-728.jpg?cb=1301623910
 tags: 
 - 前端
 - BOM

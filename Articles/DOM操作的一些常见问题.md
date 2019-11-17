@@ -1,6 +1,7 @@
 ---
 title: DOM操作的一些常见问题
 date: 2017/08/17 00:00:01
+cover: http://brainoteka.com/Content/uploads/users/4/20151120193818_js-0-DOM.jpg
 tags: 
 - 前端
 - DOM

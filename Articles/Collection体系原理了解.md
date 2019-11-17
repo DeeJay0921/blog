@@ -1,6 +1,7 @@
 ---
 title: Collection体系原理了解
 date: 2019/07/22 00:00:01
+cover: https://marcus-biel.com/wp-content/uploads/2015/08/class-and-interface-hierarchy.png
 tags: 
 - Java
 - 集合

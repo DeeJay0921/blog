@@ -1,6 +1,7 @@
 ---
 title: JS-Math,Array,Date的使用举例
 date: 2017/10/13 00:00:01
+cover: https://tekraze.com/wp-content/uploads/2018/05/javascript.jpg
 tags: 
 - 前端
 - JS

@@ -1,6 +1,7 @@
 ---
 title: Python中的可变类型，不可变类型，以及变量引用
 date: 2018/06/09 00:00:01
+cover: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png
 tags: 
 - Python
 categories: 
