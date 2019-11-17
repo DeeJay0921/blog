@@ -1,10 +1,11 @@
 ---
 title: TypeScript中的声明文件
 date: 2019/11/07 15:44:01
-tags: 
+cover: https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2018/08/typescriptfeature.png
+tags:
 - 前端
 - TS
-categories: 
+categories:
 - 前端
 ---
 介绍如何书写规范的声明文件

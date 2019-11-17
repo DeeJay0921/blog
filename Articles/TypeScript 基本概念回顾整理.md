@@ -1,11 +1,11 @@
 ---
 title: TypeScript 回顾整理
 date: 2019/10/08 15:04:01
-cover: https://www.tslang.cn/assets/images/logo_nocircle.svg
-tags: 
+cover: https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2018/08/typescriptfeature.png
+tags:
 - 前端
 - TS
-categories: 
+categories:
 - 前端
 ---
 
@@ -1273,7 +1273,7 @@ var Colors ;
     Colors [Colors ["green"] = 2] = "green";
 })(Colors || (Colors = {}));
 ```
-实际最后的Colors为: 
+实际最后的Colors为:
 ```
 {
     1: "blue",
@@ -1957,7 +1957,7 @@ namespace Album {
 合并结果是**一个类并带有一个内部类**。
 除了内部类的模式，你在JavaScript里，创建一个函数稍后扩展它增加一些属性也是很常见的。 TypeScript使用声明合并来达到这个目的并保证类型安全。
 
- 
+
 
 ```typescript
 

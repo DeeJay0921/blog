@@ -1,11 +1,11 @@
 ---
 title: TypeScript 中的命名空间（namespace）
 date: 2019/11/06 09:34:01
-cover: https://github.com/DeeJay0921/blog/blob/master/Covers/typescript.jpg
-tags: 
+cover: https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2018/08/typescriptfeature.png
+tags:
 - 前端
 - TS
-categories: 
+categories:
 - 前端
 ---
 

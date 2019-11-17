@@ -1,11 +1,11 @@
 ---
 title: TypeScript中的映射类型及常见工具映射类型
 date: 2019/10/30 11:05:01
-cover: https://github.com/DeeJay0921/blog/blob/master/Covers/typescript.jpg
-tags: 
+cover: https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2018/08/typescriptfeature.png
+tags:
 - 前端
 - TS
-categories: 
+categories:
 - 前端
 ---
 TypeScript中的映射类型允许我们基于旧类型创建一个新类型，从而有一些很有用的使用方法
@@ -337,7 +337,7 @@ let p: Readonly<Person> = {
 
    name: "Y", age: 20
 
-}; 
+};
 
 
 

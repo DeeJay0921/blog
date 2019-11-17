@@ -1,11 +1,11 @@
 ---
 title: Vue2.x+TypeScript开发指南
 date: 2019/11/15 11:02:01
-cover: https://github.com/DeeJay0921/blog/blob/master/Covers/vue%2Bts.jpg
-tags: 
+cover: https://ordina-jworks.github.io/img/vue-with-typescript/vue-plus-typescript.png
+tags:
 - 前端
 - Vue
-categories: 
+categories:
 - 前端
 ---
 
@@ -267,7 +267,7 @@ declare module "*.vue" {
 
 > 而在代码中导入`*.vue`文件的时候，需要写上`.vue` 后缀。因为Typescript只识别ts文件
 
- 
+
 
 > 当想在项目中使用`window`等变量时，也需要额外书写声明文件，如`declare let window: any`
 
@@ -410,7 +410,7 @@ declare module "*.vue" {
 
     export default class App extends Vue {
 
-        
+
 
     }
 
@@ -451,7 +451,7 @@ export default class Home extends Vue{
 
     }
 
-    
+
 
     bar() {
 
