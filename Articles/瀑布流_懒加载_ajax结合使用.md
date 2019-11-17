@@ -1,6 +1,7 @@
 ---
 title: 瀑布流_懒加载_ajax结合使用
 date: 2017/08/29 00:00:01
+cover: http://raphamorim.io/waterfall.js/images/waterfall.png
 tags: 
 - 前端
 - JS

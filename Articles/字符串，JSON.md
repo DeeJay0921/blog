@@ -1,6 +1,7 @@
 ---
 title: 字符串，JSON
 date: 2017/08/14 00:00:01
+cover: https://www.laraphp.com/wp-content/uploads/2019/01/convert-json-string.png
 tags: 
 - 前端
 - JSON

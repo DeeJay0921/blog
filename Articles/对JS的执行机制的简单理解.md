@@ -1,6 +1,7 @@
 ---
 title: 对JS的执行机制的简单理解
 date: 2017/12/27 00:00:01
+cover: https://john-dugan.com/wp-content/uploads/2018/05/event-loop.png
 tags: 
 - 前端
 - JS

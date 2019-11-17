@@ -1,6 +1,7 @@
 ---
 title: 经典的jQuery实现图片懒加载的一种方法
 date: 2017/08/26 00:00:01
+cover: https://alligator.io/images/js/lazy-loading.png
 tags: 
 - 前端
 - JS

@@ -2,131 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d13b407-0e0d-481f-8088-9706dc45fa1f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AMD_-CMD.md" beforeDir="false" afterPath="$PROJECT_DIR$/AMD_-CMD.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BOM.md" beforeDir="false" afterPath="$PROJECT_DIR$/BOM.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS-3-Flex布局.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS-3-Flex布局.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS-垂直居中的几种实现思路方法.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS-垂直居中的几种实现思路方法.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS3-文本_边框_背景--渐变_动画_3D.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS3-文本_边框_背景--渐变_动画_3D.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS基础.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS居中.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS居中.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS布局.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS布局.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS常见样式.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS常见样式.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS常见样式2.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS常见样式2.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS浮动和负margin的对比，圣杯布局，双飞翼布局.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS浮动和负margin的对比，圣杯布局，双飞翼布局.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS浮动定位和BFC边距合并.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS浮动定位和BFC边距合并.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS选择器.md" beforeDir="false" afterPath="$PROJECT_DIR$/CSS选择器.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Collection体系原理了解.md" beforeDir="false" afterPath="$PROJECT_DIR$/Collection体系原理了解.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DOM操作.md" beforeDir="false" afterPath="$PROJECT_DIR$/DOM操作.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DOM操作的一些常见问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/DOM操作的一些常见问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ES6-一些重要概念.md" beforeDir="false" afterPath="$PROJECT_DIR$/ES6-一些重要概念.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Form表单.md" beforeDir="false" afterPath="$PROJECT_DIR$/Form表单.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML-知识点.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML-知识点.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML5-.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML5-.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML5-CSS3相关问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/HTML5-CSS3相关问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Http.md" beforeDir="false" afterPath="$PROJECT_DIR$/Http.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Http的一些知识点复习.md" beforeDir="false" afterPath="$PROJECT_DIR$/Http的一些知识点复习.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ICON的几种实现方式.md" beforeDir="false" afterPath="$PROJECT_DIR$/ICON的几种实现方式.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JDBC的简单了解.md" beforeDir="false" afterPath="$PROJECT_DIR$/JDBC的简单了解.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS-Math,Array,Date的使用举例.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS-Math,Array,Date的使用举例.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS-this.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS-this.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS-this_原型链_继承-相关问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS-this_原型链_继承-相关问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS-闭包_定时器_BOM常见问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS-闭包_定时器_BOM常见问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JSONP--跨域.md" beforeDir="false" afterPath="$PROJECT_DIR$/JSONP--跨域.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS中的Math对象,数组，和Date对象.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS中的Math对象,数组，和Date对象.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS作用域链.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS作用域链.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS函数与作用域.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS函数与作用域.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS原型链.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS原型链.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS变量提升，浏览器渲染原理.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS变量提升，浏览器渲染原理.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS定时器-setTimeout-异步.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS定时器-setTimeout-异步.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS对象，原型-相关问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS对象，原型-相关问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS对象，原型.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS对象，原型.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS常见设计模式.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS常见设计模式.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS引用类型，对象拷贝.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS引用类型，对象拷贝.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS数据类型，运算符，流程控制语句.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS数据类型，运算符，流程控制语句.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS继承.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS继承.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS闭包.md" beforeDir="false" afterPath="$PROJECT_DIR$/JS闭包.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JS面向对象应用，常见组件的封装(轮播，tab，曝光加载).md" beforeDir="false" afterPath="$PROJECT_DIR$/JS面向对象应用，常见组件的封装(轮播，tab，曝光加载).md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java-File类详解及IO介绍及使用.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java-File类详解及IO介绍及使用.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java-集合与泛型.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java-集合与泛型.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的Collections工具类及Comparator和Comparable的区别.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的Collections工具类及Comparator和Comparable的区别.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的IO和流.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的IO和流.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的IO流的简单介绍.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的IO流的简单介绍.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的Set和Map集合.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的Set和Map集合.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的String类的简单介绍.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的String类的简单介绍.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的一些基础知识点整理.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的一些基础知识点整理.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的函数(方法)的简单介绍.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的函数(方法)的简单介绍.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的包装类,以及自动装箱和拆箱.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的包装类,以及自动装箱和拆箱.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的数组以及java-util-Random的简单介绍.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的数组以及java-util-Random的简单介绍.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的泛型以及常见数据结构.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的泛型以及常见数据结构.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的运算系统中需要注意的地方.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的运算系统中需要注意的地方.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的集合类的简单介绍.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的集合类的简单介绍.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的面向对象.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的面向对象.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的面向对象的简单介绍（一）.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的面向对象的简单介绍（一）.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的面向对象的简单介绍（三）继承及abstract抽象类.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的面向对象的简单介绍（三）继承及abstract抽象类.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的面向对象的简单介绍（二）static以及代码块.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的面向对象的简单介绍（二）static以及代码块.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的面向对象的简单介绍（五）包和修饰符以及内部类.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的面向对象的简单介绍（五）包和修饰符以及内部类.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java中的面向对象的简单介绍（四）接口和多态.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java中的面向对象的简单介绍（四）接口和多态.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java基本语法.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java基本语法.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java多线程.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java多线程.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java异常体系.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java异常体系.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java的包管理以及Maven的初步了解.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java的包管理以及Maven的初步了解.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java线程.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java线程.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java线程模型.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java线程模型.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java运算符中的一些注意点，以及Scanner的介绍.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java运算符中的一些注意点，以及Scanner的介绍.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java面向对象编程(下)抽象类，接口以及多态.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java面向对象编程(下)抽象类，接口以及多态.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java面向对象编程（上）封装和继承.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java面向对象编程（上）封装和继承.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MVC-MVVM.md" beforeDir="false" afterPath="$PROJECT_DIR$/MVC-MVVM.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Maven的简单使用.md" beforeDir="false" afterPath="$PROJECT_DIR$/Maven的简单使用.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Node之Stream.md" beforeDir="false" afterPath="$PROJECT_DIR$/Node之Stream.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中值得关注的一些知识点.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中值得关注的一些知识点.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中关于字典的一些API.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中关于字典的一些API.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中列表(dict)和元祖(tuple)的相关操作.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中列表(dict)和元祖(tuple)的相关操作.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中字符串的常见操作.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中字符串的常见操作.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的__new__(cls)-以及-单例模式.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的__new__(cls)-以及-单例模式.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的set类型-以及-数组去重问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的set类型-以及-数组去重问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的函数.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的函数.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的列表生成式.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的列表生成式.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的可变类型，不可变类型，以及变量引用.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的可变类型，不可变类型，以及变量引用.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的异常处理.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的异常处理.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的文件操作.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的文件操作.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的模块.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的模块.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的浅拷贝和深拷贝.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的浅拷贝和深拷贝.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的真假值.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的真假值.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python中的面向对象.md" beforeDir="false" afterPath="$PROJECT_DIR$/Python中的面向对象.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RequireJS__r-js.md" beforeDir="false" afterPath="$PROJECT_DIR$/RequireJS__r-js.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Spring-boot简单了解.md" beforeDir="false" afterPath="$PROJECT_DIR$/Spring-boot简单了解.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VueCli3.0简介.md" beforeDir="false" afterPath="$PROJECT_DIR$/VueCli3.0简介.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vue中的v-model理解.md" beforeDir="false" afterPath="$PROJECT_DIR$/Vue中的v-model理解.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web前后端基础架构原理.md" beforeDir="false" afterPath="$PROJECT_DIR$/Web前后端基础架构原理.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_flex布局汇总2.md" beforeDir="false" afterPath="$PROJECT_DIR$/_flex布局汇总2.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ajax--.md" beforeDir="false" afterPath="$PROJECT_DIR$/ajax--.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ajax实践.md" beforeDir="false" afterPath="$PROJECT_DIR$/ajax实践.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gulp.md" beforeDir="false" afterPath="$PROJECT_DIR$/gulp.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jQuery-ajax常见问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/jQuery-ajax常见问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jQuery常用方法以及ajax.md" beforeDir="false" afterPath="$PROJECT_DIR$/jQuery常用方法以及ajax.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jQuery常见问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/jQuery常见问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jQuery选择器_Dom操作_样式_事件处理_动画.md" beforeDir="false" afterPath="$PROJECT_DIR$/jQuery选择器_Dom操作_样式_事件处理_动画.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/less_预编译_后编译.md" beforeDir="false" afterPath="$PROJECT_DIR$/less_预编译_后编译.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mongoDB中聚合(aggregate)的具体使用.md" beforeDir="false" afterPath="$PROJECT_DIR$/mongoDB中聚合(aggregate)的具体使用.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql的简单了解.md" beforeDir="false" afterPath="$PROJECT_DIR$/mysql的简单了解.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm-npmscript-gulp-webpack--相关问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/npm-npmscript-gulp-webpack--相关问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npm.md" beforeDir="false" afterPath="$PROJECT_DIR$/npm.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react.md" beforeDir="false" afterPath="$PROJECT_DIR$/react.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server-mock的使用.md" beforeDir="false" afterPath="$PROJECT_DIR$/server-mock的使用.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql多表查询.md" beforeDir="false" afterPath="$PROJECT_DIR$/sql多表查询.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.md" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web安全，关于XSS-和-CSRF.md" beforeDir="false" afterPath="$PROJECT_DIR$/web安全，关于XSS-和-CSRF.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/一些知识点的总结.md" beforeDir="false" afterPath="$PROJECT_DIR$/一些知识点的总结.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/事件.md" beforeDir="false" afterPath="$PROJECT_DIR$/事件.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/事件常见问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/事件常见问题.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/事件的应用，tab效果和模态框.md" beforeDir="false" afterPath="$PROJECT_DIR$/事件的应用，tab效果和模态框.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/从Python中的self说起（理解this与箭头函数）.md" beforeDir="false" afterPath="$PROJECT_DIR$/从Python中的self说起（理解this与箭头函数）.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/从process-nextTick(cb)-Promise说起，(js执行机制的再次理解).md" beforeDir="false" afterPath="$PROJECT_DIR$/从process-nextTick(cb)-Promise说起，(js执行机制的再次理解).md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/伪类及伪元素.md" beforeDir="false" afterPath="$PROJECT_DIR$/伪类及伪元素.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/再次理解Promise.md" beforeDir="false" afterPath="$PROJECT_DIR$/再次理解Promise.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/几类常见的数据结构(哈希表，栈，队列)的简单了解.md" beforeDir="false" afterPath="$PROJECT_DIR$/几类常见的数据结构(哈希表，栈，队列)的简单了解.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/命令行详解.md" beforeDir="false" afterPath="$PROJECT_DIR$/命令行详解.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/字符串，JSON.md" beforeDir="false" afterPath="$PROJECT_DIR$/字符串，JSON.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/对ES6的再次补充理解.md" beforeDir="false" afterPath="$PROJECT_DIR$/对ES6的再次补充理解.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/对JS的执行机制的简单理解.md" beforeDir="false" afterPath="$PROJECT_DIR$/对JS的执行机制的简单理解.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/对XML以及Tomcat的简单了解.md" beforeDir="false" afterPath="$PROJECT_DIR$/对XML以及Tomcat的简单了解.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/对于遍历对象的几种方法的总结.md" beforeDir="false" afterPath="$PROJECT_DIR$/对于遍历对象的几种方法的总结.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/左右水平轮播，渐变轮播.md" beforeDir="false" afterPath="$PROJECT_DIR$/左右水平轮播，渐变轮播.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/异步_-promise.md" beforeDir="false" afterPath="$PROJECT_DIR$/异步_-promise.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/性能优化相关.md" beforeDir="false" afterPath="$PROJECT_DIR$/性能优化相关.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/懒加载相关问题.md" beforeDir="false" afterPath="$PROJECT_DIR$/懒加载相关问题.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/数据库基本概念.md" beforeDir="false" afterPath="$PROJECT_DIR$/数据库基本概念.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/正则表达式.md" beforeDir="false" afterPath="$PROJECT_DIR$/正则表达式.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/正则表达式的用法举例.md" beforeDir="false" afterPath="$PROJECT_DIR$/正则表达式的用法举例.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/浏览器兼容.md" beforeDir="false" afterPath="$PROJECT_DIR$/浏览器兼容.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/瀑布流_懒加载_ajax结合使用.md" beforeDir="false" afterPath="$PROJECT_DIR$/瀑布流_懒加载_ajax结合使用.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/瀑布流布局.md" beforeDir="false" afterPath="$PROJECT_DIR$/瀑布流布局.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/由Vue+Typescirpt引出的一些学习记录(decorator).md" beforeDir="false" afterPath="$PROJECT_DIR$/由Vue+Typescirpt引出的一些学习记录(decorator).md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -138,7 +29,30 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/媒体查询_栅格系统.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="60">
+                <caret line="3" column="102" selection-start-line="3" selection-start-column="102" selection-end-line="3" selection-end-column="102" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/移动端开发相关.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor />
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -146,23 +60,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/JS定时器-setTimeout-异步.md" />
-        <option value="$PROJECT_DIR$/JS对象，原型.md" />
-        <option value="$PROJECT_DIR$/JS对象，原型-相关问题.md" />
-        <option value="$PROJECT_DIR$/JS常见设计模式.md" />
-        <option value="$PROJECT_DIR$/JS引用类型，对象拷贝.md" />
-        <option value="$PROJECT_DIR$/JS数据类型，运算符，流程控制语句.md" />
-        <option value="$PROJECT_DIR$/JS继承.md" />
-        <option value="$PROJECT_DIR$/JS闭包.md" />
-        <option value="$PROJECT_DIR$/JS面向对象应用，常见组件的封装(轮播，tab，曝光加载).md" />
-        <option value="$PROJECT_DIR$/less_预编译_后编译.md" />
-        <option value="$PROJECT_DIR$/Maven的简单使用.md" />
-        <option value="$PROJECT_DIR$/mongoDB中聚合(aggregate)的具体使用.md" />
-        <option value="$PROJECT_DIR$/MVC-MVVM.md" />
-        <option value="$PROJECT_DIR$/mysql的简单了解.md" />
-        <option value="$PROJECT_DIR$/Node之Stream.md" />
-        <option value="$PROJECT_DIR$/npm.md" />
-        <option value="$PROJECT_DIR$/npm-npmscript-gulp-webpack--相关问题.md" />
         <option value="$PROJECT_DIR$/Python中值得关注的一些知识点.md" />
         <option value="$PROJECT_DIR$/Python中关于字典的一些API.md" />
         <option value="$PROJECT_DIR$/Python中列表(dict)和元祖(tuple)的相关操作.md" />
@@ -197,6 +94,23 @@
         <option value="$PROJECT_DIR$/再次理解Promise.md" />
         <option value="$PROJECT_DIR$/几类常见的数据结构(哈希表，栈，队列)的简单了解.md" />
         <option value="$PROJECT_DIR$/命令行详解.md" />
+        <option value="$PROJECT_DIR$/媒体查询_栅格系统.md" />
+        <option value="$PROJECT_DIR$/字符串，JSON.md" />
+        <option value="$PROJECT_DIR$/对ES6的再次补充理解.md" />
+        <option value="$PROJECT_DIR$/对JS的执行机制的简单理解.md" />
+        <option value="$PROJECT_DIR$/对XML以及Tomcat的简单了解.md" />
+        <option value="$PROJECT_DIR$/对于遍历对象的几种方法的总结.md" />
+        <option value="$PROJECT_DIR$/左右水平轮播，渐变轮播.md" />
+        <option value="$PROJECT_DIR$/异步_-promise.md" />
+        <option value="$PROJECT_DIR$/性能优化相关.md" />
+        <option value="$PROJECT_DIR$/懒加载相关问题.md" />
+        <option value="$PROJECT_DIR$/数据库基本概念.md" />
+        <option value="$PROJECT_DIR$/正则表达式.md" />
+        <option value="$PROJECT_DIR$/正则表达式的用法举例.md" />
+        <option value="$PROJECT_DIR$/浏览器兼容.md" />
+        <option value="$PROJECT_DIR$/瀑布流_懒加载_ajax结合使用.md" />
+        <option value="$PROJECT_DIR$/瀑布流布局.md" />
+        <option value="$PROJECT_DIR$/由Vue+Typescirpt引出的一些学习记录(decorator).md" />
       </list>
     </option>
   </component>
@@ -252,15 +166,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574002050630</updated>
-      <workItem from="1574002055576" duration="3528000" />
+      <workItem from="1574002055576" duration="4022000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3528000" />
+    <option name="totallyTimeSpent" value="4022000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973601" />
@@ -285,196 +200,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/JS对象，原型.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="73" selection-start-line="3" selection-start-column="73" selection-end-line="3" selection-end-column="73" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JS对象，原型-相关问题.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="73" selection-start-line="3" selection-start-column="73" selection-end-line="3" selection-end-column="73" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JS常见设计模式.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="61" selection-start-line="3" selection-start-column="61" selection-end-line="3" selection-end-column="61" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JS引用类型，对象拷贝.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="99" selection-start-line="3" selection-start-column="99" selection-end-line="3" selection-end-column="99" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JS数据类型，运算符，流程控制语句.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="141" selection-start-line="3" selection-start-column="141" selection-end-line="3" selection-end-column="141" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JS继承.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="96" selection-start-line="3" selection-start-column="96" selection-end-line="3" selection-end-column="96" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JS闭包.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="104" selection-start-line="3" selection-start-column="104" selection-end-line="3" selection-end-column="104" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JS面向对象应用，常见组件的封装(轮播，tab，曝光加载).md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="141" selection-start-line="3" selection-start-column="141" selection-end-line="3" selection-end-column="141" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/less_预编译_后编译.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="50" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Maven的简单使用.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="69" selection-start-line="3" selection-start-column="69" selection-end-line="3" selection-end-column="69" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mongoDB中聚合(aggregate)的具体使用.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="78" selection-start-line="3" selection-start-column="78" selection-end-line="3" selection-end-column="78" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MVC-MVVM.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="105" selection-start-line="3" selection-start-column="105" selection-end-line="3" selection-end-column="105" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysql的简单了解.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="63" selection-start-line="3" selection-start-column="63" selection-end-line="3" selection-end-column="63" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Node之Stream.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="122" selection-start-line="3" selection-start-column="122" selection-end-line="3" selection-end-column="122" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/npm.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="101" selection-start-line="3" selection-start-column="101" selection-end-line="3" selection-end-column="101" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/npm-npmscript-gulp-webpack--相关问题.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="101" selection-start-line="3" selection-start-column="101" selection-end-line="3" selection-end-column="101" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Python中值得关注的一些知识点.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="60">
-            <caret line="3" column="96" selection-start-line="3" selection-end-line="4" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Python中关于字典的一些API.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="80">
-            <caret line="4" selection-start-line="4" selection-end-line="4" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Python中列表(dict)和元祖(tuple)的相关操作.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="80">
-            <caret line="4" selection-start-line="4" selection-end-line="4" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Python中字符串的常见操作.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -791,6 +516,194 @@
           <first_editor relative-caret-position="60">
             <caret line="3" column="74" selection-start-line="3" selection-start-column="74" selection-end-line="3" selection-end-column="74" />
           </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/字符串，JSON.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="81" selection-start-line="3" selection-start-column="81" selection-end-line="3" selection-end-column="81" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/对ES6的再次补充理解.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="77" selection-start-line="3" selection-start-column="77" selection-end-line="3" selection-end-column="77" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/对JS的执行机制的简单理解.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="71" selection-start-line="3" selection-start-column="71" selection-end-line="3" selection-end-column="71" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/对XML以及Tomcat的简单了解.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="73" selection-start-line="3" selection-start-column="73" selection-end-line="3" selection-end-column="73" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/对于遍历对象的几种方法的总结.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="62" selection-start-line="3" selection-start-column="62" selection-end-line="3" selection-end-column="62" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/左右水平轮播，渐变轮播.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="93" selection-start-line="3" selection-start-column="93" selection-end-line="3" selection-end-column="93" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/异步_-promise.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="76" selection-start-line="3" selection-start-column="76" selection-end-line="3" selection-end-column="76" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/性能优化相关.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="85" selection-start-line="3" selection-start-column="85" selection-end-line="3" selection-end-column="85" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/懒加载相关问题.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="240">
+            <caret line="12" column="11" lean-forward="true" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/排序算法和搜索算法的简单了解.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="460">
+            <caret line="23" column="13" lean-forward="true" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/数据库基本概念.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="95" selection-start-line="3" selection-start-column="95" selection-end-line="3" selection-end-column="95" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/正则表达式.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="103" selection-start-line="3" selection-start-column="103" selection-end-line="3" selection-end-column="103" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/正则表达式的用法举例.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="103" selection-start-line="3" selection-start-column="103" selection-end-line="3" selection-end-column="103" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/浏览器兼容.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="72" selection-start-line="3" selection-start-column="72" selection-end-line="3" selection-end-column="72" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/瀑布流_懒加载_ajax结合使用.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="61" selection-start-line="3" selection-start-column="61" selection-end-line="3" selection-end-column="61" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/瀑布流布局.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="61" selection-start-line="3" selection-start-column="61" selection-end-line="3" selection-end-column="61" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/由Vue+Typescirpt引出的一些学习记录(decorator).md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="75" selection-start-line="3" selection-start-column="72" selection-end-line="3" selection-end-column="75" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/媒体查询_栅格系统.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="60">
+            <caret line="3" column="102" selection-start-line="3" selection-start-column="102" selection-end-line="3" selection-end-column="102" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/移动端开发相关.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
           <second_editor />
         </state>
       </provider>

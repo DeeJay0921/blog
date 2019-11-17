@@ -1,6 +1,7 @@
 ---
 title: 异步_-promise
 date: 2017/10/13 00:00:01
+cover: https://blog.michelletorres.mx/wp-content/uploads/2017/10/promise.png
 tags: 
 - 前端
 - JS

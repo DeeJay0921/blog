@@ -1,6 +1,7 @@
 ---
 title: 由Vue+Typescirpt引出的一些学习记录(decorator)
 date: 2019/07/04 00:00:01
+cover: https://css-tricks.com/wp-content/uploads/2018/06/vue-typescript.jpg
 tags: 
 - Vue
 - Typescirpt

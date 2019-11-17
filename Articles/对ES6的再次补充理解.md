@@ -1,6 +1,7 @@
 ---
 title: 对ES6的再次补充理解
 date: 2019/07/04 00:00:01
+cover: https://cdn-images-1.medium.com/max/1600/1*SL4sWHdjGR3vo0x5ta3xfw.jpeg
 tags: 
 - Vue
 - ES6

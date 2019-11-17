@@ -1,6 +1,7 @@
 ---
 title: 对XML以及Tomcat的简单了解
 date: 2019/04/22 00:00:01
+cover: https://www.itzgeek.com/wp-content/uploads/2014/03/Tomcat-Logo.jpg
 tags: 
 - Tomcat
 - XML
