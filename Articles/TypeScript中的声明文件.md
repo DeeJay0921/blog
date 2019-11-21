@@ -14,7 +14,7 @@ categories:
 
 [官方模板](https://www.tslang.cn/docs/handbook/declaration-files/templates.html)
 
-对于第三方库的声明文件，可以直接进行[TypeSeach搜索](https://microsoft.github.io/TypeSearch/)对应的@types包,如需引入es6的新方法，即可搜索`es6-shim`,安装`/@types/es6-shim`包即可
+对于第三方库的声明文件，可以直接进行[TypeSeach搜索](https://microsoft.github.io/TypeSearch/)对应的`@types`包,例如如需引入es6的新方法，即可搜索`es6-shim`,安装`/@types/es6-shim`包即可
 
 # 识别库的类型
 
