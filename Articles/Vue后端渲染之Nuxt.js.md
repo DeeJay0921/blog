@@ -959,17 +959,92 @@ new Vuex.Store({
 
 
 
-# Nuxt支持Typescript
+# Nuxt支持TypeScript
+
+> 笔者在这里踩过坑，所以注明以下配置都是针对` Nuxt 2.10`及以上的版本进行切换到TS，对于低版本的，安装`@nuxt/typescript`和`ts-node`即可
+
+对于`Nuxt 2.10`及以上的版本来说，想要支持`TypeScript` 需要安装`@nuxt/types` `@nuxt/typescript-build`以及`@nuxt/typescript-runtime`
+
+其中`@nuxt/typescript-build`和`@nuxt/typescript-runtime`都已经集成了`@nuxt/types`,没必要进行单独安装，另外`@nuxt/typescript-runtime`是可选安装的。
 
 
+## @nuxt/typescript-build
 
-为了能够在项目中使用`TypeScript`，需要安装`@nuxt/typescript`和`ts-node`作为开发依赖,同时在根目录下创建`tsconfig.json`
+如果只想对于`layouts`,` components`,` plugins`以及` middlewares`这几个文件夹下的做ts支持的话，我们只需要安装`@nuxt/typescript-build`即可
 
+```
+npm install --save-dev @nuxt/typescript-build
+```
 
+然后修改`nuxt.config.js`:
+```
+// nuxt.config.js
+export default {
+  buildModules: ['@nuxt/typescript-build']
+}
+```
 
-然后将`nuxt.config.js`直接rename为`nuxt.config.ts`即可切换到`ts`模式
+最后创建一个`tsconfig.json`:
+```
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": [
+      "esnext",
+      "esnext.asynciterable",
+      "dom"
+    ],
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./*"
+      ],
+      "@/*": [
+        "./*"
+      ]
+    },
+    "types": [
+      "@types/node",
+      "@nuxt/types"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
 
+> 这边要注明一点，如果最后是想要通过`class API`的风格进行编写组件的话，需要引入`vue-property-decorator`，所以在`tsconfig.json`中需要加上`"experimentalDecorators": true,`这个选项，否则会有报错提示。
 
+## @nuxt/typescript-runtime
+
+`@nuxt/typescript-runtime`针对的是那些不会被`webpack`编译的文件，比如说`nuxt.config`,还有本地的模块以及`serverMiddlewares`等。
+
+其内部使用了`ts-node`进行编译这些文件。
+
+```
+npm install @nuxt/typescript-runtime
+```
+
+安装完成后需要修改`npm scripts`:
+
+```
+"scripts": {
+  "dev": "nuxt-ts",
+  "build": "nuxt-ts build",
+  "generate": "nuxt-ts generate",
+  "start": "nuxt-ts start"
+},
+```
 # 其余SSR替代方案
 
 由于已有`Vue`项目迁移到`NuxtJS`项目需要较大工作量的重构（二者的规则约定差别较大）
