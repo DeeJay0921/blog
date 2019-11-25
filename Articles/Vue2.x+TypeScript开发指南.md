@@ -50,7 +50,6 @@ categories:
 - tslint-config-standard：tslint 配置 standard风格的约束
 
 
-
 ### 更改webpack配置
 
 
@@ -274,6 +273,20 @@ declare module "*.vue" {
 
 
 经过上面几步相应配置就可以支持ts了，值得一提的是`typescript`版本可能会和`webpack`版本不兼容，所以升级的时候需要开发自己去注意一下版本适配的问题
+
+### 补充说明
+
+比较新的`ts-loader`会强制要求`webpack`版本到`4.0`以上，所以如果涉及到了`webpack`的升级的话，需要注意一下:
+- `html-webpack-plugin`，`uglifyjs-webpack-plugin`的更新以及配置文件写法改动
+- `eslint` `eslint-loader` `url-loader` `file-loader`的更新
+- `webpack.optimize.CommonsChunkPlugin`和`webpack.optimize.UglifyJsPlugin`插件废弃，转为在配置中新增`optimization`选项
+- `extract-text-webpack-plugin`loader改为使用`mini-css-extract-plugin`
+- 同时也要注意`vue-loader`的更新，`vue-loader`到15之后需要注册一个插件（这个应该都知道）
+
+
+> 另外如果启动项目时出现类型检测错误时，可能是`Vue`不同版本的声明文件不配套导致的，比如简单的`import { Vue, Component } from 'vue-property-decorator'; class App extends Vue{}`就报错了，那么需要更新`Vue`版本，而无需改`tsconfig.json`的`strictFunctionTypes`选项。
+
+
 ### 重写`.vue`文件
 
 
