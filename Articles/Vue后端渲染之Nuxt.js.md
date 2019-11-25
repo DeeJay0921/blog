@@ -1045,6 +1045,44 @@ npm install @nuxt/typescript-runtime
   "start": "nuxt-ts start"
 },
 ```
+
+然后就可以进行开发了，对于组件内部的写法，有传统的`optional API`写法，也有`Vue`新出的`composition API`写法，以及使用`vue-property-decorator`的`Class API`
+
+具体可以见[官方的cookbook](https://typescript.nuxtjs.org/cookbook/components/)
+
+笔者是习惯写`class API`的，放一个实例上来：
+```
+<template>
+    <div id="App">
+        <div>{{msg}}</div>
+        <div>{{msg2}}</div>
+    </div>
+</template>
+
+<script lang="ts">
+    import {Vue, Component} from "vue-property-decorator";
+    import { Context } from "@nuxt/types";
+
+    let p = new Promise<string>((resolve => {
+        setTimeout(() => {
+            resolve("Hi, this is msg from Promise");
+        }, 3000);
+    }));
+
+    @Component({
+        asyncData(ctx: Context) {
+            return p.then(res => {
+                return {
+                    msg2: res
+                }
+            })
+        }
+    })
+    export default class App extends Vue {
+        msg: string = "msg from data";
+    }
+</script>
+```
 # 其余SSR替代方案
 
 由于已有`Vue`项目迁移到`NuxtJS`项目需要较大工作量的重构（二者的规则约定差别较大）
