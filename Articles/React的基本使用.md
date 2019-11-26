@@ -1,11 +1,10 @@
 ---
 title: React的基本使用
 date: 2019/11/26 14:24:01
-cover: https://moriohcdn.b-cdn.net/521f533697.png
+cover: https://blog.dashlane.com/wp-content/uploads/2016/02/react-logo-2.png
 tags: 
 - 前端
 - React
-- 后端渲染
 categories: 
 - 前端
 ---
