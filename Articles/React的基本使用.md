@@ -72,3 +72,85 @@ class App extends React.Component {
     }
 }
 ```
+### `setState`
+
+对于修改`state`的操作，`React`提供了`setState()`方法，这个方法是合并修改的，即`state`有多个属性如:
+```
+this.state = {
+    name: "yang",
+    age: 23
+}
+```
+我们调用:
+```
+this.setState({
+    name: "zhang"
+})
+```
+之后，其`name`属性的改动会更新到`state`上，但是不会对`state`的`age`属性去做修改.
+但是`setState`对于`state`的修改是一个异步的操作，其内部会对多个相同的`state`操作进行合并操作，所以调用`setState`之后如果马上去使用`state`的话，其内部的值是没更新的，见下例：
+```
+constructor(props) {
+    super(props);
+    this.state = {
+        name: "Yang",
+        age: 23,
+    }
+}
+clickBtn = () => {
+    this.setState({
+        name: "zhang",
+    });
+    console.log(this.state); // {name: "Yang", age: 23} 在这state并没有同步更新
+}
+```
+
+对于这种情况，`setState`方法可以传入第二个参数作为`callback`，其回调函数内部可以获得同步修改之后的值:
+```
+clickBtn = (e) => {
+    this.setState({
+        name: "Zhang"
+    }, () => {
+        console.log(this.state);// {name: "Zhang", age: 23}
+    });
+}
+```
+
+除此之外还会有一种情况，比方说我频繁的去调用`setState`，且每次的`state`的值的改动会依赖上一次的`state`的值，这种情况下，普通的调用`setState`并不会像同步的那样去更新`state`的值：
+```
+constructor(props) {
+    super(props);
+    this.state = {
+        counter: 0
+    }
+}
+
+clickBtn = () => {
+    for (let i = 0; i < 5; i ++) {
+        this.setState({
+            counter: this.state.counter + 1
+        }, () => {
+            console.log(this.state); // console 5次 {counter: 1}
+        });
+    }
+}
+```
+如上例所示，这样调用`setState`的话，`state`上一次的改动是异步操作，所以几次循环的`counter`值都为0，最后得到的`counter`为1。
+
+为了针对上述这种情况，`setState`方法的第一个参数也可以传入一个函数，其函数的参数为`(state, props)`，即用上一个 `state `作为第一个参数，将此次更新被应用时的` props `做为第二个参数
+
+那么我们做如下改动:
+```
+clickBtn = () => {
+    for (let i = 0; i < 5; i ++) {
+        this.setState((state, props) => {
+            return {
+                counter: state.counter + 1
+            }
+        }, () => {
+            console.log(this.state);  // console 5次 {counter: 5}
+        })
+    }
+}
+```
+即可达到效果，此时`counter`即为5了
