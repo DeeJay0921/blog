@@ -154,3 +154,149 @@ clickBtn = () => {
 }
 ```
 即可达到效果，此时`counter`即为5了
+## 组件生命周期
+
+[官方图示](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+
+图示里面很清晰，当第一次挂载时，调用的钩子为：
+1. **`constructor()`**
+2. `static getDerivedStateFromProps()`
+3. **`render()`**
+4. **`componentDidMount()`**
+
+
+> `componentWillMount()`已被废弃，不建议再使用
+
+
+当组件的 props 或 state 发生变化时会触发更新, 调用的钩子为：
+1. `static getDerivedStateFromProps()`
+2. **`shouldComponentUpdate()`**
+3. **`render()`**
+4. `getSnapshotBeforeUpdate()`
+5. **`componentDidUpdate()`**
+
+> `componentWillUpdate()` `componentWillReceiveProps()`已被废弃
+
+组件卸载时，调用的钩子为:
+- `componentWillUnmount()`
+
+另外的，当渲染过程，生命周期，或子组件的构造函数中抛出错误时，会调用：
+1. `static getDerivedStateFromError()`
+2. **`componentDidCatch()`**
+接下来介绍一些常用的钩子函数：
+
+### `render()`
+
+`render() `方法是 class 组件中唯一必须实现的方法。
+
+`render() `函数应该为**纯函数**，这意味着在不修改组件 state 的情况下，每次调用时都返回相同的结果，并且它**不会直接与浏览器交互。**
+
+如需与浏览器进行交互，请在` componentDidMount() `或其他生命周期方法中执行你的操作。保持` render()` 为纯函数，可以使组件更容易思考。
+
+### `constructor()`
+
+只有一个原则，在`constructor()`中只做3件事：
+1. `super(props)`，否则，`this.props `在构造函数中可能会出现未定义的 bug。
+2. 通过给` this.state `赋值对象来初始化内部` state`
+3. 为事件处理函数绑定实例,例如：`this.btnClick = this.btnClick.bind(this)`
+
+在`constructor()`中没有任何必要调用`setState()`，如有需要直接给`this.state`赋值即可。
+
+另外，给`state`赋值`props`的话，只会保存`props`的初始值，如果后续`props`发生变化，其`state`中的值是**不会**随之更新的，应当避免这种使用，直接使用`this.props.xxx`即可。
+
+具体可以看这个例子：
+```
+//ParentComponent
+clickBtn = () => {
+    this.setState((state) => ({
+        counter: state.counter + 1
+    }))
+}
+render() {
+    return (
+        <div>
+            <SubComponent counter={this.state.counter} />
+
+            <button onClick={this.clickBtn}>
+                click to add counter
+            </button>
+        </div>
+    )
+}
+```
+
+```
+// SubComponent
+constructor(props) {
+    super(props);
+    this.state = {
+        counter: props.counter
+    }
+}
+```
+在上例中，父组件触发更新时，子组件中，`props`可以正常更新，但是`state.counter`并不会更新，仅仅还是第一次的`props.counter`的值
+
+### `componentDidMount()`
+
+`componentDidMount() `会在组件挂载后（插入` DOM `树中）立即调用。依赖于` DOM` 节点的初始化应该放在这里。如需通过网络请求获取数据，此处是实例化请求的好地方。
+
+另外在`componentDidMount`中调用`setState()`的话，会再次触发`render()`,可能会有性能问题，所以尽量在`constructor()`中将`state`就初始化好。
+
+### `componentDidUpdate(prevProps, prevState, snapshot)`
+
+`componentDidUpdate() `会在更新后会被立即调用。首次渲染**不会执行此方法**。
+
+当组件更新后，可以在此处对` DOM `进行操作。如果你对更新前后`的 props `进行了比较，也可以选择在此处进行网络请求。（例如，当` props `未发生变化时，则不会执行网络请求）。
+
+```
+componentDidUpdate(prevProps, prevState, snapshot) {
+//    比如说可以这样使用
+    if (this.props.userID !== prevProps.userID) {
+        this.getData(this.props.userID);
+    }
+}
+```
+另外也可以在`componentDidUpdate()`中调用`setState()`，但是要预留好出口，即**一定要有条件判断，否则就会陷入死循环**。
+
+其第三个参数`snapshot`是钩子`getSnapshotBeforeUpdate`的返回值(如果你定义了的话，没定义就是`undefined`)
+
+### `componentWillUnmount()`
+
+`componentWillUnmount()` 会在组件卸载及销毁之前直接调用。在此方法中执行必要的清理操作，例如清除 `timer`，取消网络请求或清除在` componentDidMount() `中创建的订阅等
+
+另外，不该在`componentWillUnmount()` 调用`setState()`
+
+### `shouldComponentUpdate(nextProps, nextState)`
+
+当 `props/state `发生变化时，`shouldComponentUpdate() `会在渲染执行之前被调用。返回值默认为` true`。**首次渲染或使用` forceUpdate() `时不会调用该方法**。
+
+一般是不需要定义该钩子去修改默认行为的，如需做一些性能优化的话，可以考虑`React.PureComponent`而不是去改其内部逻辑。
+
+如果无论如何都要自己实现`shouldComponentUpdate()`,可以通过`this.props `与` nextProps` 以及` this.state `与`nextState` 进行比较，并返回` false` 以告知` React `可以跳过更新。
+
+请注意，返回` false `**并不会阻止子组件在` state `更改时重新渲染**。
+
+> `shouldComponentUpdate()`返回`false`之后，不会去调用`render()`和`componentWillUpdate(已废弃)`以及`componentDidUpdate()`
+
+另外官方提到说，后续版本可能就算返回了`false`,也有可能导致组件重新渲染
+
+<details>
+    <summary>扩展了解: React.PureComponent</summary>
+    
+    React.PureComponent和常规的React.Component的区别在于:
+    
+    React.PureComponent中以浅层对比prop和state的方式来实现了shouldComponentUpdate()。
+    
+    其内部只对对象做了浅层比较，所以涉及到state/props嵌套较深的情况的时候，尽量不要用React.PureComponent,考虑其他办法，比如forceUpdate()等
+    
+    总的来说，对于结构简单的state/props，使用React.PureComponent可提高性能
+</details>
+
+### `static getDerivedStateFromProps(props, state)`
+
+`getDerivedStateFromProps `会在**调用` render`方法之前**调用，并且在初始挂载及后续更新时都会被调用。它应返回一个对象来**更新` state`**，如果返回` null `则不更新任何内容。
+
+本钩子访问不到组件实例，且用处真的不多，不做过多了解，只需要了解到每次渲染前都会触发`static getDerivedStateFromProps()`即可。
+
+> 一般不需要使用本钩子，常用的场景都有简单的解决方案, 见: [you-probably-dont-need-derived-state](https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html)
+
