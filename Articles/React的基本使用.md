@@ -183,6 +183,7 @@ clickBtn = () => {
 另外的，当渲染过程，生命周期，或子组件的构造函数中抛出错误时，会调用：
 1. `static getDerivedStateFromError()`
 2. **`componentDidCatch()`**
+
 接下来介绍一些常用的钩子函数：
 
 ### `render()`
@@ -300,3 +301,104 @@ componentDidUpdate(prevProps, prevState, snapshot) {
 
 > 一般不需要使用本钩子，常用的场景都有简单的解决方案, 见: [you-probably-dont-need-derived-state](https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html)
 
+### `getSnapshotBeforeUpdate(prevProps, prevState)`
+
+本钩子也**不常用**。
+
+`getSnapshotBeforeUpdate() `在最近一次渲染输出（提交到` DOM `节点）之前调用。
+
+它使得组件能在发生更改之前从` DOM `中捕获一些信息（例如，滚动位置）。
+
+此生命周期的任何返回值将作为参数传递给` componentDidUpdate()`(第三个参数)。
+
+来看具体用法:
+```
+class SubComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.spanRef = React.createRef();
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        // 定义了getSnapshotBeforeUpdate之后就要定义componentDidUpdate 否则会报warning
+        // 因为getSnapshotBeforeUpdate()的返回值只有在componentDidUpdate中使用
+        const spanNode = this.spanRef.current;
+        return spanNode.innerText; // 无需返回值时返回null即可
+    }
+
+    componentDidUpdate(prevProps, prevState, snapShot) {
+        // 在这可以获得getSnapshotBeforeUpdate返回的快照 
+        // 比如更新后的props.counter为5 会console snapShot props.counter: 4
+        console.log("snapShot", snapShot);
+    }
+
+    render() {
+        return (
+            <div>
+                <h2>SubComponent</h2>
+                <span ref={this.spanRef}>
+                    props.counter: {this.props.counter}
+                </span>
+            </div>
+        )
+    }
+}
+```
+
+### 定义错误边界组件
+**任意的**`React`组件，只要定义了`static getDerivedStateFromError(error)`或者`componentDidCatch(error, info) `之后，就会成为一个错误边界，其子组件如果出错的话，错误会在这个错误边界组件中被上述2个方法捕获到，所以可以做一些错误处理，比如说更换为出错提示的UI等。
+
+在这看一个错误边界组件的例子：
+```
+// ErrorBoundary.js
+export default class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isError: false
+        }
+    }
+
+    static getDerivedStateFromError(error) {
+        //    getDerivedStateFromError将抛出的错误作为参数，并返回一个值以更新 state
+        console.log("getDerivedStateFromError: ",error);
+        return {
+            isError: true
+        }
+    }
+
+    render() {
+        if(this.state.isError) {
+            return <h1>出错啦~</h1>
+        }
+        return this.props.children;
+    }
+}
+```
+
+有了上述的错误处理组件之后，我们可以将之前的组件作为该错误处理组件的子组件：
+```
+<ErrorBoundary>
+    <SubComponent counter={this.state.counter}/>
+</ErrorBoundary>
+```
+
+### `static getDerivedStateFromError(error)`
+
+ `getDerivedStateFromError`将抛出的错误作为参数，并返回一个值以更新` state`,比如上文声明的错误边界组件中的：
+ 
+ ```
+ static getDerivedStateFromError(error) {
+    return {
+        isError: true
+    }
+}
+ ```
+ 
+ > `getDerivedStateFromError()` 会在**渲染阶段**调用，因此不允许出现副作用。 如遇此类情况，请改用` componentDidCatch()`。
+ 
+ ### `componentDidCatch(error, info)`
+ 
+ `componentDidCatch`的第二个参数是一个带错误栈信息的错误信息对象
+ 
+ `componentDidCatch() `会在**“提交”阶段**被调用，因此允许执行副作用。 它应该用于记录错误之类的情况
