@@ -401,4 +401,4 @@ export default class ErrorBoundary extends React.Component {
  
  `componentDidCatch`的第二个参数是一个带错误栈信息的错误信息对象
  
- `componentDidCatch() `会在**“提交”阶段**被调用，因此允许执行副作用。 它应该用于记录错误之类的情况
+ `componentDidCatch() `会在**commit阶段**被调用(commit阶段见[图示](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/))，因此允许执行副作用。 它应该用于记录错误之类的情况
