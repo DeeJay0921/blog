@@ -54,7 +54,8 @@ const element = <h1>Hello, world</h1>;
 ReactDOM.render(element, document.getElementById('root'));
 ```
 
-另外数据变化有涉及到视图的更新的时候，需要手动去`ReactDOM.render`方法（这点不像`Vue`是`MVVM`，可以直接驱动视图更新）
+对于这种元素，如果想更新的话，可以再次调用`ReactDOM.render`去进行渲染。不过对于组件内部的`state`和`props`变化，`React`会自动更新。
+
 
 # 组件
 
@@ -72,7 +73,7 @@ class App extends React.Component {
     }
 }
 ```
-### `setState`
+### `setState(updater[, callback])`
 
 对于修改`state`的操作，`React`提供了`setState()`方法，这个方法是合并修改的，即`state`有多个属性如:
 ```
@@ -116,6 +117,9 @@ clickBtn = (e) => {
 }
 ```
 
+> 另外如果`setState()`了之后想获得更新后的`state`的话，也可以在`componentDidUpdate(prevState, prevProps, snapShot)`中获取到
+
+
 除此之外还会有一种情况，比方说我频繁的去调用`setState`，且每次的`state`的值的改动会依赖上一次的`state`的值，这种情况下，普通的调用`setState`并不会像同步的那样去更新`state`的值：
 ```
 constructor(props) {
@@ -154,6 +158,23 @@ clickBtn = () => {
 }
 ```
 即可达到效果，此时`counter`即为5了
+
+<details>
+    <summary>setState扩展阅读：StackOverflow: Dan谈论setState()的更新队列原则</summary>
+    
+    [原文链接在这](https://stackoverflow.com/questions/48563650/does-react-keep-the-order-for-state-updates/48610973#48610973)
+    总结一下的他的发言：
+    1. 只要是在事件处理函数中调用的setState，不管有几个组件调用了无论多少次，最后都只会合成一次更新去调用一次render
+    2. 在事件处理函数中，这种队列的合并总是会按照调用的顺序来进行合并的，即对于同一属性的更新，最后一次的更新永远会覆盖前面的
+    3. 到React16及之前的版本，都只有事件处理函数式按照上述原则来的，在其他场景比如Ajax请求回调中，这种维持队列更新的原则就不成立
+    4. React准备在未来的React17中将这种维持队列更新的原则应用到所有地方，
+    但是在这之前如果想在事件处理函数之外的地方应用，请使用ReactDOM.unstable_batchedUpdates( () => {doSth;})
+</details>
+
+
+另外还可以看这个[Github Issue: gaearon解释为什么state设计成异步更新](https://github.com/facebook/react/issues/11527)
+
+
 ## 组件生命周期
 
 [官方图示](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
@@ -402,3 +423,182 @@ export default class ErrorBoundary extends React.Component {
  `componentDidCatch`的第二个参数是一个带错误栈信息的错误信息对象
  
  `componentDidCatch() `会在**commit阶段**被调用(commit阶段见[图示](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/))，因此允许执行副作用。 它应该用于记录错误之类的情况
+
+### 废弃的一些钩子
+
+- `componentWillMount()`
+- `componentWillReceiveProps(nextProps)`
+- `componentWillUpdate(nextProps, nextState)`
+
+上述钩子已经被官方废弃，虽然仍然可以使用，但是并不推荐，官方同时也给出了[替代方案](https://zh-hans.reactjs.org/blog/2018/03/27/update-on-async-rendering.html)
+
+## `component.forceUpdate(callback)`
+
+默认情况下，**当组件的` state `或` props `发生变化时，组件将重新渲染**。如果` render() `方法依赖于其他数据，则可以调用 `forceUpdate()` 强制让组件重新渲染。
+
+调用` forceUpdate() `将致使组件调用` render() `方法，此操作会跳过该组件的 `shouldComponentUpdate()`。
+
+但其子组件会触发正常的生命周期方法，包括` shouldComponentUpdate()` 方法。**这意味着如果子组件的`shouldComponentUpdate`返回false的话，子组件不会被重新渲染**。
+
+如果标记发生变化，`React `仍将只更新` DOM`。
+
+> 通常你应该避免使用` forceUpdate()`，尽量`在 render() `中使用` this.props `和` this.state`
+
+## `props`
+
+对于`FunctionComponent`来讲，`props`就是函数的参数，对于`ClassComponent`，`props`会被挂到当前组件实例上，通过`this.props`可以进行访问。
+
+> 一样的，`props`不允许子组件对其进行修改
+
+### `props.children`
+
+每个组件都可以获取到` props.children`。它包含组件的开始标签和结束标签之间的内容
+
+```
+<Welcome>Hello world!</Welcome>
+```
+
+在` Welcome `组件中获取` props.children`，就可以得到字符串` Hello world!`
+
+对于` class `组件，请使用` this.props.children `来获取
+
+`props.children `是一个特殊的` prop`，通常由` JSX `表达式中的子组件组成，而非组件本身定义
+
+### `Render Props`
+
+ `render prop`是指一种在` React `组件之间使用一个值为函数的` prop `共享代码的简单技术,即传入一个函数作为`props`给其他组件：
+ 
+ ```
+ <DataProvider render={data => (
+  <h1>Hello {data.target}</h1>
+)}/>
+ ```
+
+### `props`添加默认值`defaultProps`
+
+`defaultProps `可以为` Class `组件添加默认` props`。这一般用于` props `未赋值，但又不能为` null `的情况:
+
+```
+SubComponent.defaultProps = {
+    counter: 0
+};
+```
+未指定`props.counter`的时候，会按照当前给定的默认值来取值
+
+如果你正在使用像` transform-class-properties `的` Babel `转换工具，你也可以在` React `组件类中声明` defaultProps `作为`static`属性。
+```
+export default class SubComponent extends React.Component {
+    static defaultProps = {
+        counter: 0
+    };
+
+    render() {
+        return (
+            <div>
+                <h2>SubComponent</h2>
+                <span>
+                    props.counter: {this.props.counter}
+                </span>
+            </div>
+        )
+    }
+}
+```
+### 使用` PropTypes `进行类型检查
+
+> 自` React v15.5 `起，`React.PropTypes `已移入另一个包中。请使用` prop-types `库 代替。详情请见[博客](https://zh-hans.reactjs.org/blog/2017/04/07/react-v15.5.0.html#migrating-from-reactproptypes)
+
+详细的用法可以见[npm usage](https://www.npmjs.com/package/prop-types)
+
+<details>
+    <summary>或者点击查看: prop-types使用举例</summary>
+    
+    import PropTypes from 'prop-types';
+    MyComponent.propTypes = {
+      // 你可以将属性声明为 JS 原生类型，默认情况下
+      // 这些属性都是可选的。
+      optionalArray: PropTypes.array,
+      optionalBool: PropTypes.bool,
+      optionalFunc: PropTypes.func,
+      optionalNumber: PropTypes.number,
+      optionalObject: PropTypes.object,
+      optionalString: PropTypes.string,
+      optionalSymbol: PropTypes.symbol,
+    
+      // 任何可被渲染的元素（包括数字、字符串、元素或数组）
+      // (或 Fragment) 也包含这些类型。
+      optionalNode: PropTypes.node,
+    
+      // 一个 React 元素。
+      optionalElement: PropTypes.element,
+    
+      // 一个 React 元素类型（即，MyComponent）。
+      optionalElementType: PropTypes.elementType,
+    
+      // 你也可以声明 prop 为类的实例，这里使用
+      // JS 的 instanceof 操作符。
+      optionalMessage: PropTypes.instanceOf(Message),
+    
+      // 你可以让你的 prop 只能是特定的值，指定它为
+      // 枚举类型。
+      optionalEnum: PropTypes.oneOf(['News', 'Photos']),
+    
+      // 一个对象可以是几种类型中的任意一个类型
+      optionalUnion: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.instanceOf(Message)
+      ]),
+    
+      // 可以指定一个数组由某一类型的元素组成
+      optionalArrayOf: PropTypes.arrayOf(PropTypes.number),
+    
+      // 可以指定一个对象由某一类型的值组成
+      optionalObjectOf: PropTypes.objectOf(PropTypes.number),
+    
+      // 可以指定一个对象由特定的类型值组成
+      optionalObjectWithShape: PropTypes.shape({
+        color: PropTypes.string,
+        fontSize: PropTypes.number
+      }),
+      
+      // An object with warnings on extra properties
+      optionalObjectWithStrictShape: PropTypes.exact({
+        name: PropTypes.string,
+        quantity: PropTypes.number
+      }),   
+    
+      // 你可以在任何 PropTypes 属性后面加上 `isRequired` ，确保
+      // 这个 prop 没有被提供时，会打印警告信息。
+      requiredFunc: PropTypes.func.isRequired,
+    
+      // 任意类型的数据
+      requiredAny: PropTypes.any.isRequired,
+
+      // 你可以指定一个自定义验证器。它在验证失败时应返回一个 Error 对象。
+      // 请不要使用 `console.warn` 或抛出异常，因为这在 `onOfType` 中不会起作用。
+      customProp: function(props, propName, componentName) {
+        if (!/matchme/.test(props[propName])) {
+          return new Error(
+            'Invalid prop `' + propName + '` supplied to' +
+            ' `' + componentName + '`. Validation failed.'
+          );
+        }
+      },
+    
+      // 你也可以提供一个自定义的 `arrayOf` 或 `objectOf` 验证器。
+      // 它应该在验证失败时返回一个 Error 对象。
+      // 验证器将验证数组或对象中的每个值。验证器的前两个参数
+      // 第一个是数组或对象本身
+      // 第二个是他们当前的键。
+      customArrayProp: PropTypes.arrayOf(function(propValue, key, componentName, location, propFullName) {
+        if (!/matchme/.test(propValue[key])) {
+          return new Error(
+            'Invalid prop `' + propFullName + '` supplied to' +
+            ' `' + componentName + '`. Validation failed.'
+          );
+        }
+      })
+    };
+</details>
+
