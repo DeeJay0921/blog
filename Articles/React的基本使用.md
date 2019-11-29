@@ -504,7 +504,7 @@ export default class SubComponent extends React.Component {
     }
 }
 ```
-### 使用` PropTypes `进行类型检查
+### 使用` propTypes `进行类型检查
 
 > 自` React v15.5 `起，`React.PropTypes `已移入另一个包中。请使用` prop-types `库 代替。详情请见[博客](https://zh-hans.reactjs.org/blog/2017/04/07/react-v15.5.0.html#migrating-from-reactproptypes)
 
@@ -602,3 +602,199 @@ export default class SubComponent extends React.Component {
     };
 </details>
 
+另外可以通过对`props.children`做类型限制来限制能在本组件中只接收一个元素：
+
+```
+import Props_Types from "prop-types";
+
+export default class SubComponent extends React.Component {
+    // static defaultProps = {
+    //     counter: 0
+    // };
+
+    render() {
+        return (
+            <div>
+                <h2>SubComponent</h2>
+                <div>
+                    {this.props.children}
+                </div>
+            </div>
+        )
+    }
+}
+SubComponent.propTypes = {
+    children: Props_Types.element.isRequired // 
+};
+```
+将`children`的类型设为`Props_Types.element`即可，我们设置了上述的检查后，如果这么使用的话:
+```
+<SubComponent>
+    <h2>children1</h2>
+    <h3>children2</h3>
+</SubComponent>
+```
+就会看到报错： 
+```
+Failed prop type: Invalid prop `children` of type `array` supplied to `SubComponent`, expected a single ReactElement.
+```
+
+此时如果想要允许多个元素传入，可以将类型检查改为：
+```
+SubComponent.propTypes = {
+    children: Props_Types.arrayOf(Props_Types.element)
+};
+```
+
+# 事件处理
+
+看完了组件的相关概念，来关心一下`React`中的事件处理
+
+`React`中的事件处理都是驼峰写法: `<button onClick={this.clickBtn}></button>`
+
+另外由于没有类似`Vue`的修饰符，所以对于组织默认行为或者阻止冒泡等需求，需要手动去调用：
+
+```
+clickBtn = (e) => {
+    e.preventDefault(); // 在这里手动调用
+    e.stopPropagation();
+    this.setState((state) => ({
+        counter: state.counter + 1
+    }));
+};
+
+render() {
+    return (
+        <div>
+            <button onClick={this.clickBtn}>
+                click to add counter
+            </button>
+        </div>
+    )
+}
+```
+
+> 事件处理函数中的`e`是一个`React`自己合成的事件对象，具体文档见 [SyntheticEvent](https://zh-hans.reactjs.org/docs/events.html)
+
+## React事件处理函数中的`this`
+
+需要注意的是，`JSX `回调函数中的` this`, 如果你忘记绑定` this.handleClick `并把它传入了 `onClick`，当你调用这个函数的时候` this `的值为` undefined`而非当前组件实例。
+
+分析一下原因，为什么调用的事件处理函数中的`this`是`undefined`?
+
+先来看一个`JS`的小例子：
+```
+class TestThis {
+    constructor() {
+        this.attr = "aaa";
+    }
+    consoleAttr() {
+        console.log(this.attr);
+    }
+}
+
+const test = new TestThis();
+test.consoleAttr();// aaa
+let tempMethod = test.consoleAttr;
+tempMethod.bind(test)(); // aaa 硬性绑定到当前实例即可获得this
+tempMethod(); // Cannot read property 'attr' of undefined 即 this 为undefined
+
+```
+上述例子中将内部的方法重新赋值再次调用之后`this`指向就改变了。
+
+
+明白上面例子后，再来了解一下`JSX`中传递的是什么东西: 
+
+
+> With JSX you pass a function as the event handler, rather than a string.
+
+官方文档说的很清楚，传递的是一个`function`，
+```
+render() {
+    return (
+        <div>
+            <button onClick={this.clickBtn}>
+                click to add counter
+            </button>
+        </div>
+    )
+}
+// 在这里的<button onClick={this.clickBtn}>其实就等价于:
+render() {
+    const tempClickBtn = this.clickBtn;
+    return (
+        <div>
+            <button onClick={tempClickBtn}>
+                click to add counter
+            </button>
+        </div>
+    )
+}
+```
+所以造成了这种你在事件处理函数中得到的`this`其实是`undefined`的情况
+
+那么为了避免这种情况，一般采用三种方法:
+1. 在`constructor`中将每一个事件处理函数手动绑定到当前实例(真的不推荐，太麻烦)
+2. 使用`public class fields`语法直接声明事件处理函数即可:
+    ```
+    clickBtn = (e) => {
+        console.log(this);
+    };
+    ```
+3. 在回调中使用箭头函数:
+    ```
+    clickBtn(e) {
+        console.log(this);
+    };
+    
+    render() {
+        return (
+            <div>
+                <button onClick={(e) => this.clickBtn(e)}>
+                    click to add counter
+                </button>
+            </div>
+        )
+    }
+    ```
+
+### 事件处理函数的参数
+
+如果要想给事件处理方法传递更多参数时，只能通过：
+1. 回调函数的写法:
+    ```
+    clickBtn(info, e) {
+        console.log(info);
+        console.log(e);
+    };
+    <!--回调函数的 e 必须显式的传递给事件处理方法 -->
+    render() {
+        return (
+            <div>
+                <button onClick={(e) => this.clickBtn("123", e)}>
+                    click to add counter
+                </button>
+            </div>
+        )
+    }
+    ```
+2. bind的写法:
+    ```
+    clickBtn(info, e) {
+        console.log(info);
+        console.log(e);
+    };
+    // bind的写法不需要显式的传递 e
+    render() {
+        return (
+            <div>
+                <button onClick={this.clickBtn.bind(this, "123")}>
+                    click to add counter
+                </button>
+            </div>
+        )
+    }
+    ```
+
+
+# React中的条件渲染
