@@ -947,3 +947,23 @@ render() {
 }
 ```
 
+也可以嵌入在`JSX`里，但是要注意可读性：
+```
+render() {
+    return (
+        <div>
+            {
+                this.state.nameList.map((e, i) => {
+                    return (
+                        <SubComponent
+                            key={i}
+                            name={e}
+                        >{e}</SubComponent>
+                    );
+                })
+            }
+        </div>
+    )
+}
+```
+
