@@ -798,3 +798,152 @@ render() {
 
 
 # React中的条件渲染
+
+`React`中的条件渲染都是通过`if`或者`条件运算符`进行控制的。
+
+例如:
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isShow: true
+        };
+    }
+    render() {
+        if(this.state.isShow) {
+            return (
+                <div>isShow = true</div>
+            )
+        }
+        return (
+            <div>isShow = false</div>
+        )
+    }
+}
+```
+上述例子就通过了`state.isShow`来控制不同的元素进行渲染
+
+此外你还可以通过变量来储存元素，这对于大段的内容来说，可以进行局部的修改:
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isShow: true
+        };
+    }
+    toggleIsShow = () => {
+        this.setState((state) => {
+            return {
+                isShow: !state.isShow
+            }
+        })
+    };
+    render() {
+        let element;
+        if(this.state.isShow) {
+            element = <div>isShow = true</div>;
+        }else {
+            element = <div>isShow = false</div>;
+        }
+        return (
+            <div>
+                {element}
+                <button onClick={this.toggleIsShow}>
+                    Click to toggle isShow
+                </button>
+            </div>
+        )
+    }
+}
+```
+
+上述例子就是在通过变量来控制局部渲染的例子。
+
+另外还可以通过`&&`或者三目运算符等来进行控制渲染,比如：
+
+```
+let element;
+if(this.state.isShow) {
+    element = <div>isShow = true</div>;
+}else {
+    element = <div>isShow = false</div>;
+}
+```
+可以简化为:
+```
+let element = this.state.isShow ? <div>isShow = true</div> : <div>isShow = false</div>;
+```
+这些`JS`的常规操作都可以在`JSX`中进行。
+
+另外值得一提的是，可以在`render`函数中`return null`来隐藏组件组织组件渲染，且**该组件的生命周期钩子依旧会被调用**：
+
+```
+export default class SubComponent extends React.Component {
+    componentDidMount() {
+        console.log("SubComponent Mounted");
+    }
+
+    render() {
+        if(!this.props.isShow) {
+            return null;
+        }
+        return (
+            <div>
+                <h2>SubComponent</h2>
+            </div>
+        );
+    }
+}
+```
+
+# React中的列表渲染
+
+进行列表渲染，首先需要给每一个渲染项一个`key`属性，且这个`key`属性只有放在就近的数组上下文中才有意义。
+
+具体列表渲染的方式很简单，主要是通过`map`方法直接返回一个元素数组：
+
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            nameList: ["Yang", "Zhang", "Wang"]
+        };
+    }
+    render() {
+        const nameElements = this.state.nameList.map((e, i) => {
+            return <li key={i}>{e}</li>;
+        });
+        return (
+            <div>
+                <ul>
+                    {nameElements}
+                </ul>
+            </div>
+        )
+    }
+}
+```
+对于组件也是一样：
+```
+render() {
+    const SubComponentList = this.state.nameList.map((e, i) => {
+        return (
+            <SubComponent
+                key={i} 
+                name={e}
+            >{e}</SubComponent>
+        );
+    });
+    return (
+        <div>
+            <ul>
+                {SubComponentList}
+            </ul>
+        </div>
+    )
+}
+```
+
