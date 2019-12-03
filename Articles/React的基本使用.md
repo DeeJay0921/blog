@@ -967,3 +967,113 @@ render() {
 }
 ```
 
+# React中的Form
+
+> 扩展阅读: [What you need to know about forms in React](https://goshakkk.name/on-forms-react/)
+
+由于表单元素会有一些内部的`state`，所以`React`中对于`Form`分成了**受控表单**和**非受控表单**两类。
+
+**当一个表单有一个`value`作为`prop`时，它就成为了一个受控组件（当然`checkbox`和`radio`对应的`prop`是`checked`）**
+
+## 受控表单
+
+对于受控表单，给定一个`value`作为`prop`，这个`value`应当为组件内部的`state`,然后监听其内部值发生变化时进行修改`setState()`:
+
+拿最简单的`<input type="text" />`举个例子：
+
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            val: "",
+        };
+    }
+    handleChange = (e) => {
+        this.setState({
+            val: e.target.value.toUpperCase()
+        })
+    };
+    render() {
+        return (
+            <div>
+                <input type="text" value={this.state.val} onChange={this.handleChange}/>
+            </div>
+        )
+    }
+}
+```
+
+上述例子对于`input`输入做了处理，每次值变化更新`state`且转换为大写，这就是受控组件的通常用法。
+
+对于`<input type="text">`,`<textarea>` 和` <select>` 之类的标签传入的`prop`都为`value`
+
+而对于`<input type="checkbox" />`和 `<input type="radio" />`则为`checked`
+
+### 处理不同的受控表单的输入
+
+当一个组件中拥有多个受控表单的时候，需要在同一函数中对其值做处理，这时有2种情况：
+1. 表单类型互不相同，比如说有`<input type="text">` `<input type="checkbox" />` 和` <select>`等：
+    ```
+    export default class LearnReact extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                val: "",
+                selectedVal: [],
+                checked: false
+            };
+        }
+
+        handleChange = (e) => {
+            console.log(e.target.type);
+            let stateKey;
+            let propKey;
+            switch (e.target.type) {
+                case "text": {
+                    stateKey = "val";
+                    propKey = "value";
+                    break;
+                }
+                case "checkbox": {
+                    stateKey = "checked";
+                    propKey = "checked";
+                    break;
+                }
+                case "select-one": {
+                    stateKey = "selectedVal";
+                    propKey = "value";
+                    break;
+                }
+                case "select-multiple": {
+                    stateKey = "selectedVal";
+                    propKey = "value";
+                    break;
+                }
+             }
+            this.setState({
+                 [stateKey]: e.target[propKey]
+            },() => {
+                console.log(this.state);
+            })
+            };
+
+            render() {
+                return (
+                    <div>
+                        <input type="text" value={this.state.val} onChange={this.handleChange}/>
+                        <br/>
+                        <input type="checkbox" checked={this.state.checked} onChange={this.handleChange}/>
+                        <br/>
+                        <select value={this.state.selectedVal} onChange={this.handleChange} multiple={true}>
+                            <option value="grapefruit">葡萄柚</option>
+                            <option value="lime">酸橙</option>
+                            <option value="coconut">椰子</option>
+                            <option value="mango">芒果</option>
+                        </select>
+                    </div>
+                )
+            }
+    };
+    ```
+2. 存在相同类型的表单，比如说存在2个`<input type="text">`
