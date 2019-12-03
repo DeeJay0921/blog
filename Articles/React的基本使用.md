@@ -1056,24 +1056,145 @@ export default class LearnReact extends React.Component {
             },() => {
                 console.log(this.state);
             })
-            };
+         };
 
-            render() {
-                return (
-                    <div>
-                        <input type="text" value={this.state.val} onChange={this.handleChange}/>
-                        <br/>
-                        <input type="checkbox" checked={this.state.checked} onChange={this.handleChange}/>
-                        <br/>
-                        <select value={this.state.selectedVal} onChange={this.handleChange} multiple={true}>
-                            <option value="grapefruit">葡萄柚</option>
-                            <option value="lime">酸橙</option>
-                            <option value="coconut">椰子</option>
-                            <option value="mango">芒果</option>
-                        </select>
-                    </div>
-                )
-            }
+         render() {
+              return (
+                  <div>
+                      <input type="text" value={this.state.val} onChange={this.handleChange}/>
+                      <br/>
+                      <input type="checkbox" checked={this.state.checked} onChange={this.handleChange}/>
+                      <br/>
+                      <select value={this.state.selectedVal} onChange={this.handleChange} multiple={true}>
+                          <option value="grapefruit">葡萄柚</option>
+                          <option value="lime">酸橙</option>
+                          <option value="coconut">椰子</option>
+                          <option value="mango">芒果</option>
+                      </select>
+                  </div>
+              )
+          }
     };
     ```
+    对于不同类型的表单，可以直接使用`e.target.type`来进行判断是哪一个表单发生了改变，从而进行获取`e.target.value/checked`,需要注意的是,`select`对应的`type`为`select-one`或者`select-multiple`，视是否为`multipie`而定
 2. 存在相同类型的表单，比如说存在2个`<input type="text">`
+    ```
+    export default class LearnReact extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                firstInput: "",
+                lastInput: "",
+            };
+        }
+    
+        handleChange = (e) => {
+            console.log(e.target.name);
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        };
+    
+        render() {
+            return (
+                <div>
+                    <input type="text" name="firstInput" value={this.state.firstInput} onChange={this.handleChange}/>
+                    <br/>
+                    <input type="text" name="lastInput" value={this.state.lastInput} onChange={this.handleChange}/>
+                </div>
+            )
+        }
+    }
+    ```
+    而对于有相同类型的表单的话，能做的只有给每个表单一个`name`然后根据`e.target.name`去进行判断是哪个表单触发了处理函数
+
+## 非受控表单
+
+官方是一直推荐使用受控表单的，因为每次值变化都能检测到，可以做很多的自定义操作。但是受控表单书写逻辑比较麻烦，一个受控表单就要对应一个`state`值和一个相应的处理方法。
+
+如果你的表单足够简单的话，也可以使用非受控表单，通常非受控表单的处理方式为：
+1. 给定目标表单一个`ref`
+2. 在需要用值的时候通过`ref`去取到值，比如说进行提交的时候，而在这期间的对于内部值的变化是不感知的
+
+
+来看一个简单的例子：
+
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            inputVal: "",
+        };
+        this.inputRef = React.createRef();
+    }
+
+    getValFromInput = () => {
+        console.log(this.inputRef.current.value);
+    };
+
+    render() {
+        return (
+            <div>
+                <input type="text" ref={this.inputRef}/>
+                <br/>
+                <button onClick={this.getValFromInput}>click to get InputVal</button>
+            </div>
+        )
+    }
+}
+```
+上例展示了非受控表单的基本使用，跟受控表单不同的是，取值的函数只有在想要获得值的时候才调用，而受控表单则是表单每次输入时就自动调用一次。
+
+
+
+另外，因为没有传入`value`作为`prop`， 非受控表单的默认值不能像受控表单那样简单的把`state`中对应的值置空即可，而是需要一个`defaultValue `属性：
+```
+<input
+      defaultValue="Bob"
+      type="text"
+      ref={this.input} />
+```
+
+
+> 对于`checkbox`和`radio`对应的属性为`defaultChecked`
+
+
+## `<input type="file">`文件上传表单
+
+由于其的`value`属性只读，所以`React`也没办法将其变为受控表单，所以**所有的`<input type="file">`都为非受控表单**
+
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.fileInput = React.createRef();
+    }
+    
+    handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(this.fileInput.current.files[0]);
+    };
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Upload file:
+                    <input type="file" ref={this.fileInput} />
+                </label>
+                <br />
+                <button type="submit">Submit</button>
+            </form>
+        );
+    }
+}
+```
+
+
+## 受控组件vs非受控组件
+
+推荐阅读：[controlled-vs-uncontrolled-inputs-react](https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/)
+
+如果你使用的表单比较简单，也没有什么实时校验合法性的需求的话，就可以使用非受控表单，其他的，建议还是都使用受控表单
+
