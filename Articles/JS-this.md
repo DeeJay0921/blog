@@ -12,6 +12,7 @@ categories:
 JS对象，原型
 <!--more-->
 
+[箭头函数的this](https://github.com/zhengweikeng/blog/issues/11)
 
 [转换为call/apply来看待this的值](https://zhuanlan.zhihu.com/p/23804247)
 
