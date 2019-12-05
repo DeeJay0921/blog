@@ -1198,3 +1198,150 @@ export default class LearnReact extends React.Component {
 
 如果你使用的表单比较简单，也没有什么实时校验合法性的需求的话，就可以使用非受控表单，其他的，建议还是都使用受控表单
 
+# React中的Ref
+
+不进行赘述`Ref`的概念，简单介绍一下`Ref`的使用.
+
+## Refs
+
+目前简单使用`Ref`的方式有2种:
+1. 通过`React.createRef()`(`React16.3`及以上)
+2. 较早版本使用回调形式的`refs`
+3. `String `类型的` Refs`(过时，不推荐使用，在此也不做介绍)
+
+### `React.createRef()`
+
+首先声明**不能在函数式组件上使用`ref`**,因为其并没有组件实例。
+
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.inputRef = React.createRef();
+    }
+
+    render() {
+        return (
+            <div>
+                <input type="text" ref={this.inputRef}/>
+            </div>
+        )
+    }
+}
+```
+
+上述就是一个通过`React.createRef()`创建`ref`的例子，创建好之后我们可以通过`this.inputRef.current`来获取元素：
+1. 对于原生`HTML`元素，`current`为其底层 DOM 元素
+2. 对于`Class类的组件`, `current`为当前组件实例
+
+给原生`DOM`元素添加`Ref`的例子：
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.inputRef = React.createRef();
+    }
+
+    clickBtn = () => {
+        this.inputRef.current.focus(); // 原生的html元素  底层DOM为current
+    };
+
+    render() {
+        return (
+            <div>
+                <input type="text" ref={this.inputRef}/>
+                <br/>
+                <button onClick={this.clickBtn}>Click me !</button>
+            </div>
+        )
+    }
+}
+```
+
+给`Class Component`添加`ref`的例子：
+
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.subComponentRef = React.createRef();
+    }
+
+    clickBtn = () => {
+        this.subComponentRef.current.ConsoleMsgFromSub(); // 输出: this is msg from subComponent
+        // ClassComponent current为组件实例
+    };
+
+    render() {
+        return (
+            <div>
+                <SubComponent ref={this.subComponentRef} />
+                <br/>
+                <button onClick={this.clickBtn}>Click me !</button>
+            </div>
+        )
+    }
+}
+```
+```
+// SubComponent 
+export default class SubComponent extends React.Component {
+    ConsoleMsgFromSub() {
+        console.log("this is msg from subComponent");
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>subComponent</h1>
+            </div>
+        );
+    }
+}
+```
+
+但是对于函数式组件，并不能直接使用`ref`,但是可以在函数组件内部使用`ref `属性，只要它指向一个` DOM `元素或` class `组件
+
+### 回调Refs
+
+如果当前版本不支持`React.createRef`的话，可以使用回调`Refs`的方式，来介绍下基本使用：
+
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.inputRef = null;
+        this.setInputRef = (element) => { // 回调ref中，该属性会传递一个函数
+            // 该函数接受 React 组件实例或 HTML DOM 元素作为参数，以使它们能在其他地方被存储和访问
+            this.inputRef = element; // element即为 React 组件实例或 HTML DOM 元素 将其赋给想使用变量存储起来便于访问
+        };
+    }
+
+    componentDidMount() {
+        this.inputRef.focus(); // 回调ref不需要current
+    }
+
+    render() {
+        return (
+            <div>
+                {/*在这里要传入目标回调*/}
+                <input type="text" ref={this.setInputRef}/>
+            </div>
+        )
+    }
+}
+```
+`React `将在组件挂载时，会调用` ref `回调函数并传入` DOM `元素，当**卸载时调用它并传入`null`**。
+
+> 在` componentDidMount `或` componentDidUpdate `触发前，`React `会保证` refs `**一定是最新的**。
+
+## Refs转发
+
+`Ref `转发指的是将`ref `自动地通过组件传递到其一子组件.
+
+即在父组件中拿到子组件中的元素的`ref`,一般应用场景较少。
+
+
+一般实现`Refs`转发的方式有：
+1. 一般对于新版本(16.3及以上)，可以使用` React.forwardRef()`
+2. 旧版本的话，一般使用将`ref`作为一个特殊的`prop`传入子组件，具体见: [dom_ref_forwarding_alternatives_before_16.3](https://gist.github.com/gaearon/1a018a023347fe1c2476073330cc5509)
