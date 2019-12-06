@@ -1345,3 +1345,77 @@ export default class LearnReact extends React.Component {
 一般实现`Refs`转发的方式有：
 1. 一般对于新版本(16.3及以上)，可以使用` React.forwardRef()`
 2. 旧版本的话，一般使用将`ref`作为一个特殊的`prop`传入子组件，具体见: [dom_ref_forwarding_alternatives_before_16.3](https://gist.github.com/gaearon/1a018a023347fe1c2476073330cc5509)
+
+使用` React.forwardRef()`定义一个函数式组件:
+```
+import React from "react";
+
+export default React.forwardRef((props, ref) => {
+    return (
+        <div>
+            <button ref={ref}>forwardRef's Button</button>
+        </div>
+    )
+})
+```
+在父组件中调用：
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.subRef = React.createRef();
+    }
+
+    componentDidMount() {
+        console.log(this.subRef.current); // 获取到的即为ForwardComponent中的那个button
+    }
+
+    render() {
+        return (
+            <div>
+                <ForwardComponent ref={this.subRef} />
+            </div>
+        )
+    }
+}
+```
+
+> 只有在` React.forwardRef `定义的函数式组件中才存在第二个参数`ref`。常规函数和` class `组件不接收` ref `参数，且 `props `中也不存在` ref`。
+
+使用特殊`prop`转发`ref`:
+
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.subRef = React.createRef();
+    }
+
+    componentDidMount() {
+        console.log(this.subRef);
+    }
+
+    render() {
+        return (
+            <div>
+                {/*传入一个特殊的props*/}
+                <SubComponent specialPropToPassRef={this.subRef} />
+            </div>
+        )
+    }
+}
+```
+```
+// SubComponent
+export default class SubComponent extends React.Component {
+    render() {
+        return (
+            <div>
+                <h1 ref={this.props.specialPropToPassRef}>SubComponent</h1>
+            </div>
+        );
+    }
+}
+```
+
+
