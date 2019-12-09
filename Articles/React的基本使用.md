@@ -1418,4 +1418,140 @@ export default class SubComponent extends React.Component {
 }
 ```
 
+# React中的高阶组件HOC(High Order Component)
 
+高阶组件本质上其实就是一个函数，其**参数为组件，返回值为新组件**。
+
+其应用场景一般都是对当前目标组件做一些修饰或者代替`mixin`进行组合亦或是提取相似重复逻辑。
+
+首要原则是： `HOC `**不能修改传入的组件，也不会使用继承来复制其行为**, 而是应该通过将组件包装在容器组件中来组成**新组件**。`HOC `是纯函数，没有副作用。
+
+
+来看一个简单的例子使用
+
+现有如下目标子组件:
+```
+export default class SubComponent extends React.Component {
+    render() {
+        return (
+            <div>
+                {
+                    this.props.list.map((e, i) => {
+                        return <div key={i}>line {e}</div>
+                    })
+                }
+            </div>
+        );
+    }
+}
+```
+
+我们现在给这个子组件设计一个修饰其的`HOC`: 
+
+```
+const TestHocFunc = (targetComponent, componentData) => {
+    class SubComponentWithDescription extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                data: componentData
+            }
+        }
+        render() {
+            return (
+                <div>
+                    <h1>SubComponentWithDescription</h1>
+                    {/*这里将props全部透传给目标子组件*/}
+                    <SubComponent list={this.state.data} {...this.props} />
+                </div>
+            )
+        }
+    }
+    return SubComponentWithDescription;
+};
+```
+上述`HOC`添加了一下额外的`DOM`结构，也将其不需要的`props`都透传给了`SubComponent`，同时另外传入了目标`props`，且没有涉及到修改`SubComponent`的内部结构。
+然后就可以在父组件中进行使用：
+
+```
+export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            renderList: [1,2,3]
+        }
+    }
+
+    render() {
+        const SubComponentWithDescription = TestHocFunc(SubComponent, this.state.renderList); // 参数为组件，返回值为新组件
+        return (
+            <div>
+                <SubComponentWithDescription />
+            </div>
+        )
+    }
+}
+```
+即可看到修饰后的`SubComponent`
+
+上述是一个`HOC`的简单使用。
+
+在使用`HOC`的时候，还有一些注意点:
+-  对于本身用不到的`props`,应该将其悉数透传给目标子组件:
+    ```
+    render() {
+      // 过滤掉非此 HOC 额外的 props，且不要进行透传
+      const { extraProp, ...passThroughProps } = this.props;
+    
+      // 将 props 注入到被包装的组件中。
+      // 通常为 state 的值或者实例方法。
+      const injectedProp = someStateOrInstanceMethod;
+    
+      // 将 props 传递给被包装组件
+      return (
+        <WrappedComponent
+          injectedProp={injectedProp}
+          {...passThroughProps}
+        />
+      );
+    }
+    ```
+- 给定包装函数的`displayName`以便使用` React Developer Tools`进行调试：
+    ```
+    function TestHocFunc(targetComponent, componentData) {
+        TestHocFunc.displayName = "DeeJay's Test Hoc Function";
+        return class extends React.Component {
+            // balabala
+        }
+    }
+    ```
+- 不要在` render `方法中使用` HOC`:
+
+    由于`render()`会通过判断当前返回的组件和上一个渲染的组件是不是相同（通过`===`判断）来进行更新现有子组件还是将其丢弃并挂载新子组件，所以在`render`方法中使用`HOC`会造成一个后果就是，`render()`判断的结果总是`false`即总是会重新渲染（即卸载当前再重新加载）整个组件，这不仅仅是**性能问题** 且重新挂载组件会导致**该组件及其所有子组件的状态丢失**。
+
+- 使用`HOC`时，对目标子组件上的**静态方法**要做拷贝
+    ```
+    class SubComponent extends React.Component {
+        static staticMethod() { /* doSth */ }
+        // ...
+    }
+    // 静态方法也可以写为
+    // SubComponent.staticMethod = function () {/* doSth */}
+    
+    const SubComponentWithDesc = HOCFunc(SubComponent);
+    
+    console.log(SubComponentWithDesc.staticMethod === undefined); // true
+    ```
+    对于上例来说，加过修饰的组件`SubComponentWithDesc`中并不存在原本组件的静态方法。对于这种情况，必须要做拷贝：
+    ```
+    const SubComponentWithDesc = HOCFunc(SubComponent);
+    SubComponentWithDesc.staticMethod = SubComponent.staticMethod; // 手动进行拷贝
+    ```
+    这种情况适用于知道哪些方法需要拷贝，如果不知道的话可以使用[hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics)这个库：
+    ```
+    import hoistNonReactStatic from 'hoist-non-react-statics';
+    const SubComponentWithDesc = HOCFunc(SubComponent);
+    hoistNonReactStatic(SubComponentWithDesc, SubComponent);
+    ```
+
+值得一提的是，`Refs `不会被传递,因为其跟`props`原理不同，`React`会去专门处理`refs`， 如果将` ref `添加到` HOC `的返回组件中，则` ref `引用指向容器组件，而不是被包装组件。如果想要使其指向原始被包装组件，可以参考`refs 转发`
