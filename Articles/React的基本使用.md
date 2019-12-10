@@ -474,6 +474,124 @@ export default class ErrorBoundary extends React.Component {
 )}/>
  ```
 
+ 常用的使用场景: 需要**动态决定组件内部什么东西是需要渲染的**，官方举了大概这么个例子：
+ ```
+ export default class LearnReact extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            x: 0,
+            y: 0,
+        }
+    }
+
+    handleMouseMove = (e) => {
+        this.setState({
+            x: e.clientX,
+            y: e.clientY,
+        })
+    };
+
+    render() {
+        return (
+            <div className="learnReact" onMouseMove={this.handleMouseMove}>
+                <p>当前的鼠标位置是 ({this.state.x}, {this.state.y})</p>
+            </div>
+        )
+    }
+}
+ ```
+ 现在需要复用该组件内部获取鼠标位置的逻辑做一些额外的操作，比如要获取到当前鼠标位置，达到页面上图片跟着鼠标位置而移动的效果。
+
+比如我们指定目标组件采用`<ImgCanMove mouse={{ x, y }} />`这样的方式进行接收参数，其内部实现大概为:
+
+```
+import React from "react";
+import PropTypes from "prop-types";
+
+export default class ImgCanMove extends React.Component{
+    render() {
+        const mouse = this.props.mouse;
+        return (
+            <img src="../logo.png" alt="目标图片" style={{ position: 'absolute', left: mouse.x, top: mouse.y }} />
+        );
+    }
+}
+ImgCanMove.propTypes = {
+    mouse: PropTypes.shape({
+        x: PropTypes.number.isRequired,
+        y: PropTypes.number.isRequired
+    }).isRequired
+};
+```
+接下来就是重点，如果我们不使用`render prop`去动态的决定其内部渲染什么内容时，我们这时只能将`<ImgCanMove />`放到父组件中：
+
+```
+// LearnReact.js
+    render() {
+        return (
+            <div className="learnReact" onMouseMove={this.handleMouseMove}>
+                {/*<p>当前的鼠标位置是 ({this.state.x}, {this.state.y})</p>*/}
+                <ImgCanMove mouse={this.state} />
+            </div>
+        )
+    }
+```
+
+这种方法没什么问题，但是这种情况下，丧失了可复用性，比如我现在又有新的组件也要复用其内部获取鼠标位置的逻辑，那么又得创建一个新组件。
+
+鉴于上述原因，这时候可以使用`render prop`，动态去决定`<LearnReact />`内部渲染什么内容,先修改其内部`render()`:
+
+```
+// LearnReact.js 修改render()
+    render() {
+        return (
+            <div className="learnReact" onMouseMove={this.handleMouseMove}>
+                {/*<p>当前的鼠标位置是 ({this.state.x}, {this.state.y})</p>*/}
+                {/*<ImgCanMove mouse={this.state} />*/}
+                {this.props.render(this.state)}
+            </div>
+        )
+    }
+```
+此时，`<LearnReact />`内部渲染什么内容就通过`this.props.render`来动态决定了，剩下的只需要在调用时动态给定这个`render prop`就可以了：
+```
+// 外部使用 render prop
+    render() {
+        return (
+            // 这里传入一个(mouse) => (<ImgCanMove mouse={mouse} />) 函数来让LearnReact动态渲染ImgCanMove组件
+            <LearnReact render={(mouse) => (
+                <ImgCanMove mouse={mouse} />
+            )} />
+        )
+    }
+```
+
+上述就是一个简单使用`render prop`的例子。可以体会到**render prop 是一个用于告知组件需要渲染什么内容的函数 prop。**
+
+另外别误会，任何被用于告知组件需要渲染什么内容的函数` prop `在技术上都可以被称为` “render prop”`，即`prop`的名字不一定非得是`render`
+
+补充一点需要注意的：当在`React.PureComponent`中使用`Render Props`时，**浅比较的值永远是`false`**,所以这时候使用`React.PureComponent`并不能达到效果，官方给出的解决方案有：
+1. 放弃使用`React.PureComponent`转为`React.Component`
+2. 如果能将传入的`prop`设定为组件的实例方法的话，是可以解决问题的：
+    ```
+    class RenderPropWrapper extends React.PureComponent {
+        //  我们将要传入的render prop设置为实例一个方法，
+        //  那么在使用时，其指向地址都是一致的，能避免浅比较都为false的情况
+        renderTheCat(mouse) {
+            return <ImgCanMove mouse={mouse} />;
+        }
+    
+        render() {
+            return (
+                <div>
+                    <LearnReact render={this.renderTheCat} />
+                </div>
+            );
+        }
+    }
+    ```
+
 ### `props`添加默认值`defaultProps`
 
 `defaultProps `可以为` Class `组件添加默认` props`。这一般用于` props `未赋值，但又不能为` null `的情况:
