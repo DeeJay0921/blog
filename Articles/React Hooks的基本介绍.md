@@ -214,3 +214,81 @@ export default () => {
 
 对于这样的`effect`，我们使用`useEffect`时就要有不一样的逻辑了
 
+一般使用`Class`组件，我们需要将订阅和取消订阅操作放到2个不同的钩子函数中，但是使用`useEffect`时，这样的操作是放到一起的。
+
+**只要在`useEffect`中`return`出一个函数后，返回的这个函数就会在执行清除操作时（`React`会在组件卸载的时候执行清除操作）调用它**，这是`useEffect`的一个可选的清除机制
+
+所以一般需要清除的`effect`的代码大概像这样：
+```
+    useEffect(() => {
+        //    第一次渲染之后和每次更新之后都会执行
+        Api.subscribeXXX(xxx);
+
+        return () => { //  return的函数会在React执行清除操作时调用
+            Api.unsubscribeXXX(xxx);
+        }
+    });
+```
+
+接下来看一些`effect`常见的进阶用法
+
+### 使用多个` Effect `将不相关的逻辑分离开
+
+使用`Class`组件的一个不好的地方就是开发者会被迫将不相关的逻辑放到同一个钩子函数中，跟`Vue`的`options Api`以及`composition Api`是一个道理。
+
+而`useEffect`也像`useState`一样允许开发者定义多个，可以在同一个`useEffect`中专注于同一逻辑。例如：
+
+```
+export default () => {
+    const [counter, setCounter] = useState(0);
+    useEffect(() => { // 这个effect 只处理counter相关逻辑
+        document.title = `current Counter: ${counter}`;
+    });
+
+    useEffect(() => { // 这个effect只处理订阅逻辑
+        Api.subscribeXXX(xxx);
+
+        return () => { //  return的函数会在React执行清除操作时调用
+            Api.unsubscribeXXX(xxx);
+        }
+    });
+
+    return (
+        <div>
+            <h1>LearnHooks</h1>
+            <div>current Counter: {counter}</div>
+            <button onClick={() => setCounter(counter + 1)}>click to plus counter</button>
+        </div>
+    )
+}
+```
+
+如上例所示，我们可以根据代码的用途去定义多个`effect`
+
+### 由于effect在每次重渲染时都会执行导致的性能问题及解决方案
+
+我们一直在强调，`effect`在**组件第一次渲染及之后每次更新都会执行**
+
+这样做的好处是解决了`Class`组件中经常存在的忘记在` componentDidUpdate `钩子中添加组件更新后的逻辑的问题
+
+但是这样每次渲染后都执行清理或者执行`effect`也带来了性能问题
+
+传统的`Class`组件可以在`componentDidUpdate`中进行对比`prevProps `或` prevState`来进行跳过执行逻辑
+
+相应的，使用`useEffect`也有对应的功能：
+
+```
+useEffect(() => { // 这个effect 只处理counter相关逻辑
+    document.title = `current Counter: ${counter}`;
+}, [counter]); // 仅在 counter 更改时更新
+```
+
+我们可以通过给`useEffect`传递**一个数组**作为其第二个参数来达到效果，**如果某些特定值在两次重渲染之间没有发生变化，就可以跳过对`effect`的调用**
+
+值得注意的是，如果数组中有多个元素，即使**只有一个元素发生变化，`React `也会执行` effect`**
+
+如果想执行**只运行一次的` effect`（仅在组件挂载和卸载时执行）**，可以**传递一个空数组（`[]`）作为第二个参数**。这就告诉` React `你的` effect `不依赖于` props `或` state `中的任何值，所以它永远都不需要重复执行。
+
+如果你传入了一个空数组（`[]`），`effect `内部的` props `和` state `就会一直会是其初始值。
+
+> 另外`React `会等待浏览器完成画面渲染之后才会延迟调用` useEffect`，因此会使得额外操作很方便。
