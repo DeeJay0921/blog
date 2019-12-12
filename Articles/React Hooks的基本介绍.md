@@ -99,6 +99,10 @@ export default class LearnReact extends React.Component {
 
     经过上面的例子，我们已经可以得出，`useState`的返回值是**一个数组**，其内部元素依次为**当前` state `以及更新` state `的函数**, 每定义一个`state`都需要去成对的获取一下修改相应的`state`的方法。
 
+
+> `useState(initialValue)`其**是一个惰性的初始值，一旦初始化之后，后续`initialValue`就算有更新也会被忽略**
+
+
 ### state Hook中的事件处理函数
 
 对于上述例子，更新`state`时传入的事件处理函数，注意不能直接写成:
@@ -121,7 +125,7 @@ const [todos, setTodos] = useState([{ text: '学习 Hook' }]);
 
 但是在开发时要注意`state`的分离颗粒度。
 
-### state hook的更新(替换而非合并)
+### state hook的更新
 
 > 值得注意的是, `useState`返回的修改`state`的方法对于`state`的修改，是**单纯的替换而不是合并**
 
@@ -163,6 +167,14 @@ export default () => {
 `obj`的值由`{name: "Yang", age: 23, gender: "male"}`直接变为了`{name: "Zhang"}`，
 
 并没有像传统的`class`组件中调用`setState`那样对值进行合并，这一点要特别注意。
+
+**且`State Hook`对于`state`的更新方法，也像`class`那样可以传入一个函数进行函数式更新**：
+
+```
+setCounter((prevCounter) => {
+    return prevCounter + 1;
+})
+```
 
 ## Effect Hook
 
@@ -292,3 +304,202 @@ useEffect(() => { // 这个effect 只处理counter相关逻辑
 如果你传入了一个空数组（`[]`），`effect `内部的` props `和` state `就会一直会是其初始值。
 
 > 另外`React `会等待浏览器完成画面渲染之后才会延迟调用` useEffect`，因此会使得额外操作很方便。
+
+## 自定义Hook
+
+自定义` Hook `是一个函数，其名称**必须以` use `开头**，函数内部可以调用其他的` Hook`。
+
+每次使用自定义` Hook `时，**其中的所有` state `和副作用都是完全隔离独立的**。
+
+来看一个使用自定义`Hook`的例子
+
+假设现在有一个记录页面已经打开了多少秒的组件如下：
+
+```
+export default () => {
+    const [seconds, setSeconds] = useState(0);
+    let timer;
+
+    useEffect(() => {
+        timer = setInterval(() => {
+            setSeconds(seconds + 1);
+        }, 1000);
+
+        return () => {
+            console.log("Total Seconds: ", seconds);
+            clearInterval(timer);
+        }
+    });
+
+    return (
+        <div>
+            <span>页面已经渲染了{seconds}秒</span>
+        </div>
+    )
+}
+```
+
+这时别的组件刚好也需要这个计时功能，就可以将其内部计数的逻辑单独抽出来，定义为一个自定`Hook`,比如我们定义为`useSeconds`,内部逻辑为：
+
+```
+// useSeconds.js
+import {useState, useEffect} from "react";
+
+export default function useSeconds() {
+    const [seconds, setSeconds] = useState(0);
+    let timer;
+
+    useEffect(() => {
+       timer = setInterval(() => {
+           setSeconds(seconds + 1);
+       },1000);
+       return () => {
+           console.log("Total Seconds: ", seconds);
+           clearInterval(timer);
+       }
+    });
+
+    return seconds;
+}
+```
+
+此时我们就可以进行使用这个自定义`Hook`了，在原来的组件里：
+
+```
+import React from "react";
+import useSeconds from "./useSeconds";
+
+export default () => {
+    const seconds = useSeconds();
+
+    return (
+        <div>
+            <span>页面已经渲染了{seconds}秒</span>
+        </div>
+    )
+}
+```
+
+在另外想复用的组件里也可以直接引入使用，且多个自定义`Hook`之间的`state`和`effect`是相互独立的。
+
+
+当然由于自定义`Hook`就是一个函数，也可以通过调用使用传入参数传递信息。
+
+
+从上例中我们可以看出：**自定义` Hook `解决了以前在` React `组件中无法灵活共享逻辑的问题。**
+
+## useContext
+
+接收一个` context `对象（`React.createContext `的返回值）并返回该` context `的当前值。该`Hook`能够读取` context `的值以及订阅` context `的变化。
+
+来看一个简单使用的例子, 假设有如下`Theme`文件：
+
+```
+import React from "react";
+const themes = {
+    light: {
+        foreground: "#000000",
+        background: "#eeeeee"
+    },
+    dark: {
+        foreground: "#ffffff",
+        background: "#222222"
+    }
+};
+const ThemeContext = React.createContext(themes.light);
+export  {
+    themes,
+    ThemeContext,
+}
+```
+
+此时在`<App />`中应用这个`Context`:
+```
+import React, {useState, useEffect} from 'react';
+import LearnHooks from "./components/LearnHooks";
+import { themes, ThemeContext } from "./components/Theme";
+
+function App() {
+    const [theme, setTheme] = useState(themes.dark);
+    
+    useEffect(() => {
+        setTimeout(() => {
+            setTheme(themes.light); // 3s后将主题改为白色
+        }, 3000)
+    });
+
+    return (
+        <div id="app">
+            <ThemeContext.Provider value={theme}>
+                <LearnHooks/>
+            </ThemeContext.Provider>
+        </div>
+    );
+}
+
+export default App;
+
+```
+此时在我们的目标组件中，就可以进行使用`useContext`来进行获取`Context`了：
+
+```
+import React, {useContext} from "react";
+import { ThemeContext } from "./Theme";
+
+export default () => {
+    const theme = useContext(ThemeContext); // 获取theme
+
+    return (
+        <p style={{ background: theme.background, color: theme.foreground }}>
+            normal Text
+        </p>
+    )
+}
+```
+
+## useReducer
+
+用法:
+
+```
+const [state, dispatch] = useReducer(reducer, initialArg, init);
+```
+
+在 `state `逻辑较复杂且包含多个子值，或者下一个` state `依赖于之前的` state `等场景下，可以用来代替`useState()`,同时`useReducer`的优势在于还会对深层次组件更新做优化。
+
+`useReducer`最多可以接收三个参数：
+- 第一个参数`reducer`是`(state, action) => newState `类型的函数
+- 第二个参数如果在第三个参数未传的情况下，是直接作为`state`的初始值的，但是如果传入了第三个参数，那么初始值为`init(initialArg)`
+- 第三个参数是可选的一个函数，参数为`initialArg`, 返回`state`的初始值（传入`init`时为惰性的初始化`state`）。
+
+看一个基本使用的例子：
+```
+import React, {useReducer} from "react";
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'increment':
+            return {count: state.count + 1};
+        case 'decrement':
+            return {count: state.count - 1};
+        default:
+            throw new Error();
+    }
+}
+
+function init(initialCount) {
+    return {count: initialCount};
+}
+
+export default () => {
+    const [state, dispatch] = useReducer(reducer, 0, init);
+
+    return (
+        <div>
+            Count: {state.count}
+            <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+            <button onClick={() => dispatch({type: 'increment'})}>+</button>
+        </div>
+    )
+}
+```
