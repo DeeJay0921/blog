@@ -754,3 +754,92 @@ export default () => {
 }
 ```
 
+## useLayoutEffect
+
+`useLayoutEffect`和`useEffect`的区别在于:`useLayoutEffect`会在所有的` DOM `变更之后**同步调用**` effect`。
+
+可以使用它来读取` DOM `布局并同步触发重渲染。在浏览器执行绘制之前，`useLayoutEffect `内部的更新计划将被同步刷新。
+
+其调用阶段和`componentDidMount`、`componentDidUpdate` 的调用阶段是一样的
+
+但是一般只有特殊情况才会使用到，一般建议使用`useEffect`来避免阻塞加载从而提高用户体验
+
+## 一些补充
+
+
+### react hooks 异步获取数据
+[扩展阅读：How to fetch data with React Hooks?](https://www.robinwieruch.de/react-hooks-fetch-data)
+
+### `useRef`的额外用法
+
+ `useRef `不仅可以用于` DOM refs`。**`ref`对象还是一个` current `属性可变且可以容纳任意值的通用容器**,可以作为当前组件中的全局变量进行使用。
+ 
+ 比如说：作为一个`timerID`,在卸载组件的时候进行消除
+ 
+ #### 使用`useRef`让`effect`只在组件更新时执行
+
+ 通过使用`useRef`，可以达到一个使`useEffect`只在组件更新时(类似于`componentDidUpdate`)进行执行`effect`而在组件第一次渲染时(类似于`componentDidMount`)不执行`effect`:
+ 
+
+ ```
+ export default () => {
+    const [counter, setCounter] = useState(0);
+    const isFirstRender = useRef(true); // 设置默认 是否第一次渲染为true
+
+    useEffect(() => {
+        if(!isFirstRender.current) { // 已经不是第一次渲染 而是后续组件更新
+            console.log("componentDidUpdate");
+            //    目标 effect的逻辑可以在这执行
+        }else {
+            isFirstRender.current = false; // 第一次渲染之后将值置为false
+            console.log("componentDidMount");
+        }
+    });
+
+    return (
+        <div>
+            <div>counter: {counter}</div>
+            <button onClick={() => setCounter(counter + 1)}>click to reRender component</button>
+        </div>
+    )
+}
+ ```
+
+#### 通过`useRef`获取上一轮的`props`或者`state`
+
+可以通过`useRef`和`useEffect`来进行记录存储上一次的`state`:
+
+```
+export default () => {
+    const [counter, setCounter] = useState(0);
+    const prevCounter = useRef();
+
+    useEffect(() => {
+        prevCounter.current = counter;
+        console.log("counter: ", counter);
+        console.log("prevCounter: ", prevCounter.current); // 这里获取的prevCounter和counter是一致的
+        //  这的逻辑是较晚异步执行的
+    });
+
+    console.log(prevCounter.current); // 在这里获取的prevCounter 为前一次的值
+    // useEffect是异步执行  所以在这的逻辑是较早执行的
+    return (
+        <div>
+            <div>counter: {counter}</div>
+            <div>prevCounter: {prevCounter.current}</div>
+            <button onClick={() => setCounter(counter + 1)}>click to reRender component</button>
+        </div>
+    )
+}
+```
+如果该逻辑经常用到的话，可以考虑封装为一个自定义`hook`:
+```
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+```
+
