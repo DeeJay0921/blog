@@ -503,3 +503,254 @@ export default () => {
     )
 }
 ```
+
+## `useCallback` 和 `useMemo`
+
+这2个`hook`都是作为性能优化手段来使用的，也能使用其特性达成一些特殊用途。且`useMemo`可以实现`useCallback`
+
+
+相关用法：
+```
+// useCallback:
+const memoizedCallback = useCallback(
+  () => {
+    doSomething(a, b);
+  },
+  [a, b],
+);
+
+// useMemo:
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+```
+
+> `useCallback(fn, deps) `相当于` useMemo(() => fn, deps)`。
+
+2者都是返回一个`memoized`过后的函数/值，第二个参数和`useEffect`类似为依赖项，如果依赖项有改变的话，`memoized`的值或者函数才会得到更新。
+
+如果依赖传入一个`[]`或者依赖未发生改变的话，其`memoized`的函数或者值的引用地址是不会改变的（同一块内存区域），利用这一特性，可以配合类似于`shouldComponentUpdate`的机制来进行避免重复渲染。
+
+### 使用`useCallback`和`useMemo`的场景举例
+
+了解了基本概念之后，[这篇文章](https://juejin.im/post/5db14bf2e51d452a161df297)举了个例子展示了`useCallback`及`useMemo`的使用。
+
+大概例子是有这么一个防抖函数，在鼠标滑动的时候去触发：
+```
+// generateDebounce.js
+
+function generateDebounce(func, delay=1000) {
+    let timer;
+    function debounce(...args) {
+        debounce.cancel();
+        timer = setTimeout(() => {
+            console.count("func called");
+            func.apply(this, args);
+        }, delay);
+    }
+
+    debounce.cancel = function () {
+        if (timer !== undefined) {
+            clearTimeout(timer);
+            timer = undefined;
+        }
+    };
+    return debounce;
+}
+```
+这个函数调用之后返回一个防抖函数`debounce`，然后在如下组件中进行防抖使用：
+
+```
+import React, {useState} from "react";
+import generateDebounce from "./generateDebounce";
+
+export default () => {
+    const [count, setCount] = useState(0);
+    const [bounceCount, setBounceCount] = useState(0);
+    const debounceSetCount = generateDebounce(setBounceCount); // 每次更新渲染都会重新创建一个debounceSetCount
+
+    const handleMouseMove = () => {
+        setCount(count + 1);
+        debounceSetCount(bounceCount + 1);
+    };
+
+    return (
+        <div onMouseMove={handleMouseMove}>
+            <p>普通移动次数: {count}</p>
+            <p>防抖处理后移动次数: {bounceCount}</p>
+        </div>
+    )
+}
+```
+在上述例子中，我们可以看到，虽然`bounceCount`增加的不多，但是其实内部的`console.count("func called");`执行的次数和未做防抖的次数`count`是一样的
+
+也就是说并没有达到防抖的效果，造成这个现象的原因是：
+
+每次执行`onMouseMove`都会导致组件的重新渲染，整个函数组件将会被重新执行
+
+即意味着`const debounceSetCount = generateDebounce(setBounceCount);`这句每次都会执行，会创建很多个新的`debounceSetCount`，所以其不同的`debounce`其实是使用很多个不同的`timer`,这就造成了我们看到的调用次数并没有减少的情况
+
+但是`bounceCount`增加的并没有像`count`那么快的原因就是在执行`onMouseMove`时疯狂的传入了很多次一样的参数，而在异步函数中执行增加操作时，其实都是一个相同的值在加一，所以`bounceCount`没有增加到函数调用次数那么大，但是本质上，函数还是调用了很多次的。
+
+### 使用`useCallback`举例
+
+花了这么多篇幅讲通这个例子的原路，现在来看怎么修复，我们通过`useCallback`创建一个`memoized`函数，依赖为`[]`, 这样一来，我们创建的这个`debounceSetCount`函数的引用就一直是同一个地址，这样就组件每次更新时，由于依赖为`[]`，函数一直不会更新，永远为同一个函数，即可达到效果
+
+```
+export default () => {
+    const [count, setCount] = useState(0);
+    const [bounceCount, setBounceCount] = useState(0);
+    // const debounceSetCount = generateDebounce(setBounceCount);
+    // 改用callback创建一个 memoized 函数，依赖为[]即永远保存同一块内存中的这个 debounceSetCount 函数
+    const debounceSetCount = useCallback(generateDebounce(setBounceCount), []);
+    
+    // 省略下面代码。。。。
+}
+```
+
+### 使用`useMemo`举例
+
+上面例子中，也可以直接使用`useMemo`:
+
+```
+    // const debounceSetCount = generateDebounce(setBounceCount);
+    // const debounceSetCount = useCallback(generateDebounce(setBounceCount), []);
+    const debounceSetCount = useMemo(() => generateDebounce(setBounceCount), []);
+```
+
+达到的效果是一样的。也能创建一个唯一的`debounceSetCount`函数
+
+关于`useMemo`,官方建议我们，**先不要使用`useMemo`编写可用的代码，然后再引入`useMemo`仅仅作为性能优化的手段**，因为官方说了`useMemo`不一定能作为一个保证来使用
+
+> 关于`useMemo`引自文档： **You may rely on useMemo as a performance optimization, not as a semantic guarantee.** In the future, React may choose to “forget” some previously memoized values and recalculate them on next render, e.g. to free memory for offscreen components. 
+
+## useRef
+
+用法：
+```
+const ref = useRef(initialValue);
+```
+
+和`Class`组件一样，`useRef`提供了在函数组件中使用`ref`的方法，其参数`initialValue`为给`ref`设置的初始值，该值在`useEffect`之中就已经被重新赋值为目标`DOM`
+
+来看使用例子：
+```
+import React, {useRef, useEffect} from "react";
+
+
+export default () => {
+    const testRef = useRef(null); // 给null作为初始值
+    console.log(testRef); // {current: null}
+
+    useEffect(() => {
+        console.log(testRef); // 输出 {current: div}
+    });
+
+    return (
+        <div ref={testRef}>
+            normal Text
+        </div>
+    )
+}
+```
+
+> 当` ref `对象内容发生变化时，`useRef `并不会通知更新。且变更` .current `属性也不会引发组件重新渲染。
+
+
+如果想要在` React `绑定或解绑` DOM `节点的` ref` 时运行某些代码，则需要使用回调` ref `来实现。
+
+来看一个不使用`useRef`而是使用回调`ref`的例子：
+
+```
+export default () => {
+    const [isShow, setIsShow] = useState(true);
+    const callbackRef = useCallback((domNode) => {
+        console.log(domNode); // 在ref附加到节点上时自动调用  在节点卸载时也会自动调用 输出null
+    }, []);
+
+    return (
+        <React.Fragment>
+            {
+                isShow &&
+                <h1 ref={callbackRef}>
+                    <div>Hello, ref</div>
+                </h1>
+            }
+            <button onClick={() => (setIsShow(false))}>click</button>
+        </React.Fragment>
+    )
+}
+```
+
+我们分析下上述例子：使用`useCallback`声明一个`callbackRef`，传入的依赖为`[]`,所以其`ref`不会在组件重新渲染时改变。
+
+**使用回调`ref`的优点是，节点发生变化的时候，会自动调用目标回调**，而使用`useRef`时，节点对象发生变化时，`useRef`并不会通知你（当然可以手动写一个`useEffect`去主动获取`ref`对象，是可以拿到最新的对象的）
+
+## useImperativeHandle
+
+用法：
+```
+useImperativeHandle(ref, createHandle, [deps])
+```
+
+`useImperativeHandle`是和`forwardRef`搭配使用实现`refs`转发的,来看使用例子，现有父组件：
+
+```
+export default () => {
+    const supRef = useRef(null);
+
+    useEffect(() => {
+        console.log(supRef);
+        supRef.current.focus();
+    });
+
+    return (
+        <ImperativeHandle ref={supRef} />
+    )
+}
+```
+而子组件里的逻辑为：
+```
+// ImperativeHandle.js
+import React, {useRef, useImperativeHandle} from "react";
+
+export default React.forwardRef((props, ref) => {
+    const subRef = useRef(null);
+
+    useImperativeHandle(ref, () => subRef.current);
+
+    return <input ref={subRef} />;
+})
+```
+
+而`useImperativeHandle`的功能在于，**在使用` ref `时自定义暴露给父组件的实例值**,上述例子中我们通过使用：
+```
+useImperativeHandle(ref, () => subRef.current);
+```
+直接暴露出了整个`subRef.current`，我们可以自定义决定暴露出什么，比如我们改为暴露一个`subFocus`方法而不是暴露整个`subRef`:
+
+```
+// ImperativeHandle.js
+    <!--省略其他代码-->
+    useImperativeHandle(ref, () => { // 可以自定义决定暴露什么内容给父组件
+        return {
+            subFocus: () => {
+                subRef.current.focus();
+            }
+        }
+    });
+```
+在父组件中获取到的`supRef.current`也发生了相应的改变：
+```
+export default () => {
+    const supRef = useRef(null);
+
+    useEffect(() => {
+        // 在这获取到的supRef.current 就是子组件通过 useImperativeHandle 自定义暴露出的内容
+        supRef.current.subFocus(); // 调用暴露出的subFocus()
+    });
+
+    return (
+        <ImperativeHandle ref={supRef} />
+    )
+}
+```
+
