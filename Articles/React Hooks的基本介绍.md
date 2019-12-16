@@ -843,3 +843,107 @@ function usePrevious(value) {
 }
 ```
 
+#### 组件中的函数读取`state`和`prop`出现不及时更新的情况
+
+造成在组件内函数中拿到的`state`和`prop`不是最新的原因有两个:
+1. 如果是使用的`useEffect`，可能是依赖数组中提供了`[]`或者依赖项没有提供全.
+2. 组件内部的任何函数，包括事件处理函数和` effect`，其内部拿到的值都是其被声明的那一次渲染中获取的
+
+
+其中第1点可能很好理解，解决方案就是修正给`useEffect`提供的依赖数组即可
+
+下面解释一下第2点：假设现有如下例子：
+
+```
+export default () => {
+    const [counter, setCounter] = useState(0);
+
+    function handleAlertClick() {
+        setTimeout(() => {
+            alert('You clicked on: ' + counter);
+        }, 3000);
+    }
+
+    return (
+        <div>
+            <p>You clicked {counter} times</p>
+            <button onClick={() => setCounter(counter + 1)}>
+                Click me
+            </button>
+            <button onClick={handleAlertClick}>
+                Show alert
+            </button>
+        </div>
+    )
+}
+```
+
+在上述组件中，点击了`show alert`按钮之后，再点击数次`click me`按钮去增加`counter` 可以看到，3s后会输出当时3s前点击`show alert`时的`counter`,而不是目前页面显示的`counter`
+
+
+要理解这种情况发生的原因，需要理解2点：
+1. **每次点击`click me`去更新`state`的时候，整个函数组件的逻辑都会被重新执行，所以事件处理函数`handleAlertClick`每次都会被重复声明**
+2. 明确了第1点之后，那么**每次重新声明的`handleAlertClick`内部都只能拿到当前这次渲染中的`state`**
+
+
+我们在上例中，先点击一次`handleAlertClick`，其只能拿到当前这次渲染时的`counter`即`0`，然后我们点击数次`click me`并不会改变第一次声明的这个`handleAlertClick`中拿到的`counter`值，所以即会造成上述情况。
+
+而这种情况，也是会造成在函数中拿到的值是陈旧的情况，针对这种情况，如果想要去获取到最新的`state`和`prop`的话，可以在值更新后的异步回调中去创建一个`ref`去存储其最新值。
+
+
+使用`ref`存储的例子：
+```
+export default () => {
+    const [counter, setCounter] = useState(0);
+    const latestVal = useRef(null);
+
+    function handleAlertClick() {
+        setTimeout(() => {
+            alert('You clicked on: ' + counter);
+            alert('latest counter: ' + latestVal.current);
+        }, 3000);
+    }
+
+    useEffect(() => {
+        latestVal.current = counter; // 在这使用ref存储最新的值
+    }, [counter]);
+
+    return (
+        <div>
+            <p>You clicked {counter} times</p>
+            <button onClick={() => setCounter(counter + 1)}>
+                Click me
+            </button>
+            <button onClick={handleAlertClick}>
+                Show alert
+            </button>
+        </div>
+    )
+}
+```
+
+#### 在函数组件中使用`hook`达到`static getDerivedStateFromProps`的效果
+
+> 如果你的**组件中`state`的值在任何时候都取决于` props`的时候**，这种情况才考虑使用`static getDerivedStateFromProps`, 用之前考虑一下，如果不是这种情况，那么[you-probably-dont-need-derived-state](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#when-to-use-derived-state)
+
+
+针对这种情况，`React`有一个机制是：如果在渲染过程中更新`state`的话，那么`React`会**立即退出上一次渲染**并用更新后的 `state`重新运行组件以避免耗费太多性能
+
+```
+function ScrollView({row}) {
+    let [isScrollingDown, setIsScrollingDown] = useState(false);
+    let [prevRow, setPrevRow] = useState(null);
+
+    // 每次父组件props.row改变时，在这做拦截判断，如果没改变那么按逻辑return，
+    // 如果props.row改变了，那么直接在这setState更新，跳过当前这次渲染，直接使用新的state运行下次组件逻辑
+    if (row !== prevRow) {
+        // Row 自上次渲染以来发生过改变。更新 isScrollingDown。
+        setIsScrollingDown(prevRow !== null && row > prevRow);
+        setPrevRow(row);
+    }
+
+    return `Scrolling down: ${isScrollingDown}`;
+}
+```
+
+上述是官方举的一个例子，该组件接收一个`props`为`row`，目标组件中`state`依赖`props.row`进行更新，本组件中如果父组件滚动时，子组件的逻辑会判断`props.row`,如果确定向下滚动了，那么直接调用`setState`更新`state`，跳过当前这次渲染，直接使用新的`state`运行下次组件逻辑
