@@ -947,3 +947,35 @@ function ScrollView({row}) {
 ```
 
 上述是官方举的一个例子，该组件接收一个`props`为`row`，目标组件中`state`依赖`props.row`进行更新，本组件中如果父组件滚动时，子组件的逻辑会判断`props.row`,如果确定向下滚动了，那么直接调用`setState`更新`state`，跳过当前这次渲染，直接使用新的`state`运行下次组件逻辑
+
+
+#### 实现类似于`React.PureComponent`的效果
+
+可以通过`React.memo`来达到效果：
+
+```
+const Button = React.memo((props) => {
+  // 你的组件
+});
+```
+
+`React.memo `等效于` PureComponent`，但它**只比较` props`**, 不比较` state`。
+
+> 也可以通过第二个参数指定一个自定义的比较函数来比较新旧 props。如果函数返回 true，就会跳过更新
+
+```
+// 第二个参数指定一个自定义的比较函数来比较新旧 props
+const compare = (prevProp, currentProp) => {
+    return prevProp.children === currentProp.children; // return true 代表跳过更新
+};
+
+export default React.memo((props) => {
+    return (
+        <div>
+            <div>hello world</div>
+            {props.children}
+        </div>
+    )
+}, compare)
+```
+
