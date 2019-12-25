@@ -46,6 +46,54 @@ OS（操作系统）的目的就是可以让上层程序可以通过一种统一
 相对路径相对的是JVM当前的工作目录，永远建议使用绝对路径。
 - 读写文件
 
+## 使用FileInputStream/FileOutputStream读写数据
+
+举个简单的例子，现有一个多行文本，需要提供一个方法将其内容按照一行一行的写为一个`List`，另外的方法将其生成的多行文本的`List`写入文件：
+
+```
+public class FileAccessor {
+    public static List<String> readFile1(File file) {
+//        使用 FileInputStream 读取数据
+        List<String> lines = new ArrayList<>();
+        if(file.exists()) {
+            try(InputStream inputStream = new FileInputStream(file)){
+                int readRes = inputStream.read();
+                StringBuffer allChars = new StringBuffer();
+                while(readRes != -1) { // -1表示读取到文件末尾
+                    allChars.append((char) readRes); // 将文件一次读完
+                    readRes = inputStream.read();
+                }
+                String[] split = allChars.toString().split("\r\n"); // 使用换行符将其分隔开
+                lines.addAll(Arrays.asList(split));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return lines;
+    }
+
+    public static void writeLinesToFile1(List<String> lines, File file) {
+        try(OutputStream outputStream = new FileOutputStream(file)) {
+            for (String line : lines) {
+                outputStream.write(line.getBytes()); // 直接将一整行转换为byte[]进行写入,无需再一个字节一个字节的写入
+                outputStream.write("\r\n".getBytes()); // 每行末尾加上换行符
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void main(String[] args) {
+        String rootPath = System.getProperty("user.dir"); // 获取当前工作目录
+        File targetText = new File(rootPath, "text.txt");
+        List<String> lines = readFile1(targetText);
+        System.out.println("lines = " + lines);
+        File anotherText = new File(rootPath, "anotherText.txt");
+        writeLinesToFile1(lines, anotherText);
+    }
+}
+```
+
 
 ## NIO
 - NIO是Java7之后引入的，解释为：1.new IO 2.Non-blocking IO非阻塞的IO
