@@ -46,9 +46,11 @@ OS（操作系统）的目的就是可以让上层程序可以通过一种统一
 相对路径相对的是JVM当前的工作目录，永远建议使用绝对路径。
 - 读写文件
 
-## 使用FileInputStream/FileOutputStream读写数据
+## 常用的读写文件的方法
 
-举个简单的例子，现有一个多行文本，需要提供一个方法将其内容按照一行一行的写为一个`List`，另外的方法将其生成的多行文本的`List`写入文件：
+现有如下场景：假设有一个多行文本，需要提供一个方法将其内容按照一行一行的写为一个`List`，另外的方法将其生成的多行文本的`List`写入文件，下面介绍几种常用的方法：
+
+### 使用FileInputStream/FileOutputStream读写数据
 
 ```
 public class FileAccessor {
@@ -85,6 +87,121 @@ public class FileAccessor {
     
     public static void main(String[] args) {
         String rootPath = System.getProperty("user.dir"); // 获取当前工作目录
+        File targetText = new File(rootPath, "text.txt");
+        List<String> lines = readFile1(targetText);
+        System.out.println("lines = " + lines);
+        File anotherText = new File(rootPath, "anotherText.txt");
+        writeLinesToFile1(lines, anotherText);
+    }
+}
+```
+
+### 使用 BufferedReader/BufferedWriter一行一行读取
+
+```
+public class FileAccessor {
+    public static List<String> readFile1(File file) {
+//        使用 BufferedReader/BufferedWriter
+        List<String> lines = new ArrayList<>();
+        if(file.exists()) {
+            try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+                String line = bufferedReader.readLine();
+                while(line != null) {
+                    lines.add(line);
+                    line = bufferedReader.readLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return lines;
+    }
+
+    public static void writeLinesToFile1(List<String> lines, File file) {
+        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+            for (String line : lines) {
+                bufferedWriter.write(line);
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        String rootPath = System.getProperty("user.dir");
+        File targetText = new File(rootPath, "text.txt");
+        List<String> lines = readFile1(targetText);
+        System.out.println("lines = " + lines);
+        File anotherText = new File(rootPath, "anotherText.txt");
+        writeLinesToFile1(lines, anotherText);
+    }
+}
+```
+
+### 使用 Java7+ 的NIO引入的Files.readAllLines()/ Files.readAllBytes() / Files.write进行读写
+
+```
+public class FileAccessor {
+
+    public static List<String> readFile1(File file) {
+//        使用 Java7+ 的NIO引入的Files.readAllLines()/ Files.readAllBytes() / Files.write进行读写
+        List<String> lines = new ArrayList<>();
+        if(file.exists()) {
+            try {
+                lines = Files.readAllLines(file.toPath(), Charset.defaultCharset());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return lines;
+    }
+
+    public static void writeLinesToFile1(List<String> lines, File file) {
+        try {
+            Files.write(file.toPath(), lines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        String rootPath = System.getProperty("user.dir");
+        File targetText = new File(rootPath, "text.txt");
+        List<String> lines = readFile1(targetText);
+        System.out.println("lines = " + lines);
+        File anotherText = new File(rootPath, "anotherText.txt");
+        writeLinesToFile1(lines, anotherText);
+    }
+}
+```
+
+### 使用 Apache Commons IO 中的 FileUtils 或者 IOUtils进行读写
+
+```
+public class FileAccessor {
+    public static List<String> readFile1(File file) {
+        List<String> lines = new ArrayList<>();
+        try {
+            lines = FileUtils.readLines(file, StandardCharsets.UTF_8);
+            // lines = IOUtils.readLines(new FileInputStream(file), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
+    public static void writeLinesToFile1(List<String> lines, File file) {
+        try {
+            FileUtils.writeLines(file, lines);
+            // IOUtils.writeLines(lines,IOUtils.LINE_SEPARATOR, new FileOutputStream(file), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        String rootPath = System.getProperty("user.dir");
         File targetText = new File(rootPath, "text.txt");
         List<String> lines = readFile1(targetText);
         System.out.println("lines = " + lines);
