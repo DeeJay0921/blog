@@ -503,7 +503,7 @@ export default class ErrorBoundary extends React.Component {
  ```
  现在需要复用该组件内部获取鼠标位置的逻辑做一些额外的操作，比如要获取到当前鼠标位置，达到页面上图片跟着鼠标位置而移动的效果。
 
-比如我们指定目标组件采用`<ImgCanMove mouse={{ x, y }} />`这样的方式进行接收参数，其内部实现大概为:
+比如我们指定目标组件采用`<ImgCanMove mouse={ { x, y } } />`这样的方式进行接收参数，其内部实现大概为:
 
 ```
 import React from "react";
@@ -513,7 +513,7 @@ export default class ImgCanMove extends React.Component{
     render() {
         const mouse = this.props.mouse;
         return (
-            <img src="../logo.png" alt="目标图片" style={{ position: 'absolute', left: mouse.x, top: mouse.y }} />
+            <img src="../logo.png" alt="目标图片" style={ { position: 'absolute', left: mouse.x, top: mouse.y } } />
         );
     }
 }
