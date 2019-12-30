@@ -25,10 +25,10 @@ Java多线程
 
 - Thread
   - Java中唯一的代表线程的东西
-  - 只有start()方法才能开始并发执行
+  - 只有start()方法才能开始并发执行，**注意，run()方法并不会使得线程并发执行，而是会等当前调用run()的线程执行完成后再进行下一步操作，实质上跟不开线程的执行时间是一样的**
   - 每多开一个线程，就多一个执行流
-  - 方法栈（局部变量）是线程私有的
-  - 静态变量/类变量是所有线程共享的
+  - 方法栈内部的局部变量是线程私有的，即不同线程内部的方法中声明的变量完全不相干。
+  - 静态变量/类变量是所有线程共享的，由于总要将多线程的运行结果收集起来，所以需要线程共享的变量，而这也就是多线程出现问题的原因。
 
 # 多线程引起的问题
 > 多线程难的地方在于：要看着同一份代码，想象着不同的人在以疯狂的乱序执行它
@@ -55,6 +55,7 @@ public static void modifySharedVar() {
   System.out.println(i);
 }
 ```
+> 原子操作指的是在多线程领域，在某一个时刻只能被一个线程执行的操作
 
 造成上述问题的愿意在于：`i++;`这个操作不是一个原子操作。其分为三步：
 1. 取i的值
@@ -70,7 +71,7 @@ public static void modifySharedVar() {
 - 对于IO密集型应用极其有用
   - 网络IO（通常包括数据库）
   - 文件IO
-- 对于CPU密集型应用稍有折扣
+- 对于CPU密集型应用稍有折扣（因为多线程本来就是为了提高CPU的利用率，CPU密集型本身就快将CPU跑满了）
 - 性能提升的上限在哪？
   - CPU：占用100%
 
@@ -186,10 +187,10 @@ public class Main {
 
 2. synchronized
     - synchronized同步块
-    - 同步块t同步了什么东西？
+    - 同步块同步了什么东西？
       1. synchronized(object) 将object当成一个锁
       2. static方法上使用synchronized,由于static是和类绑定，所以锁住的是当前的class对象，即把这个Class对象当成锁
-      3. 如果不是static方法，那么方法上的synchronized会将this当成锁，即锁住的是这个实例对象
+      3. 对于实例对象来说，那么方法上的synchronized会将this当成锁，即锁住的是这个实例对象
     - Collections.synchronized
     常见的Collection都不是线程安全的，Collections工具类提供了synchronizedXXX方法将对应的集合转为线程安全的。
 
@@ -247,14 +248,15 @@ private synchronized static void ModifySharedVar() { // 写到方法上
 ```
 3. 使用第三方的实现类
 JUC包
- - AtomicInteger
+ - AtomicInteger等原子类
 - ConcurrentHashMap 任何使用HashMap有线程安全问题的地方，无脑使用ConcurrentHashMap替换即可
-- ReentrantLock 可重入锁 比synchronized要强大，可以手动unlock
+- `java.util.concurrent.locks.ReentrantLock`是一个`java.util.concurrent.locks.Lock`的实现，其是一个ReentrantLock，即可重入锁 比synchronized要强大，可以手动unlock
 
-## Object类里的线程方法
-- 为什么Java中的所有对象都可以成为锁
-  - Object.wait()/notify()/notifyAll()方法
-   - 线程的状态与线程调度
+> 可重入锁: 一个线程在获取了锁之后，可以再次去获取同一个锁
+
+# Object类里的线程方法
+
+Java在语言级别上就支持了多线程，Java中的所有对象都可以成为锁
   
 wait()和notify()方法为线程协作提供了方法
 
@@ -282,7 +284,7 @@ wait()方法的注释：`Causes the current thread to wait until it is awakened,
 - notifyAll则会唤醒所有的线程，这些被唤醒的线程则会开始重新竞争锁，但是只有拿到锁的那一个线程会继续执行逻辑，其余线程则又会陷入沉睡，且所有线程竞争时没有任何优先级
 
 
-###### 线程的状态
+## 线程的状态
 线程的状态可以分为下列6种：
 1. 初始(NEW)：新创建了一个线程对象，但还没有调用start()方法。
 2. 运行(RUNNABLE)：Java线程中将就绪（ready）和运行中（running）两种状态笼统的称为“运行”。
@@ -299,18 +301,308 @@ wait()方法的注释：`Causes the current thread to wait until it is awakened,
 [相关文章: 线程的状态](https://blog.csdn.net/pange1991/article/details/53860651)
 
 
-### 多线程的经典问题: 生产者/消费者模型
+## 多线程的经典问题: 生产者/消费者模型
 
 使用三种方法来实现生产者/消费者模型：
-1. wait/notify/notifyAll
 
-2. Lock/Condition
-将lock变为一个ReentrantLock,将一个synchronized快变为一个try/catch，进入上锁，finally解锁
+给定一个场景： 生产者给定10个随机整数给消费者使用，每次生产一个出来后，生产者不能再进行生产，得等到消费者消费这个整数之后才能继续生产
 
-3. BlockingQueue
+大概的使用方式为：
+```
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        Container container = new Container(); // 作为存储生产出来值的容器
+        Object lock = new Object();
+
+        Producer producer = new Producer(container, lock);
+        Consumer consumer = new Consumer(container, lock);
+
+        producer.start();
+        consumer.start();
+
+        producer.join();
+        producer.join();
+    }
+}
+```
+
+### 使用wait/notify/notifyAll
+
+首先通过`Optional`实现一个容器来存放生产的数据
+```
+// 作为容器的Container：
+import java.util.Optional;
+
+public class Container {
+    private Optional<Integer> value = Optional.empty();
+
+    public Optional<Integer> getValue() {
+        return value;
+    }
+
+    public void setValue(Optional<Integer> value) {
+        this.value = value;
+    }
+}
+```
+
+```
+public class Producer extends Thread{
+    private Container container;
+    private final Object lock;
+
+    Producer(Container container, Object lock) {
+        this.container = container;
+        this.lock = lock;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i ++) {
+            synchronized (lock) {
+                while (container.getValue().isPresent()) { // 只要不为空就一直wait()
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                // 为空的话开始消费
+                int random = new Random().nextInt();
+                System.out.println("Producing... " + random);
+                container.setValue(Optional.of(random));
+
+                lock.notify(); // 生产完成后通知 Consumer
+            }
+        }
+    }
+}
+```
+
+```
+public class Consumer extends Thread{
+    private Container container;
+    private final Object lock;
+
+    Consumer(Container container, Object lock) {
+        this.container = container;
+        this.lock = lock;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i ++) {
+            synchronized (lock) {
+                while (!container.getValue().isPresent()) { // 如果为空 则一直等待
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // 如果不为空 开始进行消费
+                System.out.println("Consuming... " + container.getValue().get());
+                container.setValue(Optional.empty());
+                // 消费完成 通知Producer进行生产
+                lock.notify();
+            }
+        }
+    }
+}
+```
 
 
-### 线程池和Callable/Future
+### 使用Lock/Condition
+
+还可以通过`Condition`来创建2个对应的条件，修改一下`Container`：
+
+```
+import java.util.Optional;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Container {
+    private Optional<Integer> value = Optional.empty();
+
+    //    新增2个条件
+    private Condition notConsumedYet; // 还没有被消费掉
+    private Condition notProducedYet; // 还没有被生产出来
+
+    public Container(ReentrantLock lock) { // 构造函数接收一个 可重入锁 来初始化2个条件
+        this.notConsumedYet = lock.newCondition();
+        this.notProducedYet = lock.newCondition();
+    }
+
+    public Condition getNotConsumedYet() {
+        return notConsumedYet;
+    }
+
+    public Condition getNotProducedYet() {
+        return notProducedYet;
+    }
+
+    public Optional<Integer> getValue() {
+        return value;
+    }
+
+    public void setValue(Optional<Integer> value) {
+        this.value = value;
+    }
+}
+```
+而`ReentrantLock`的`lock()`和`unlock()`的组合就可以视为等价于一个`synchronized`块，可以使用`Condition`修改之前的代码为：
+
+```
+import java.util.Optional;
+import java.util.Random;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Producer extends Thread{
+    private Container container;
+    private final ReentrantLock lock;
+
+    Producer(Container container, ReentrantLock lock) {
+        this.container = container;
+        this.lock = lock;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i ++) {
+            try {
+                lock.lock(); // 通过lock() 和 unlock()等价替换synchronized{}
+                while (container.getValue().isPresent()) { // 只要不为空就一直wait()
+                    try {
+                        container.getNotConsumedYet().await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                // 为空的话开始消费
+                int random = new Random().nextInt();
+                System.out.println("Producing... " + random);
+                container.setValue(Optional.of(random));
+                container.getNotProducedYet().signal(); // 生产完成后通知 Consumer
+            }finally {
+                lock.unlock(); // 无论发生什么事 都要保证锁被释放掉
+            }
+        }
+    }
+}
+```
+```
+import java.util.Optional;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Consumer extends Thread{
+    private Container container;
+    private final ReentrantLock lock;
+
+    Consumer(Container container, ReentrantLock lock) {
+        this.container = container;
+        this.lock = lock;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i ++) {
+            try {
+                lock.lock();
+                while (!container.getValue().isPresent()) { // 如果为空 则一直等待
+                    try {
+                        container.getNotProducedYet().await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // 如果不为空 开始进行消费
+                System.out.println("Consuming... " + container.getValue().get());
+                container.setValue(Optional.empty());
+                // 消费完成 通知Producer进行生产
+                container.getNotConsumedYet().signal();
+            } finally {
+                lock.unlock(); // 无论发生什么事 都要保证锁被释放掉
+            }
+        }
+    }
+}
+```
+
+### 使用BlockingQueue
+
+`BlockingQueue`是一个会阻塞的队列接口，可以等待该队列变为空或者非空。
+
+此时的Main可以简化为：
+```
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        BlockingDeque<Integer> blockingDeque = new LinkedBlockingDeque<>(1); // 长度为1的容器
+
+        Producer producer = new Producer(blockingDeque);
+        Consumer consumer = new Consumer(blockingDeque);
+
+        producer.start();
+        consumer.start();
+    }
+}
+```
+而内部的`Producer`和`Consumer`改为：
+```
+import java.util.Random;
+import java.util.concurrent.BlockingDeque;
+
+public class Producer extends Thread{
+    private BlockingDeque<Integer> blockingDeque;
+
+    Producer(BlockingDeque<Integer> blockingDeque) {
+        this.blockingDeque = blockingDeque;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i ++) {
+            int random = new Random().nextInt();
+            System.out.println("Producing... " + random);
+            try {
+                blockingDeque.put(random); // 生产出来将其放入 blockingDeque 下次循环到这时 线程会自动停下来
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+```
+import java.util.concurrent.BlockingDeque;
+
+public class Consumer extends Thread{
+    private BlockingDeque<Integer> blockingDeque;
+
+    Consumer(BlockingDeque<Integer> blockingDeque) {
+        this.blockingDeque = blockingDeque;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i ++) {
+            try {
+                System.out.println("Consumering... " + blockingDeque.take()); // 在这消费，如果没有生产出来 也会自动停下来
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+> 注意，上述例子存在一个问题是，会重复执行2次`System.out.println("Producing... " + random);`这是因为执行了第二次`sout`之后线程才停止了，所以会输出2次，然后该例子消费者会等`blockingDeque.put(random);`执行了之后立即去消费，如果要改善这种方式，那么单靠一个`BlockingDeque`是做不到的，须得再引入一个`BlockingDeque`作为控制开关。
+
+# 线程池和Callable/Future
 - 什么是线程池
     - 线程是昂贵的（Java线程模型的缺陷）
      Java线程模型的缺陷是其自己是没有调度器的，每个线程调度都依赖于操作系统的线程调度，因此每个线程都要占用操作系统的资源，所以其非常的昂贵
