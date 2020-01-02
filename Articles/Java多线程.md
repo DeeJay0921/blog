@@ -603,17 +603,122 @@ public class Consumer extends Thread{
 > 注意，上述例子存在一个问题是，会重复执行2次`System.out.println("Producing... " + random);`这是因为执行了第二次`sout`之后线程才停止了，所以会输出2次，然后该例子消费者会等`blockingDeque.put(random);`执行了之后立即去消费，如果要改善这种方式，那么单靠一个`BlockingDeque`是做不到的，须得再引入一个`BlockingDeque`作为控制开关。
 
 # 线程池和Callable/Future
-- 什么是线程池
-    - 线程是昂贵的（Java线程模型的缺陷）
-     Java线程模型的缺陷是其自己是没有调度器的，每个线程调度都依赖于操作系统的线程调度，因此每个线程都要占用操作系统的资源，所以其非常的昂贵
-    - 线程池是预先定义好的若干个线程
-    不用每次都先创建新的线程
-    - Java中的线程池
-- Callable/Future
-    - 类比Runnable, Callable可以返回值，抛出异常
-    - Future代表一个未来才会返回的结果
-   ```
-    ExcutorService threadPool;
-    Future f1 = threadPool.submit(Callable..)
-  ```
-- 多线程的WordCount
+
+Java自己是没有调度器的，每个线程调度都依赖于操作系统的线程调度，因此每个线程都要占用操作系统的资源，所以其非常的昂贵
+
+而线程池就是预先定义好的若干个线程，有任务来了就丢到线程池里交给某个线程来处理，处理完该任务的线程又会重新进入等待。
+
+Java中通过`Executors`来创建一个线程池，如：
+
+```
+ExecutorService threadPool = Executors.newFixedThreadPool(10); // 规模为10的一个线程池
+```
+
+返回值为一个`ExecutorService`类型的值，该类型有一个`submit()`方法，可以立即返回一个`Future`类型，该类型代表一个异步的计算结果，而`submit()`方法可以接受`Runnable/Callable`类型的值。
+
+> `Callable`相比于`Runnable`,可以自定义返回值，且可以抛出异常，而`Runnable`既不能返回值，对于异常处理也只能忽略掉
+
+来看一个使用的基本例子：
+
+```
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class Main {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        ExecutorService threadPool = Executors.newFixedThreadPool(10);
+
+        Future<Integer> future1 = threadPool.submit(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                Thread.sleep(10000);
+                return 1;
+            }
+        }); // 调用 submit 之后 立即返回一个 future
+//        boolean cancel = future.cancel(true);// 等不及了可以调用cancel()方法来取消任务
+
+        Future<Object> future2 = threadPool.submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                throw new RuntimeException("测试Callable抛出异常");
+            }
+        });
+
+        System.out.println("future1.get() = " + future1.get()); // 在计算完成后会执行这句
+        // 在future1得到结果之前会一直在这阻塞 不会抛出异常  
+        System.out.println("future2.get() = " + future2.get()); // 上面输出语句执行完后会接收到future2抛出的异常
+    }
+}
+```
+
+## 使用多线程解决WordCount问题
+
+`Word Count`是一个著名的练手程序。一个文本文件包含若干行，每行包含若干个只包含小写字母的单词，单词之间以空格分割。我们要使用多线程对这个文本的每一行文件单独使用一个线程去分析结果，最后将结果汇总起来
+
+完整例子如下：
+```
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class WordCount {
+    public static Map<String, Integer> count(File targetFile) throws Exception {
+        ExecutorService threadPool = Executors.newFixedThreadPool(10); // 假设线程池规模为10
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(targetFile))) {
+            List<Future<Map<String, Integer>>> futureList = new ArrayList<>();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                Future<Map<String, Integer>> singleLineResult = threadPool.submit(new SingleLineWork(line));
+                futureList.add(singleLineResult);
+            }
+            Map<String, Integer> totalResult = mergeSingleLineResultsToTotal(futureList); // 将各行结果汇总
+            System.out.println("totalResult = " + totalResult);
+            return totalResult;
+        }
+    }
+
+
+    private static Map<String, Integer> mergeSingleLineResultsToTotal(List<Future<Map<String, Integer>>> futureList) throws ExecutionException, InterruptedException {
+        Map<String, Integer> totalResult = new HashMap<>();
+        for (Future<Map<String, Integer>> future : futureList) {
+            Set<Map.Entry<String, Integer>> entries = future.get().entrySet();
+            for (Map.Entry<String, Integer> entry : entries) {
+                totalResult.put(entry.getKey(), totalResult.getOrDefault(entry.getKey(), 0) + entry.getValue());
+            }
+        }
+        return totalResult;
+    }
+
+    private static class SingleLineWork implements Callable<Map<String, Integer>> {
+        private String line;
+
+        public SingleLineWork(String line) {
+            this.line = line;
+        }
+
+        @Override
+        public Map<String, Integer> call() {
+            Map<String, Integer> singleLineMap = new HashMap<>();
+            String[] split = line.split(" ");
+            for (String s : split) {
+                singleLineMap.put(s, singleLineMap.getOrDefault(s, 0) + 1);
+            }
+            return singleLineMap;
+        }
+    }
+}
+
+```
