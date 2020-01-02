@@ -684,6 +684,7 @@ public class WordCount {
                 Future<Map<String, Integer>> singleLineResult = threadPool.submit(new SingleLineWork(line));
                 futureList.add(singleLineResult);
             }
+            threadPool.shutdown(); // 关闭线程池 如果不关的话线程池内的现场会一直处于wait状态等待下次再有任务进来  视情况看关不关
             Map<String, Integer> totalResult = mergeSingleLineResultsToTotal(futureList); // 将各行结果汇总
             System.out.println("totalResult = " + totalResult);
             return totalResult;
