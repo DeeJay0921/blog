@@ -723,3 +723,150 @@ public class WordCount {
 }
 
 ```
+
+## 一些多线程额外的解决方案
+
+### CountDownLatch
+
+`CountDownLatch`允许一个或多个线程一直等待，直到其他线程执行完后再执行。
+
+比方说我们可以在主线程开始运行前使用其他子线程执行一系列的初始化操作等。
+
+主要使用方法为：
+```
+CountDownLatch countDownLatch = new CountDownLatch(countNum); // 设定一个计数器
+countDownLatch.countDown(); // 将计数器减1
+countDownLatch.await(); // 在计数器 countDown 为0之前  该线程会阻塞到这一句
+```
+
+我们使用`CountDownLatch`来解决上面的`WordCount`问题：
+
+
+```
+import java.io.File;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+
+public class CountDownLatchDemo {
+    public static Map<String, Integer> count (File file) throws Exception {
+        List<String> allLines = Files.readAllLines(file.toPath());
+        CountDownLatch countDownLatch = new CountDownLatch(allLines.size()); // 根据文件的行数创建计数器
+        List<Map<String, Integer>> totalLine = new ArrayList<>();
+        for (String line : allLines) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Map<String, Integer> singleLineResult = new HashMap<>();
+                    for (String split : line.split(" ")) {
+                        singleLineResult.put(split, singleLineResult.getOrDefault(split, 0) + 1);
+                    }
+                    totalLine.add(singleLineResult);
+                    countDownLatch.countDown(); // 每结束一个线程 相应的countDown一次
+                }
+            }).start();
+        }
+        countDownLatch.await(); // 如果 countDownLatch 没有 countDown 为0的话 当前线程就会一直阻塞在这
+        return mergeTotalResult(totalLine);
+    }
+
+    private static Map<String, Integer> mergeTotalResult(List<Map<String, Integer>> totalLine) { // 合并各行统计结果为目标Map
+        Map<String, Integer> totalResult = new HashMap<>();
+        for (Map<String, Integer> result : totalLine) {
+            for (Map.Entry<String, Integer> entry : result.entrySet()) {
+                totalResult.put(entry.getKey(), totalResult.getOrDefault(entry.getKey(), 0) + entry.getValue());
+            }
+        }
+        return totalResult;
+    }
+}
+```
+
+上述例子我们创建了文件行数个线程，每个线程统计完毕之后就使用`CountDownLatch`去`countDown`一次，等所有线程都统计完，再回复执行`await`之后的`return`语句。
+
+
+### ForkJoinPool
+
+`ForkJoinPool`是`ExecutorService`的实现类，因此是一种特殊的线程池
+
+它的优势在于，可以充分利用多cpu，多核cpu的优势，把一个任务拆分成多个“小任务”，把多个“小任务”放到多个处理器核心上并行执行；当多个“小任务”执行完成之后，再将这些执行结果合并起来即可
+
+这种**分而治之**的思想是`ForkJoinPool`的最大优势
+
+基本的使用和常规的线程池差不多, `ForkJoinPool`实例创建后，也可以一样的调用`submit()`方法去注册任务，相比`Runnable/Callable`,`ForkJoinPool`还支持`submit(ForkJoinTask<T> task)`,`ForkJoinTask`是一个抽象类，常见的有`RecusiveAction`(无返回值)和`RecusiveTask`(有返回值)2种子类实现， 使用时实现其内部`compute()`方法即可
+
+下面通过使用`ForkJoinPool`来解决`Word Count`问题，体会分而治之的思想
+
+
+```
+import java.io.File;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.RecursiveTask;
+
+public class ForkJoinPoolDemo {
+    public static Map<String, Integer> count(File file) throws Exception {
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        List<String> allLines = Files.readAllLines(file.toPath());
+        ForkJoinTask<Map<String, Integer>> submit = forkJoinPool.submit(new FiveLineWork(allLines));
+        return submit.get();
+    }
+
+    static class FiveLineWork extends RecursiveTask<Map<String, Integer>> {
+        //  创建一个任务  接收一个 List<String> 代表多行的文本
+        private List<String> lines;
+
+        public FiveLineWork(List<String> lines) {
+            this.lines = lines;
+        }
+
+
+        @Override
+        protected Map<String, Integer> compute() {
+            System.out.println("Thread.currentThread().getName() = " + Thread.currentThread().getName()); // 在这可以看出开的线程并不多  也就几个线程  但是一个线程处理了多个小任务
+            if (lines.size() > 5) { // 如果 行数大于5 将其拆分成更小的任务去做
+                int middleIndex = lines.size() / 2;
+                List<String> list1 = lines.subList(0, middleIndex);
+                List<String> list2 = lines.subList(middleIndex, lines.size()); // 将列表等分
+                FiveLineWork task1 = new FiveLineWork(list1); // 拆分成2个更小的任务
+                FiveLineWork task2 = new FiveLineWork(list2);
+                task1.fork(); // 通过调用fork() 并行执行任务
+                task2.fork();
+                return mergeTasksResult(task1.join(), task2.join()); // task.join() 代表小任务的返回结果
+            }else {
+                return getLinesWordCount(lines);
+            }
+        }
+
+        private Map<String, Integer> mergeTasksResult(Map<String, Integer> join1, Map<String, Integer> join2) { // 将2个task的结果合并
+            Map<String, Integer> totalMap = new HashMap<>(join1);
+            for (Map.Entry<String, Integer> entry : join2.entrySet()) {
+                totalMap.put(entry.getKey(), totalMap.get(entry.getKey()) + join2.getOrDefault(entry.getKey(), 0));
+            }
+            return totalMap;
+        }
+
+        private Map<String, Integer> getLinesWordCount(List<String> lines) { // 获取 传入的N行文本的统计结果
+            Map<String, Integer> linesResult = new HashMap<>();
+            for (String line : lines) {
+                for (String split : line.split(" ")) {
+                    linesResult.put(split, linesResult.getOrDefault(split, 0) + 1);
+                }
+            }
+            return linesResult;
+        }
+    }
+}
+```
+
+上例中可以看到，在一个任务里将其拆分成更小的任务，调用`fork`使其并行执行，如果是使用`RecursiveTask`还可以使用`join`获取其返回结果，这就是分而治之的处理思想。
+
+> 也可以直接使用`ForkJoinPool.commonPool();`来使用通用线程池
+
