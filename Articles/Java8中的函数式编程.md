@@ -538,3 +538,176 @@ public static List<Point> sort(List<Point> points) {
 ```
 
 理由`Comparator`的`comparing`方法，我们可以实现用这样的方法引用去简化代码，另外如果想反序排序的话，还可以在`comparing`后面直接调用`.reversed()`
+
+## 补充：另外一些使用函数接口优化代码的例子
+
+优化前：
+```java
+public class RefactorToConsumer {
+    public static void main(String[] args) {
+        Map<String, String> map1 =
+                Stream.of("a", "b", "c").collect(Collectors.toMap(k -> k, v -> v));
+        Map<String, String> map2 =
+                Stream.of("d", "e", "f").collect(Collectors.toMap(k -> k, v -> v));
+
+        printWithComma(map1, map2);
+        printWithDash(map1, map2);
+        printWithColon(map1, map2);
+    }
+
+    public static void printWithComma(Map<String, String> map1, Map<String, String> map2) {
+        for (Map.Entry<String, String> entry : map1.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println(key + "," + value);
+        }
+
+        for (Map.Entry<String, String> entry : map2.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println(key + "," + value);
+        }
+    }
+
+    public static void printWithDash(Map<String, String> map1, Map<String, String> map2) {
+        for (Map.Entry<String, String> entry : map1.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println(key + "-" + value);
+        }
+
+        for (Map.Entry<String, String> entry : map2.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println(key + "-" + value);
+        }
+    }
+
+    public static void printWithColon(Map<String, String> map1, Map<String, String> map2) {
+        for (Map.Entry<String, String> entry : map1.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println(key + ":" + value);
+        }
+
+        for (Map.Entry<String, String> entry : map2.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println(key + ":" + value);
+        }
+    }
+}
+```
+
+可以看到有大量重复代码，提取公共方法进行优化：
+
+```java
+public class RefactorToConsumer {
+    public static void main(String[] args) {
+        Map<String, String> map1 =
+                Stream.of("a", "b", "c").collect(Collectors.toMap(k -> k, v -> v));
+        Map<String, String> map2 =
+                Stream.of("d", "e", "f").collect(Collectors.toMap(k -> k, v -> v));
+
+        printWithComma(map1, map2);
+        printWithDash(map1, map2);
+        printWithColon(map1, map2);
+    }
+
+    public static void printWithConsumer(
+            Map<String, String> map1,
+            Map<String, String> map2,
+            BiConsumer<String, String> consumer) {
+        map1.forEach(consumer);
+        map2.forEach(consumer);
+    }
+
+    public static void printWithComma(Map<String, String> map1, Map<String, String> map2) {
+        printWithConsumer(map1, map2, (key, value) -> System.out.println(key + "," + value));
+    }
+
+    public static void printWithDash(Map<String, String> map1, Map<String, String> map2) {
+        printWithConsumer(map1, map2, (key, value) -> System.out.println(key + "-" + value));
+    }
+
+    public static void printWithColon(Map<String, String> map1, Map<String, String> map2) {
+        printWithConsumer(map1, map2, (key, value) -> System.out.println(key + ":" + value));
+    }
+}
+```
+
+再看一例，优化前：
+
+```java
+public class RefactorToSupplier {
+    private static int randomInt() {
+        return new Random().nextInt();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(createObjects());
+        System.out.println(createStrings());
+        System.out.println(createRandomIntegers());
+    }
+
+    public static List<Object> createObjects() {
+        List<Object> result = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            result.add(new Object());
+        }
+        return result;
+    }
+
+    public static List<Object> createStrings() {
+        List<Object> result = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            result.add("" + i);
+        }
+        return result;
+    }
+
+    public static List<Object> createRandomIntegers() {
+        List<Object> result = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            result.add(randomInt());
+        }
+        return result;
+    }
+}
+```
+
+优化后：
+```java
+public class RefactorToSupplier {
+    private static int randomInt() {
+        return new Random().nextInt();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(createObjects());
+        System.out.println(createStrings());
+        System.out.println(createRandomIntegers());
+    }
+
+    // 使用函数式接口Supplier对三个方法进行重构
+    public static List<Object> create(Supplier<Object> supplier) {
+        List<Object> result = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            result.add(supplier.get());
+        }
+        return result;
+    }
+
+    public static List<Object> createObjects() {
+        return create(Object::new);
+    }
+
+    public static List<Object> createStrings() {
+        return create(() -> "");
+    }
+
+    public static List<Object> createRandomIntegers() {
+        return create(RefactorToSupplier::randomInt);
+    }
+}
+```
