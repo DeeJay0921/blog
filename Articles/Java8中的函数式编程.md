@@ -1,3 +1,16 @@
+---
+title: Java8函数式编程
+date: 2020/01/15 11:09:01
+cover: https://upload-images.jianshu.io/upload_images/16323523-273fc82a9a74ced8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+tags: 
+- Java
+- 函数式编程
+categories: 
+- Java
+---
+本文主要介绍了Java8之后的函数式编程及常见的函数接口
+<!--more-->
+
 # Java8函数式编程
 
 ## 为什么要使用函数式编程
