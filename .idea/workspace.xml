@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09a04031-9479-44c1-907d-c07f58c39b0c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Articles/算法与数据结构初步.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Articles/Java多线程爬虫及ElasticSearch的初步使用.md" beforeDir="false" afterPath="$PROJECT_DIR$/Articles/Java多线程爬虫及ElasticSearch的初步使用.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Articles/Java之Stream.md" beforeDir="false" afterPath="$PROJECT_DIR$/Articles/Java之Stream.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,16 +14,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Articles/Java多线程爬虫及ElasticSearch的初步使用.md">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Articles/Java之Stream.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="647">
-                <caret line="198" column="40" lean-forward="true" selection-start-line="198" selection-start-column="40" selection-end-line="198" selection-end-column="40" />
+              <first_editor relative-caret-position="479">
+                <caret line="442" lean-forward="true" selection-start-line="442" selection-end-line="442" />
                 <folding>
-                  <element signature="e#568#578#0" />
-                  <element signature="e#980#997#0" />
-                  <element signature="e#3832#3849#0" />
+                  <element signature="e#607#608#0" expanded="true" />
+                  <element signature="e#645#646#0" expanded="true" />
+                  <element signature="e#690#691#0" expanded="true" />
+                  <element signature="e#734#735#0" expanded="true" />
+                  <element signature="e#290#291#0" expanded="true" />
+                  <element signature="e#325#326#0" expanded="true" />
+                  <element signature="e#359#360#0" expanded="true" />
+                  <element signature="e#393#394#0" expanded="true" />
+                  <element signature="e#1357#1358#0" expanded="true" />
+                  <element signature="e#1410#1411#0" expanded="true" />
+                  <element signature="e#937#938#0" expanded="true" />
+                  <element signature="e#964#965#0" expanded="true" />
+                  <element signature="e#134#135#0" expanded="true" />
+                  <element signature="e#169#170#0" expanded="true" />
+                  <element signature="e#203#204#0" expanded="true" />
+                  <element signature="e#237#238#0" expanded="true" />
+                  <element signature="e#736#737#0" expanded="true" />
+                  <element signature="e#763#764#0" expanded="true" />
+                  <element signature="e#1508#1509#0" expanded="true" />
+                  <element signature="e#1541#1542#0" expanded="true" />
+                  <element signature="e#1575#1576#0" expanded="true" />
+                  <element signature="e#1610#1611#0" expanded="true" />
+                  <element signature="e#1640#1641#0" expanded="true" />
+                  <element signature="e#1674#1675#0" expanded="true" />
+                  <element signature="e#1714#1715#0" expanded="true" />
+                  <element signature="e#1755#1756#0" expanded="true" />
+                  <element signature="e#2136#2137#0" expanded="true" />
+                  <element signature="e#2183#2184#0" expanded="true" />
+                  <element signature="e#696#697#0" expanded="true" />
+                  <element signature="e#729#730#0" expanded="true" />
+                  <element signature="e#763#764#0" expanded="true" />
+                  <element signature="e#798#799#0" expanded="true" />
                 </folding>
               </first_editor>
               <second_editor />
@@ -30,7 +60,25 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Articles/算法与数据结构初步.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="FIRST">
+              <first_editor relative-caret-position="560">
+                <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>flatMap</find>
+      <find>comparing</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,6 +90,10 @@
         <option value="$PROJECT_DIR$/Articles/对XML以及Tomcat的简单了解.md" />
         <option value="$PROJECT_DIR$/Demos/JDBCUtils.java" />
         <option value="$PROJECT_DIR$/Articles/Java多线程爬虫及ElasticSearch的初步使用.md" />
+        <option value="$PROJECT_DIR$/Articles/Java8中的函数式编程,md" />
+        <option value="$PROJECT_DIR$/Articles/Java8中的函数式编程.md" />
+        <option value="$PROJECT_DIR$/Articles/Java之Stream.md" />
+        <option value="$PROJECT_DIR$/Articles/算法与数据结构初步.md" />
       </list>
     </option>
   </component>
@@ -56,6 +108,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -73,14 +126,13 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556206653895" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1579490256336" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../JavaLesson/refactor-to-functional-programming" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -126,6 +178,9 @@
       <workItem from="1578377374569" duration="2022000" />
       <workItem from="1578381382946" duration="485000" />
       <workItem from="1578381917680" duration="17000" />
+      <workItem from="1579071625781" duration="733000" />
+      <workItem from="1579072377474" duration="14293000" />
+      <workItem from="1579154610369" duration="32715000" />
     </task>
     <task id="LOCAL-00001" summary="add mysql article">
       <created>1555084607188</created>
@@ -162,17 +217,38 @@
       <option name="project" value="LOCAL" />
       <updated>1556206619195</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add Java8函数式编程">
+      <created>1579164291902</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1579164291902</updated>
+    </task>
+    <task id="LOCAL-00007" summary="modify Java8函数式编程">
+      <created>1579242549999</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1579242549999</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add Java8之Stream">
+      <created>1579253184812</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1579253184812</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30530000" />
+    <option name="totallyTimeSpent" value="78271000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26599148" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2739872" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -252,7 +328,10 @@
     <MESSAGE value="commit mysql Article;" />
     <MESSAGE value="commit pom.xml&amp;mavenRepo" />
     <MESSAGE value="add demo Or article" />
-    <option name="LAST_COMMIT_MESSAGE" value="add demo Or article" />
+    <MESSAGE value="add Java8函数式编程" />
+    <MESSAGE value="modify Java8函数式编程" />
+    <MESSAGE value="add Java8之Stream" />
+    <option name="LAST_COMMIT_MESSAGE" value="add Java8之Stream" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/README.md">
@@ -297,13 +376,77 @@
     <entry file="file://$PROJECT_DIR$/Articles/Java多线程爬虫及ElasticSearch的初步使用.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="647">
-            <caret line="198" column="40" lean-forward="true" selection-start-line="198" selection-start-column="40" selection-end-line="198" selection-end-column="40" />
+          <first_editor>
+            <caret selection-end-line="13" selection-end-column="11" />
             <folding>
               <element signature="e#568#578#0" />
               <element signature="e#980#997#0" />
               <element signature="e#3832#3849#0" />
             </folding>
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Articles/Java8中的函数式编程.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="326">
+            <caret line="548" column="22" lean-forward="true" selection-start-line="548" selection-start-column="22" selection-end-line="548" selection-end-column="22" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Articles/Java之Stream.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="479">
+            <caret line="442" lean-forward="true" selection-start-line="442" selection-end-line="442" />
+            <folding>
+              <element signature="e#607#608#0" expanded="true" />
+              <element signature="e#645#646#0" expanded="true" />
+              <element signature="e#690#691#0" expanded="true" />
+              <element signature="e#734#735#0" expanded="true" />
+              <element signature="e#290#291#0" expanded="true" />
+              <element signature="e#325#326#0" expanded="true" />
+              <element signature="e#359#360#0" expanded="true" />
+              <element signature="e#393#394#0" expanded="true" />
+              <element signature="e#1357#1358#0" expanded="true" />
+              <element signature="e#1410#1411#0" expanded="true" />
+              <element signature="e#937#938#0" expanded="true" />
+              <element signature="e#964#965#0" expanded="true" />
+              <element signature="e#134#135#0" expanded="true" />
+              <element signature="e#169#170#0" expanded="true" />
+              <element signature="e#203#204#0" expanded="true" />
+              <element signature="e#237#238#0" expanded="true" />
+              <element signature="e#736#737#0" expanded="true" />
+              <element signature="e#763#764#0" expanded="true" />
+              <element signature="e#1508#1509#0" expanded="true" />
+              <element signature="e#1541#1542#0" expanded="true" />
+              <element signature="e#1575#1576#0" expanded="true" />
+              <element signature="e#1610#1611#0" expanded="true" />
+              <element signature="e#1640#1641#0" expanded="true" />
+              <element signature="e#1674#1675#0" expanded="true" />
+              <element signature="e#1714#1715#0" expanded="true" />
+              <element signature="e#1755#1756#0" expanded="true" />
+              <element signature="e#2136#2137#0" expanded="true" />
+              <element signature="e#2183#2184#0" expanded="true" />
+              <element signature="e#696#697#0" expanded="true" />
+              <element signature="e#729#730#0" expanded="true" />
+              <element signature="e#763#764#0" expanded="true" />
+              <element signature="e#798#799#0" expanded="true" />
+            </folding>
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Articles/算法与数据结构初步.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="560">
+            <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
           </first_editor>
           <second_editor />
         </state>
